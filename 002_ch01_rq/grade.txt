@@ -1,11 +1,10 @@
-Grading at 08/31/2022:16:20:23.244915
-For commit ID 92948ca2f13a166b8d757b2accc291c235a16832
-Grading at Wed Aug 31 12:20:23 PM EDT 2022
+Grading at 08/31/2022:16:24:24.055412
+For commit ID 932f1bed90272f8aad362f75d3f75b467bfa39a6
+Grading at Wed Aug 31 12:24:23 PM EDT 2022
 Reading your quiz answers from answers.txt
-You got 2 questions incorrect.
+You got 1 questions incorrect.
 You might want to review these concepts:
 ------------
-How to approach developing an algorithm
 Understand the problem and work an example yourself 
 ------------
 
