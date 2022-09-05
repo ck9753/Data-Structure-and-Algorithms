@@ -1,0 +1,13 @@
+Grading at 09/05/2022:12:22:30.438103
+For commit ID bd6d38010af50a8544cb81105b0ddc353c11ed16
+Grading at Mon Sep  5 08:22:30 AM EDT 2022
+Reading your quiz answers from answers.txt
+You got 3 questions incorrect.
+You might want to review these concepts:
+------------
+Separation of interface from implementation
+The basics of data types
+The custom data types
+------------
+
+Overall Grade: FAILED
