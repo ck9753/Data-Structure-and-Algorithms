@@ -39,19 +39,20 @@ rectangle canonicalize(rectangle r) {
 }
 rectangle intersection(rectangle r1, rectangle r2) {
   //WRITE THIS FUNCTION
-
   rectangle r_intersection;
   r1 = canonicalize(r1);
   r2 = canonicalize(r2);
+
   r_intersection.x = max(r1.x, r2.x);
   r_intersection.y = max(r1.y, r2.y);
   r_intersection.width = min(r1.x + r1.width, r2.x + r2.width) - r_intersection.x;
   r_intersection.height = min(r1.y + r1.height, r2.y + r2.height) - r_intersection.y;
-  if ((r_intersection.width < 0) | (r_intersection.height < 0)) {
+
+  if ((r_intersection.width < 0) || (r_intersection.height < 0)) {
     r_intersection.width = 0;
     r_intersection.height = 0;
   }
-  //WRITE THIS FUNCTION
+
   return r_intersection;
 }
 
