@@ -1,17 +1,17 @@
-Grading at 10/01/2022:20:26:49.874688
-For commit ID ded0408e49527a8881abf32e304f211733c55e0e
-Grading at Sat Oct  1 04:26:47 PM EDT 2022
+Grading at 10/01/2022:20:32:22.511468
+For commit ID 98348ae5cbc56d420766c72375ef8fa91fed62e3
+Grading at Sat Oct  1 04:32:17 PM EDT 2022
 Attempting to compile breaker.c 
 make: 'breaker' is up to date.
 testcase1 passed
 #################################################
 testcase2:
-testcase2 failed
+testcase2 passed
 #################################################
 testcase3:
-testcase3 failed
+testcase3 passed
 #################################################
 testcase4:
-testcase4 failed
+testcase4 passed
 
-Overall Grade: F
+Overall Grade: A
