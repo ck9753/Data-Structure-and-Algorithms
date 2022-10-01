@@ -2,26 +2,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int max_index(int * array) {
+int find_max(int * array) {
   int index = 0;
-  int max = array[0];
-
+  int max_num = array[0];
   for (int i = 0; i < 25; i++) {
-    if (array[i + 1] > max) {
-      max = array[i + 1];
+    if (array[i + 1] > max_num) {
+      max_num = array[i + 1];
       index = i + 1;
     }
   }
   return index;
 }
 
-void key_exe(FILE * f) {
+void find_key(FILE * f) {
   int c;
-  int letter[26];  // the number of alphabet
+  int letter[26];
   for (int i = 0; i < 26; i++) {
     letter[i] = 0;
   }
-
   while ((c = fgetc(f)) != EOF) {
     if ((isalpha(c))) {
       c = tolower(c);
@@ -29,33 +27,28 @@ void key_exe(FILE * f) {
     }
   }
 
-  int max = max_index(letter);
+  int max_index = find_max(letter);
   int key;
-
-  if (max >= 4) {
-    key = max - 4;
+  if (max_index >= 4) {
+    key = max_index - 4;
   }
   else {
-    key = max + 26 - 4;
+    key = 26 - 4 + max_index;
   }
-
   printf("%d\n", key);
 }
 
 int main(int argc, char ** argv) {
-  if (argc != 3) {
+  if (argc != 2) {
     fprintf(stderr, "Usage: encrypt key inputFileName\n");
     return EXIT_FAILURE;
   }
-
-  FILE * f = fopen(argv[2], "r");
+  FILE * f = fopen(argv[1], "r");
   if (f == NULL) {
     perror("Could not open file");
     return EXIT_FAILURE;
   }
-
-  key_exe(f);
-
+  find_key(f);
   if (fclose(f) != 0) {
     perror("Failed to close the input file!");
     return EXIT_FAILURE;
