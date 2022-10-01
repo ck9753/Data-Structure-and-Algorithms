@@ -6,7 +6,7 @@ int max_index(int * array) {
   int index = 0;
   int max = array[0];
 
-  for (int i = 0; i <= 24; i++) {
+  for (int i = 0; i < 25; i++) {
     if (array[i + 1] > max) {
       max = array[i + 1];
       index = i + 1;
@@ -48,7 +48,7 @@ int main(int argc, char ** argv) {
     return EXIT_FAILURE;
   }
 
-  FILE * f = fopen(argv[1], "r");
+  FILE * f = fopen(argv[2], "r");
   if (f == NULL) {
     perror("Could not open file");
     return EXIT_FAILURE;
