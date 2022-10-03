@@ -1,0 +1,21 @@
+input1.txt
+input3.txt
+input7.txt
+input10.txt
+input14.txt
+input42.txt
+
+input4.txt
+input5.txt
+input2.txt
+input6.txt
+input8.txt
+input9.txt d
+input111.txt
+input12.txt
+input13.txt
+input15.txt
+input16.txt
+
+
+
