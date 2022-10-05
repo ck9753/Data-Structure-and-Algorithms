@@ -22,8 +22,15 @@ country_t parseLine(char * line) {
   const char * edptr = line;  //end pointer
   const char * mdptr = line;  //middle pointer
 
+  // check if the line is empty
   if ((line == NULL) || (strlen(line) == 0)) {
     perror("Line is empty\n");
+    exit(EXIT_FAILURE);
+  }
+
+  // check if the line does not have string separated by comma
+  else if (strchr(line, ',') == NULL) {
+    perror("Line doesn't include comma(,)\n");
     exit(EXIT_FAILURE);
   }
 
@@ -32,30 +39,39 @@ country_t parseLine(char * line) {
       ptr1 = strchr(ptr1, ',');
 
       if (ptr1 != NULL) {
+        // parse result name using two pointer's location difference
         strncpy(res_name, ptr2, ptr1 - ptr2);
-        ptr1++;  //point to the first letter of next token
-        ptr2 = ptr1;
+        ptr1++;       //point to the first letter of next token
+        ptr2 = ptr1;  // update ptr2 to ptr1 location
 
-        counter++;  // increment the counter
+        counter++;  // increment the counter of the elements
       }
 
       else {
-        break;
+        break;  // if ptr is reaching to the end, get out of the loop
       }
     }
 
-    edptr = strchr(line, '\0');
-    mdptr = strchr(line, ',');
+    edptr = strchr(line, '\0');  // end pointer that points to the end of the line
+    mdptr = strchr(line, ',');   // middle pointer that points to the location of comma
 
-    strncpy(res_population, mdptr + 1, edptr - mdptr - 1);
-    counter++;
+    strncpy(
+        res_population,
+        mdptr + 1,
+        edptr - mdptr -
+            1);  // take result population using location difference between edptr and mdptr
+    counter++;  //  increment the counter of the elements after getting population string
+
+    // check if the line only have 2 elements, name and population
     if (counter != 2) {
       perror("Line have an incorrect number of elements\n");
       exit(EXIT_FAILURE);
     }
 
     else {
+      // take result name and pass it to name of the answer
       strcpy(ans.name, res_name);
+      // take result population, change string to integer, and pass it to population of the answer
       ans.population = atoi(res_population);
     }
   }
@@ -66,7 +82,7 @@ void calcRunningAvg(unsigned * data, size_t n_days, double * avg) {
   unsigned sum_data[3000] = {0};  // why sum_data[n_days]; not working
 
   for (size_t i = 0; i < n_days - 6; i++) {
-    for (size_t j = i; j < n_days + i; j++) {
+    for (size_t j = i; j < i + i; j++) {
       sum_data[i] += data[j];
     }
     avg[i] = (double)sum_data[i] / 7;
