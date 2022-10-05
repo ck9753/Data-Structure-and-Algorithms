@@ -1,5 +1,7 @@
 #include "pandemic.h"
 
+#define _OPEN_SYS_ITOA_EXT
+
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -73,6 +75,14 @@ country_t parseLine(char * line) {
       strcpy(ans.name, res_name);
       // take result population, change string to integer, and pass it to population of the answer
       ans.population = atoi(res_population);
+      int num_population = ans.population;
+      char buffer[sizeof(ans.population) + 1];
+
+      sprintf(buffer, "%d", num_population);
+      if ((strlen(buffer) + 1) != strlen(res_population)) {
+        perror("There is junk after a number\n");
+        exit(EXIT_FAILURE);
+      }
     }
   }
   return ans;
