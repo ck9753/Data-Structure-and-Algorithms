@@ -79,13 +79,19 @@ country_t parseLine(char * line) {
 }
 void calcRunningAvg(unsigned * data, size_t n_days, double * avg) {
   //WRITE ME
-  unsigned sum_data[3000] = {0};  // why sum_data[n_days]; not working
+  unsigned sum_data[3000] = {0};
+
+  // check if n_days is larger than 6
+  if (n_days <= 6) {
+    perror("n_days should be larger than or equal to 7\n");
+    exit(EXIT_FAILURE);
+  }
 
   for (size_t i = 0; i < n_days - 6; i++) {
     for (size_t j = i; j < i + 7; j++) {
       sum_data[i] += data[j];
     }
-    avg[i] = (double)sum_data[i] / 7;
+    avg[i] = (double)sum_data[i] / 7;  // casting unsigned to double for avg
   }
 }
 
