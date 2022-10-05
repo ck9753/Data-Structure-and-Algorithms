@@ -78,9 +78,8 @@ country_t parseLine(char * line) {
   return ans;
 }
 void calcRunningAvg(unsigned * data, size_t n_days, double * avg) {
-  //double sum_data[n_days - 6];
-  // why unsigned sum_data[n_days] produce wrong answer?
-  double * sum_data = malloc((n_days - 6) * sizeof(sum_data));
+  double sum_data[n_days - 6];
+  //double * sum_data = malloc((n_days - 6) * sizeof(sum_data));
 
   // check if n_days is greater than 6
   if (n_days < 7) {
@@ -89,6 +88,7 @@ void calcRunningAvg(unsigned * data, size_t n_days, double * avg) {
   }
 
   for (size_t i = 0; i < n_days - 6; i++) {
+    sum_data[i] = 0.0;
     for (size_t j = i; j < i + 7; j++) {
       sum_data[i] += data[j];
     }
@@ -101,6 +101,7 @@ void calcCumulative(unsigned * data, size_t n_days, uint64_t pop, double * cum) 
   //unsigned sum_data[n_days];
   //unsigned * sum_data = malloc(n_days * sizeof(size_t));
   for (size_t i = 0; i < n_days; i++) {
+    sum_data[i] = 0.0;
     for (size_t j = 0; j < i + 1; j++) {
       sum_data[i] += data[j];
     }
