@@ -10,39 +10,55 @@ country_t parseLine(char * line) {
   ans.name[0] = '\0';
   ans.population = 0;
 
+  // make char array for result name and population
   char res_name[64] = {0};
   char res_population[64] = {0};
 
+  size_t counter = 0;
+
+  // take input line to use pointers
   const char * ptr1 = line;
   const char * ptr2 = line;
-  const char * edptr = line;
-  const char * mdptr = line;
+  const char * edptr = line;  //end pointer
+  const char * mdptr = line;  //middle pointer
 
-  while (*ptr1 != '\0') {
-    ptr1 = strchr(ptr1, ',');
-
-    if (ptr1 != NULL) {
-      strncpy(res_name, ptr2, ptr1 - ptr2);
-      ptr1++;  //point to the first letter of next token
-      ptr2 = ptr1;
-    }
-
-    else {
-      break;
-    }
+  if ((line == NULL) || (strlen(line) == 0)) {
+    perror("Line is empty\n");
+    exit(EXIT_FAILURE);
   }
+  else {
+    while (*ptr1 != '\0') {
+      ptr1 = strchr(ptr1, ',');
 
-  edptr = strchr(line, '\0');
-  mdptr = strchr(line, ',');
+      if (ptr1 != NULL) {
+        strncpy(res_name, ptr2, ptr1 - ptr2);
+        ptr1++;  //point to the first letter of next token
+        ptr2 = ptr1;
 
-  strncpy(res_population, mdptr + 1, edptr - mdptr - 1);
+        counter++;  // increment the counter
+      }
 
-  strcpy(ans.name, res_name);
-  ans.population = atoi(res_population);
+      else {
+        break;
+      }
+    }
 
-  return ans;
+    edptr = strchr(line, '\0');
+    mdptr = strchr(line, ',');
+
+    strncpy(res_population, mdptr + 1, edptr - mdptr - 1);
+    counter++;
+    if (counter != 2) {
+      perror("Line have an incorrect number of elements\n");
+      exit(EXIT_FAILURE);
+    }
+
+    strcpy(ans.name, res_name);
+    ans.population = atoi(res_population);
+
+    return ans;
+  }
 }
-
 void calcRunningAvg(unsigned * data, size_t n_days, double * avg) {
   //WRITE ME
   unsigned sum_data[3000] = {0};  // why sum_data[n_days]; not working
