@@ -1,6 +1,6 @@
-Grading at 10/05/2022:10:53:53.155382
-For commit ID b161b9425d9df408aae3ad65a3091e5ee76e24ce
-Grading at Wed Oct  5 06:53:48 AM EDT 2022
+Grading at 10/05/2022:10:56:27.749803
+For commit ID 5d6aba23129bac0a56723d4b6dd74fb126aba906
+Grading at Wed Oct  5 06:56:23 AM EDT 2022
 
 Compiling 
 rm -f *~ printCountries printRunningAvg printCumulative printDailyMax
@@ -20,7 +20,7 @@ Test case printCountries population.csv
 Your file matched the expected output
 +-----------------------------------------------------------------------+
 Test case printRunningAvg population.csv daily_small.csv
-Valgrind reported memory errors
+Your file matched the expected output
 +-----------------------------------------------------------------------+
 Test case printCumulative population.csv daily_small.csv
 Your file matched the expected output
@@ -28,7 +28,7 @@ Your file matched the expected output
 Test case printDailyMax population.csv daily_small.csv
 Your file matched the expected output
 
-You have FAILED one or more of your test cases
-Keep debugging
+You have PASSED all of your test cases
+Keep adding test cases until you are satisfied your program is correct
 
 Overall Grade: NO GRADE YET
