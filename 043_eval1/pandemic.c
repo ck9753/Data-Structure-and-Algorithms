@@ -26,6 +26,7 @@ country_t parseLine(char * line) {
     perror("Line is empty\n");
     exit(EXIT_FAILURE);
   }
+
   else {
     while (*ptr1 != '\0') {
       ptr1 = strchr(ptr1, ',');
@@ -53,11 +54,12 @@ country_t parseLine(char * line) {
       exit(EXIT_FAILURE);
     }
 
-    strcpy(ans.name, res_name);
-    ans.population = atoi(res_population);
-
-    return ans;
+    else {
+      strcpy(ans.name, res_name);
+      ans.population = atoi(res_population);
+    }
   }
+  return ans;
 }
 void calcRunningAvg(unsigned * data, size_t n_days, double * avg) {
   //WRITE ME
