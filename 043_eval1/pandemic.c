@@ -38,7 +38,7 @@ country_t parseLine(char * line) {
 
   else {
     while (*ptr1 != '\0') {
-      ptr1 = strchr(ptr1, ',');
+      ptr1 = strchr(ptr1, ',');  // set the pointer to the delimiter ','
 
       if (ptr1 != NULL) {
         // parse result name using two pointer's location difference
@@ -75,10 +75,13 @@ country_t parseLine(char * line) {
       strcpy(ans.name, res_name);
       // take result population, change string to integer, and pass it to population of the answer
       ans.population = atoi(res_population);
+
+      // convert the integer population to string
       int num_population = ans.population;
       char buffer[sizeof(ans.population) + 1];
-
       sprintf(buffer, "%d", num_population);
+
+      // check if the population include junk character
       if ((strlen(buffer) + 1) != strlen(res_population)) {
         perror("There is junk after a number\n");
         exit(EXIT_FAILURE);
