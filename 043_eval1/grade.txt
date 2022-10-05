@@ -1,6 +1,6 @@
-Grading at 10/05/2022:11:30:40.398645
-For commit ID 1aaf52f06db7eaa247e85a155a94f12fd8cca191
-Grading at Wed Oct  5 07:30:37 AM EDT 2022
+Grading at 10/05/2022:11:34:35.634786
+For commit ID a40c026a157abcd505ca9d51109f2f53c1f0d1d7
+Grading at Wed Oct  5 07:34:30 AM EDT 2022
 
 Compiling 
 rm -f *~ printCountries printRunningAvg printCumulative printDailyMax
@@ -24,7 +24,23 @@ Your file matched the expected output
 +-----------------------------------------------------------------------+
 Test case printRunningAvg population.csv daily_small.csv
 Your file matched the expected output
++-----------------------------------------------------------------------+
+Test case printCumulative population.csv daily_small.csv
+Your file matched the expected output
++-----------------------------------------------------------------------+
+Test case printCumulative population.csv daily_cases.csv
+Line_2_did_not_match
+Line_4_did_not_match
+Line_6_did_not_match
+Line_8_did_not_match
+Line_10_did_not_match
+Line_16_did_not_match
+Line_18_did_not_match
+Your file did not match the expected ouput
++-----------------------------------------------------------------------+
+Test case printDailyMax population.csv daily_small.csv
+Your file matched the expected output
 Program must be one of printCountries printRunningAvg printCumulative printDailyMax
-But found "printRunningavg"
+But found "pritnDailyMax"
 
 Overall Grade: NO GRADE YET
