@@ -1,6 +1,6 @@
-Grading at 10/05/2022:04:36:45.213133
-For commit ID 5307eec0e28d8468ef4036f697855e6e1038d008
-Grading at Wed Oct  5 12:36:42 AM EDT 2022
+Grading at 10/05/2022:04:39:33.208913
+For commit ID 74f702fa17a9d807c8e64e3c7866c4f33ec4af93
+Grading at Wed Oct  5 12:39:29 AM EDT 2022
 
 Compiling 
 rm -f *~ printCountries printRunningAvg printCumulative printDailyMax
@@ -15,6 +15,9 @@ Valgrind reported memory errors
 +-----------------------------------------------------------------------+
 Test case printCountries population.csv
 Your file matched the expected output
++-----------------------------------------------------------------------+
+Test case printRunningAvg population.csv daily_small.csv
+Valgrind reported memory errors
 +-----------------------------------------------------------------------+
 Test case printDailyMax population.csv daily_small.csv
 Your file matched the expected output
