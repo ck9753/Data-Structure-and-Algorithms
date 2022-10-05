@@ -5,7 +5,6 @@
 #include <string.h>
 
 country_t parseLine(char * line) {
-  //WRITE ME
   country_t ans;
   ans.name[0] = '\0';
   ans.population = 0;
@@ -45,14 +44,14 @@ country_t parseLine(char * line) {
 
 void calcRunningAvg(unsigned * data, size_t n_days, double * avg) {
   //WRITE ME
-  unsigned sum_data = 0;
-  double avg_cases = 0;
+  int sum_data[1024] = {0};
 
-  for (int i = 0; i < n_days; i++) {
-    sum_data += data[i];
+  for (int i = 0; i < n_days - 6; i++) {
+    for (int j = i; j < n_days + i; j++) {
+      sum_data[i] += data[j];
+    }
+    avg[i] = (double)sum_data[i] / 7;
   }
-  avg_cases = sum_data / n_days;
-  avg = &avg_cases;
 }
 
 void calcCumulative(unsigned * data, size_t n_days, uint64_t pop, double * cum) {
