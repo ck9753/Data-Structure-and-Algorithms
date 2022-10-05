@@ -1,5 +1,6 @@
 #include "pandemic.h"
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,10 +45,10 @@ country_t parseLine(char * line) {
 
 void calcRunningAvg(unsigned * data, size_t n_days, double * avg) {
   //WRITE ME
-  int sum_data[1024] = {0};
+  unsigned sum_data[3000] = {0};  // why sum_data[n_days]; not working
 
-  for (int i = 0; i < n_days - 6; i++) {
-    for (int j = i; j < n_days + i; j++) {
+  for (size_t i = 0; i < n_days - 6; i++) {
+    for (size_t j = i; j < n_days + i; j++) {
       sum_data[i] += data[j];
     }
     avg[i] = (double)sum_data[i] / 7;
@@ -56,6 +57,14 @@ void calcRunningAvg(unsigned * data, size_t n_days, double * avg) {
 
 void calcCumulative(unsigned * data, size_t n_days, uint64_t pop, double * cum) {
   //WRITE ME
+  unsigned sum_data[3000] = {0};
+
+  for (size_t i = 0; i < n_days; i++) {
+    for (size_t j = 0; j < i + 1; j++) {
+      sum_data[i] += data[j];
+    }
+    cum[i] = (double)(sum_data[i] * 100000) / pop;
+  }
 }
 
 void printCountryWithMax(country_t * countries,
