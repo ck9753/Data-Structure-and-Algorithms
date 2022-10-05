@@ -1,0 +1,25 @@
+Grading at 10/05/2022:04:36:45.213133
+For commit ID 5307eec0e28d8468ef4036f697855e6e1038d008
+Grading at Wed Oct  5 12:36:42 AM EDT 2022
+
+Compiling 
+rm -f *~ printCountries printRunningAvg printCumulative printDailyMax
+gcc -std=gnu99 -Werror -Wall -pedantic -ggdb3 pandemic.c printCountries.o -o printCountries
+gcc -std=gnu99 -Werror -Wall -pedantic -ggdb3 pandemic.c printRunningAvg.o -o printRunningAvg
+gcc -std=gnu99 -Werror -Wall -pedantic -ggdb3 pandemic.c printCumulative.o -o printCumulative
+gcc -std=gnu99 -Werror -Wall -pedantic -ggdb3 pandemic.c printDailyMax.o -o printDailyMax
+Running your test cases
++-----------------------------------------------------------------------+
+Test case printCountries invalid.csv
+Valgrind reported memory errors
++-----------------------------------------------------------------------+
+Test case printCountries population.csv
+Your file matched the expected output
++-----------------------------------------------------------------------+
+Test case printDailyMax population.csv daily_small.csv
+Your file matched the expected output
+
+You have FAILED one or more of your test cases
+Keep debugging
+
+Overall Grade: NO GRADE YET
