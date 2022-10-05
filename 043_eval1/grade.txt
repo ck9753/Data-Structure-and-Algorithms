@@ -1,6 +1,6 @@
-Grading at 10/05/2022:05:22:49.307305
-For commit ID 7d19ff342e7955d681b13c6afb604918a529cfd6
-Grading at Wed Oct  5 01:22:45 AM EDT 2022
+Grading at 10/05/2022:10:53:53.155382
+For commit ID b161b9425d9df408aae3ad65a3091e5ee76e24ce
+Grading at Wed Oct  5 06:53:48 AM EDT 2022
 
 Compiling 
 rm -f *~ printCountries printRunningAvg printCumulative printDailyMax
@@ -11,6 +11,9 @@ gcc -std=gnu99 -Werror -Wall -pedantic -ggdb3 pandemic.c printDailyMax.o -o prin
 Running your test cases
 +-----------------------------------------------------------------------+
 Test case printCountries invalid.csv
+Your program successfully indicated a failure case
++-----------------------------------------------------------------------+
+Test case printCountries invalid1.csv
 Your program successfully indicated a failure case
 +-----------------------------------------------------------------------+
 Test case printCountries population.csv
