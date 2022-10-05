@@ -78,12 +78,13 @@ country_t parseLine(char * line) {
   return ans;
 }
 void calcRunningAvg(unsigned * data, size_t n_days, double * avg) {
-  //WRITE ME
-  unsigned sum_data[3000] = {0};
+  //unsigned sum_data[n_days - 6];
+  // why unsigned sum_data[n_days] produce wrong answer?
+  double * sum_data = malloc((n_days - 6) * sizeof(sum_data));
 
-  // check if n_days is larger than 6
-  if (n_days <= 6) {
-    perror("n_days should be larger than or equal to 7\n");
+  // check if n_days is greater than 6
+  if (n_days < 7) {
+    perror("n_days should be greater than or equal to 7\n");
     exit(EXIT_FAILURE);
   }
 
@@ -91,19 +92,20 @@ void calcRunningAvg(unsigned * data, size_t n_days, double * avg) {
     for (size_t j = i; j < i + 7; j++) {
       sum_data[i] += data[j];
     }
-    avg[i] = (double)sum_data[i] / 7;  // casting unsigned to double for avg
+    avg[i] = sum_data[i] / 7;  // casting unsigned to double for avg
   }
 }
 
 void calcCumulative(unsigned * data, size_t n_days, uint64_t pop, double * cum) {
-  //WRITE ME
-  unsigned sum_data[3000] = {0};
-
+  double sum_data[n_days];
+  // why unsigned sum_data[n_days] produce wrong result?
+  //unsigned sum_data[n_days];
+  //unsigned * sum_data = malloc(n_days * sizeof(size_t));
   for (size_t i = 0; i < n_days; i++) {
     for (size_t j = 0; j < i + 1; j++) {
       sum_data[i] += data[j];
     }
-    cum[i] = (double)(sum_data[i] * 100000) / pop;
+    cum[i] = (sum_data[i] * 100000) / pop;  // casting unsigned to double for cum
   }
 }
 
@@ -111,19 +113,20 @@ void printCountryWithMax(country_t * countries,
                          size_t n_countries,
                          unsigned ** data,
                          size_t n_days) {
-  //WRITE ME
   unsigned max_case = 0;
-  //char * country_name;
   char * max_country_name;
 
   for (size_t i = 0; i < n_countries; i++) {
-    //country_name = countries[i].name;
     for (size_t j = 0; j < n_days; j++) {
+      // check if new data is greater than max_case
       if (data[i][j] > max_case) {
+        // if so, update max_case to the current data
         max_case = data[i][j];
+        // update the name of country name to the country name of the current data
         max_country_name = countries[i].name;
       }
     }
   }
+  // print the max case with the name of the country
   printf("%s has the most daily cases with %u\n", max_country_name, max_case);
 }
