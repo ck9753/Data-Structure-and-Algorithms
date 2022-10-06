@@ -20,7 +20,6 @@ int main(void) {
   q = malloc(2 * sizeof(*q));
   p = q;
   q = NULL;
-  free(q);
   free(p);
   return EXIT_SUCCESS;
 }
