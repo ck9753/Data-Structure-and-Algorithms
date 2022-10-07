@@ -53,8 +53,8 @@ void sort_more_than_one_file(int argc, char ** argv) {
 int main(int argc, char ** argv) {
   //WRITE YOUR CODE HERE!
   if (argc == 1) {
-    FILE * f = fopen(argv[1], "r");
-    sort_one_file(f);
+    //FILE * f = fopen(argv[1], "r");
+    sort_one_file(stdin);
   }
 
   if (argc > 1) {
