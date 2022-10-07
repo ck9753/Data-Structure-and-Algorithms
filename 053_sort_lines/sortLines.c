@@ -57,7 +57,7 @@ int main(int argc, char ** argv) {
     sort_one_file(f);
   }
 
-  else {
+  if (argc > 1) {
     sort_more_than_one_file(argc, argv);
   }
   return EXIT_SUCCESS;
