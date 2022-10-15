@@ -26,7 +26,7 @@ kvpair_t * fillPair(const char * line, char delim) {
   size_t valLen = y - x;
   newpair->value = malloc(valLen * sizeof(*newpair->value));
   strncpy(newpair->value, x + 1, valLen - 1);
-  newpair->key[valLen - 1] = '\0';
+  newpair->value[valLen - 1] = '\0';
 
   return newpair;
 }
@@ -62,6 +62,7 @@ kvarray_t * readKVs(const char * fname) {
   while ((len = getline(&line, &sz, f)) >= 0) {
     addPair(line, kvarray);
   }
+
   free(line);
 
   if (fclose(f) != 0) {
