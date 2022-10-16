@@ -26,7 +26,7 @@ void addCount(counts_t * c, const char * name) {
   size_t new = 1;
   if (name != NULL) {
     for (size_t i = 0; i < c->countSize; i++) {
-      if (strcmp(c->countArr[i]->string, name)) {
+      if (strcmp(c->countArr[i]->string, name) == 0) {
         new = 0;
         c->countArr[i]->countString++;
         break;
@@ -35,6 +35,9 @@ void addCount(counts_t * c, const char * name) {
     if (new == 1) {
       newStringToArray(c, name);
     }
+  }
+  else {
+    c->unknownSize++;
   }
 }
 void printCounts(counts_t * c, FILE * outFile) {
