@@ -32,7 +32,7 @@ void addCount(counts_t * c, const char * name) {
         break;
       }
     }
-    if (new == 1) {
+    if (new) {
       newStringToArray(c, name);
     }
   }
