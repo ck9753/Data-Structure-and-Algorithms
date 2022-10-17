@@ -15,11 +15,9 @@ counts_t * countFile(const char * filename, kvarray_t * kvPairs) {
   ssize_t len = 0;
 
   FILE * f = fopen(filename, "r");
-
   while ((len = getline(&line, &sz, f)) >= 0) {
     char * end = strchr(line, '\n');
     size_t length = end - line;
-
     char * value = malloc((length + 1) * sizeof(*value));
     strncpy(value, line, end - line);
     value[length] = '\0';
@@ -28,7 +26,7 @@ counts_t * countFile(const char * filename, kvarray_t * kvPairs) {
   }
   free(line);
   if (fclose(f) != 0) {
-    fprintf(stderr, "Fail to close file");
+    fprintf(stderr, "File closed failure");
   }
   return countList;
 }
@@ -44,7 +42,7 @@ int main(int argc, char ** argv) {
   kvarray_t * kv = readKVs(argv[1]);
   //count from 2 to argc (call the number you count i)
   for (int i = 2; i < argc; i++) {
-    counts_t * c = countFile(argv[1], kv);
+    counts_t * c = countFile(argv[i], kv);
     //count the values that appear in the file named by argv[i], using kv as the key/value pair
     //   (call this result c)
 
