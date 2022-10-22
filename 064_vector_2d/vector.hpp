@@ -7,7 +7,8 @@ class Vector2D {
   double y;
 
  public:
-  void initVector(double init_x, double init_y);
+  Vector2D() : x(0), y(0) {}
+  Vector2D(double x_init, double y_init) : x(x_init), y(y_init) {}
 
   double getMagnitude() const;
 
