@@ -1,6 +1,16 @@
-0x4050 has 145
-0x4080 has 104
-0x4080 has 21
-0x40B0 has 28
-0x40B0 has 100
-0x4050 has 145
+First loop
+Creating MyClass
+Creating MyClass
+Creating MyClass
+Creating MyClass
+Second loop
+Math resulted in a=4 b=4
+Math resulted in a=7 b=3
+Math resulted in a=10 b=2
+Math resulted in a=13 b=1
+Third loop
+Destroying with a=4, b=4
+Destroying with a=7, b=3
+Destroying with a=10, b=2
+Destroying with a=13, b=1
+Done looping
