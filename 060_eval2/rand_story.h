@@ -24,4 +24,8 @@ termInfo_t parseTerm(char * line);
 termInfo_t rmUnderScore(termInfo_t inputTerms);
 
 catInfo_t parseLineSemi(char * line);
+
+catarray_t storeNewArr(catInfo_t res, catarray_t savedres);
+
+catarray_t storeRes(catInfo_t res, catarray_t savedres);
 #endif

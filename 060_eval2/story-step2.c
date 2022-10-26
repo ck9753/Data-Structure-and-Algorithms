@@ -24,23 +24,28 @@ int main(int argc, char ** argv) {
 
   char * line = NULL;
   size_t sz = 0;
-
+  size_t lenNum = 0;
   while (getline(&line, &sz, f) >= 0) {
+    lenNum++;
     catInfo_t res;
 
     res.cat = NULL;
     res.name = NULL;
 
     res = parseLineSemi(line);
-    //printf("%s", res.cat);
-    //printf("%s", res.name);
 
-    savedres.n++;
+    if (lenNum == 1) {
+      savedres = storeNewArr(res, savedres);
+    }
+    else {
+      savedres = storeRes(res, savedres);
+    }
+  }
 
-    savedres.arr = realloc(savedres.arr, savedres.n * sizeof(*savedres.arr));
-    savedres.arr[savedres.n].name = malloc(sizeof(*savedres.arr[savedres.n].name));
-    savedres.arr->name = res.cat;
-    savedres.arr->n_words++;
-    //savedres.arr->words[savedres.arr->n_words]
+  for (size_t i = 0; i < savedres.n; i++) {
+    printf("%s:\n", savedres.arr[i].name);
+    for (size_t j = 0; j < savedres.arr[i].n_words; j++) {
+      printf("  %s", savedres.arr[i].words[j]);
+    }
   }
 }

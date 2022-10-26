@@ -142,3 +142,48 @@ catInfo_t parseLineSemi(char * line) {
   }
   return res;
 }
+
+catarray_t storeNewArr(catInfo_t res, catarray_t savedres) {
+  savedres.n++;
+
+  savedres.arr = realloc(savedres.arr, savedres.n * sizeof(*savedres.arr));
+  //  savedres.arr
+  savedres.arr[savedres.n - 1].name = malloc(
+      strlen(res.cat) * sizeof(*savedres.arr[savedres.n - 1].name));  // may need to fix
+  savedres.arr[savedres.n - 1].name = res.cat;
+
+  savedres.arr[savedres.n - 1].n_words++;
+
+  savedres.arr[savedres.n - 1].words = malloc(
+      savedres.arr[savedres.n - 1].n_words * sizeof(*savedres.arr[savedres.n - 1].words));
+
+  savedres.arr[savedres.n - 1].words[0] =
+      malloc(strlen(res.name) * sizeof(*savedres.arr[savedres.n - 1].words[0]));
+
+  savedres.arr[savedres.n - 1].words[0] = res.name;
+
+  return savedres;
+}
+
+catarray_t storeRes(catInfo_t res, catarray_t savedres) {
+  size_t count = 0;
+  for (size_t i = 0; i < savedres.n; i++) {
+    if (strcmp(savedres.arr[i].name, res.cat) == 0) {
+      savedres.arr[savedres.n - 1].n_words++;
+      savedres.arr[savedres.n - 1].words[savedres.arr[savedres.n - 1].n_words - 1] =
+          malloc(strlen(res.name) *
+                 sizeof(*savedres.arr[savedres.n - 1]
+                             .words[savedres.arr[savedres.n - 1].n_words - 1]));
+      savedres.arr[savedres.n - 1].words[savedres.arr[savedres.n - 1].n_words - 1] =
+          res.name;
+      count++;
+    }
+    count++;
+  }
+
+  if (count == savedres.n) {
+    savedres = storeNewArr(res, savedres);
+  }
+
+  return savedres;
+}
