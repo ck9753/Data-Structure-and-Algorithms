@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,7 +31,11 @@ int main(int argc, char ** argv) {
     termRes.termNum = 0;
     termRes = parseTerm(line);
 
-    termRes = rmUnderScore(termRes);
+    termInfo_t termRes2;
+    termRes2.termarr = NULL;
+    termRes2.termNum = 0;
+    termRes2 = termRes;
+    termRes = rmUnderScore(termRes2, NULL);
 
     for (size_t i = 0; i < termRes.termNum; i++) {
       printf("%s ", termRes.termarr[i]);

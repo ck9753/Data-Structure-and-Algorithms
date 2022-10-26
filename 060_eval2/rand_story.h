@@ -21,7 +21,7 @@ typedef struct _catInfo_t catInfo_t;
 
 termInfo_t parseTerm(char * line);
 
-termInfo_t rmUnderScore(termInfo_t inputTerms);
+termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats);
 
 catInfo_t parseLineSemi(char * line);
 

@@ -45,7 +45,11 @@ int main(int argc, char ** argv) {
   for (size_t i = 0; i < savedres.n; i++) {
     printf("%s:\n", savedres.arr[i].name);
     for (size_t j = 0; j < savedres.arr[i].n_words; j++) {
-      printf("  %s", savedres.arr[i].words[j]);
+      printf("  %s\n", savedres.arr[i].words[j]);
     }
+  }
+  free(line);
+  if (fclose(f) != 0) {
+    fprintf(stderr, "File closed failure");
   }
 }
