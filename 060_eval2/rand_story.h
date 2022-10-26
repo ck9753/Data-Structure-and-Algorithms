@@ -13,8 +13,15 @@ struct _termInfo_t {
 };
 typedef struct _termInfo_t termInfo_t;
 
+struct _catInfo_t {
+  char * cat;
+  char * name;
+};
+typedef struct _catInfo_t catInfo_t;
+
 termInfo_t parseTerm(char * line);
 
 termInfo_t rmUnderScore(termInfo_t inputTerms);
 
+catInfo_t parseLineSemi(char * line);
 #endif

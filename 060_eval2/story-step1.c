@@ -20,11 +20,9 @@ int main(int argc, char ** argv) {
 
   char * line = NULL;
   size_t sz = 0;
-  //ssize_t len = 0;
 
-  //termInfo_t termRes;
-  //termRes.termarr = NULL;
-  //termRes.termNum = 0;
+  //char ** temparr = NULL;
+  //size_t tempNum = 0;
 
   while (getline(&line, &sz, f) >= 0) {
     termInfo_t termRes;
@@ -35,11 +33,20 @@ int main(int argc, char ** argv) {
     termRes = rmUnderScore(termRes);
 
     for (size_t i = 0; i < termRes.termNum; i++) {
-      /*      if ((strcmp(termRes.termarr[i], "cat") == 0) && (i == termRes.termNum - 1)) {
-        printf("%s.\n", termRes.termarr[i]);
-      }
-      else {*/
       printf("%s ", termRes.termarr[i]);
     }
+    //free(termRes.termarr);
+    //temparr = termRes.termarr;
+    //tempNum = termRes.termNum;
+  }
+  /*
+  for (size_t i = 0; i < tempNum; i++) {
+    free(temparr[i]);
+  }
+  */
+  //free(temparr);
+  free(line);
+  if (fclose(f) != 0) {
+    fprintf(stderr, "File closed failure");
   }
 }
