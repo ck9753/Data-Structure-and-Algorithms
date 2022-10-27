@@ -19,7 +19,7 @@ IntMatrix::~IntMatrix() {
   for (int i = 0; i < numRows; i++) {
     delete rows[i];
   }
-  delete rows;
+  delete[] rows;
 }
 IntMatrix & IntMatrix::operator=(const IntMatrix & rhs) {
   if (this != &rhs) {
