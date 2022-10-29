@@ -1,6 +1,6 @@
-Grading at 10/29/2022:21:58:08.534510
-For commit ID 975d8c8bd539dbd2191d0dca70068738e60e362d
-Grading at Sat Oct 29 05:58:08 PM EDT 2022
+Grading at 10/29/2022:22:01:18.817604
+For commit ID 216abb76df2ef7b3f3b7f2ac9be2065e3af2ead5
+Grading at Sat Oct 29 06:01:18 PM EDT 2022
 Looking for malloc in your files
 No uses found (good).
 Looking for free in your files
@@ -14,7 +14,7 @@ No uses found (good).
 Looking for printf in your files
 No uses found (good).
 Attempting to compile with make
-g++ -o sort -std=gnu++98 -pedantic -Wall -Werror sort.cpp
+make: 'sort' is up to date.
 I couldnt find an executable!
 
 Overall Grade: F
