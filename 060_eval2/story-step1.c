@@ -29,13 +29,10 @@ int main(int argc, char ** argv) {
     termInfo_t termRes;
     termRes.termarr = NULL;
     termRes.termNum = 0;
+    termRes.eachTermNum = NULL;
     termRes = parseTerm(line);
 
-    termInfo_t termRes2;
-    termRes2.termarr = NULL;
-    termRes2.termNum = 0;
-    termRes2 = termRes;
-    termRes = rmUnderScore(termRes2, NULL);
+    termRes = rmUnderScore(termRes, NULL);
 
     for (size_t i = 0; i < termRes.termNum; i++) {
       printf("%s ", termRes.termarr[i]);

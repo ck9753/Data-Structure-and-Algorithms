@@ -12,6 +12,7 @@ termInfo_t parseTerm(char * line) {
   termRes.termNum = 0;
 
   termRes.termarr = malloc((termRes.termNum + 1) * sizeof(*termRes.termarr));
+  //termRes.eachTermNum = malloc(sizeof(*termRes.eachTermNum));
 
   //termRes.termarr[termRes.termNum] = NULL;
 
@@ -22,12 +23,19 @@ termInfo_t parseTerm(char * line) {
     //termRes.termarr[termRes.termNum + 1] = NULL;
     termRes.termarr =
         realloc(termRes.termarr, (termRes.termNum + 1) * sizeof(*termRes.termarr));
+    /*termRes.eachTermNum = realloc(termRes.eachTermNum,
+                                  (termRes.termNum + 1) * sizeof(*termRes.eachTermNum));
+    termRes.eachTermNum[termRes.termNum] = 0;
+    */
     ptr1 = strchr(ptr1, ' ');
 
     if (ptr1 != NULL) {
       termRes.termarr[termRes.termNum] =
           malloc((ptr1 - ptr2 + 1) * sizeof(*termRes.termarr[termRes.termNum]));
+      //termRes.eachTermNum[termRes.termNum] = ptr1 - ptr2 + 1;
       strncpy(termRes.termarr[termRes.termNum], ptr2, ptr1 - ptr2);
+      termRes.termarr[termRes.termNum][ptr1 - ptr2] = '\0';
+
       ptr1++;
       ptr2 = ptr1;
 
@@ -35,10 +43,12 @@ termInfo_t parseTerm(char * line) {
     }
 
     else {
+      //termRes.eachTermNum[termRes.termNum] = ptr1 - ptr2;
       ptr1 = ptr2;
       ptr2 = strchr(ptr2, '\0');
       termRes.termarr[termRes.termNum] =
           malloc((ptr2 - ptr1 + 1) * sizeof(*termRes.termarr[termRes.termNum]));
+
       strcpy(termRes.termarr[termRes.termNum], ptr1);
 
       termRes.termNum++;
@@ -53,18 +63,25 @@ termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats) {
   termInfo_t outputTerms;
   outputTerms.termarr = NULL;
   outputTerms.termNum = inputTerms.termNum;
+  //outputTerms.eachTermNum = NULL;
 
-  outputTerms.termarr = malloc((inputTerms.termNum + 1) * sizeof(*outputTerms.termarr));
-
+  outputTerms.termarr = malloc((inputTerms.termNum) * sizeof(*outputTerms.termarr));
+  /*outputTerms.eachTermNum =
+      malloc((inputTerms.termNum) * sizeof(*outputTerms.eachTermNum));
+      
+  outputTerms.eachTermNum = inputTerms.eachTermNum;
+  */
   for (size_t i = 0; i < inputTerms.termNum; i++) {
-    const char * ptr1 = NULL;
-    ptr1 = inputTerms.termarr[i];
+    const char * ptr1 = inputTerms.termarr[i];
     const char * ptr2 = inputTerms.termarr[i];
-    const char * end_ptr = &inputTerms.termarr[i][sizeof(inputTerms.termarr[i]) - 1];
+    const char * end_ptr =
+        &inputTerms.termarr[i][strlen(inputTerms.termarr[i]) - 3];  // -2?
 
-    outputTerms.termarr[i] = NULL;
+    //outputTerms.termarr[i] = NULL;
     outputTerms.termarr[i] =
-        malloc((strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
+        malloc((strlen(inputTerms.termarr[i]) + 2) * sizeof(*outputTerms.termarr[i]));
+    //malloc(inputTerms.eachTermNum[i] *sizeof(*outputTerms.termarr[i]));  //makes segfault
+    //strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
 
     while (ptr1 != NULL) {
       ptr1 = strchr(ptr1, '_');

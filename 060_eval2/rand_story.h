@@ -10,6 +10,7 @@
 struct _termInfo_t {
   char ** termarr;
   size_t termNum;
+  size_t * eachTermNum;
 };
 typedef struct _termInfo_t termInfo_t;
 
