@@ -42,12 +42,12 @@ void sort_files(int argc, char ** argv) {
 }
 
 int main(int argc, char ** argv) {
-  if (argc > 1) {
-    sort_files(argc, argv);
+  if (argc == 1) {
+    sort_a_file(std::cin);
   }
 
-  else if (argc == 1) {
-    sort_a_file(std::cin);
+  if (argc > 1) {
+    sort_files(argc, argv);
   }
 
   return EXIT_SUCCESS;
