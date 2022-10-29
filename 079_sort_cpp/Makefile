@@ -1,2 +1,2 @@
-sort:sort.cpp
-	g++ -o sort -std=gnu++98 -pedantic -Wall -Werror sort.cpp
+sortLines:sortLines.cpp
+	g++ -o sortLines -std=gnu++98 -pedantic -Wall -Werror sortLines.cpp
