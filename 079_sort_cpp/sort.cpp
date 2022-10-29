@@ -23,7 +23,7 @@ void sort_a_file(std::istream & x) {
 
   while (iter != line.end()) {
     std::cout << *iter << std::endl;
-    iter++;
+    ++iter;
   }
 }
 
