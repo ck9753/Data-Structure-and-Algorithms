@@ -11,7 +11,7 @@ termInfo_t parseTerm(char * line) {
   termRes.termarr = NULL;
   termRes.termNum = 0;
 
-  termRes.termarr = malloc((termRes.termNum + 1) * sizeof(*termRes.termarr));
+  termRes.termarr = malloc(sizeof(*termRes.termarr));
   //termRes.eachTermNum = malloc(sizeof(*termRes.eachTermNum));
 
   //termRes.termarr[termRes.termNum] = NULL;
@@ -49,7 +49,7 @@ termInfo_t parseTerm(char * line) {
       termRes.termarr[termRes.termNum] =
           malloc((ptr2 - ptr1 + 1) * sizeof(*termRes.termarr[termRes.termNum]));
 
-      strcpy(termRes.termarr[termRes.termNum], ptr1);
+      strncpy(termRes.termarr[termRes.termNum], ptr1, ptr2 - ptr1 + 1);
 
       termRes.termNum++;
       break;
@@ -74,12 +74,11 @@ termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats) {
   for (size_t i = 0; i < inputTerms.termNum; i++) {
     const char * ptr1 = inputTerms.termarr[i];
     const char * ptr2 = inputTerms.termarr[i];
-    const char * end_ptr =
-        &inputTerms.termarr[i][strlen(inputTerms.termarr[i]) - 3];  // -2?
+    const char * end_ptr = &inputTerms.termarr[i][strlen(inputTerms.termarr[i]) - 1];
 
     //outputTerms.termarr[i] = NULL;
     outputTerms.termarr[i] =
-        malloc((strlen(inputTerms.termarr[i]) + 2) * sizeof(*outputTerms.termarr[i]));
+        malloc((strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
     //malloc(inputTerms.eachTermNum[i] *sizeof(*outputTerms.termarr[i]));  //makes segfault
     //strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
 
