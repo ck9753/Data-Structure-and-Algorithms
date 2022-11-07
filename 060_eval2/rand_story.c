@@ -12,27 +12,20 @@ termInfo_t parseTerm(char * line) {
   termRes.termNum = 0;
 
   termRes.termarr = malloc(sizeof(*termRes.termarr));
-  //termRes.eachTermNum = malloc(sizeof(*termRes.eachTermNum));
-
-  //termRes.termarr[termRes.termNum] = NULL;
 
   const char * ptr1 = line;
   const char * ptr2 = line;
-  //size_t i = 0;  //counter for termarr
+
   while (*ptr1 != '\0') {
-    //termRes.termarr[termRes.termNum + 1] = NULL;
     termRes.termarr =
         realloc(termRes.termarr, (termRes.termNum + 1) * sizeof(*termRes.termarr));
-    /*termRes.eachTermNum = realloc(termRes.eachTermNum,
-                                  (termRes.termNum + 1) * sizeof(*termRes.eachTermNum));
-    termRes.eachTermNum[termRes.termNum] = 0;
-    */
+
     ptr1 = strchr(ptr1, ' ');
 
     if (ptr1 != NULL) {
       termRes.termarr[termRes.termNum] =
           malloc((ptr1 - ptr2 + 1) * sizeof(*termRes.termarr[termRes.termNum]));
-      //termRes.eachTermNum[termRes.termNum] = ptr1 - ptr2 + 1;
+
       strncpy(termRes.termarr[termRes.termNum], ptr2, ptr1 - ptr2);
       termRes.termarr[termRes.termNum][ptr1 - ptr2] = '\0';
 
@@ -43,7 +36,6 @@ termInfo_t parseTerm(char * line) {
     }
 
     else {
-      //termRes.eachTermNum[termRes.termNum] = ptr1 - ptr2;
       ptr1 = ptr2;
       ptr2 = strchr(ptr2, '\0');
       termRes.termarr[termRes.termNum] =
@@ -106,6 +98,24 @@ termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats) {
     }
   }
   return outputTerms;
+}
+
+void printTermInfo(termInfo_t termRes) {
+  for (size_t i = 0; i < termRes.termNum; i++) {
+    if (i != termRes.termNum - 1) {
+      printf("%s ", termRes.termarr[i]);
+    }
+    else {
+      printf("%s", termRes.termarr[i]);
+    }
+  }
+}
+
+void freeTermInfo(termInfo_t termRes) {
+  for (size_t i = 0; i < termRes.termNum; i++) {
+    free(termRes.termarr[i]);
+  }
+  free(termRes.termarr);
 }
 
 catInfo_t parseLineSemi(char * line) {

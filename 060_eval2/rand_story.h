@@ -10,7 +10,6 @@
 struct _termInfo_t {
   char ** termarr;
   size_t termNum;
-  size_t * eachTermNum;
 };
 typedef struct _termInfo_t termInfo_t;
 
@@ -23,6 +22,10 @@ typedef struct _catInfo_t catInfo_t;
 termInfo_t parseTerm(char * line);
 
 termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats);
+
+void freeTermInfo(termInfo_t termRes);
+
+void printTermInfo(termInfo_t termRes);
 
 catInfo_t parseLineSemi(char * line);
 
