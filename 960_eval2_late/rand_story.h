@@ -29,7 +29,11 @@ void printTermInfo(termInfo_t termRes);
 
 catInfo_t parseLineSemi(char * line);
 
+catarray_t arrDeepCopy(catarray_t inputArr);
+
 catarray_t storeNewArr(catInfo_t res, catarray_t savedres);
 
 catarray_t storeRes(catInfo_t res, catarray_t savedres);
+
+void freeSavedRes(catarray_t savedres);
 #endif

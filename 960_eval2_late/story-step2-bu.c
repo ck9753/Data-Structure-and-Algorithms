@@ -18,9 +18,9 @@ int main(int argc, char ** argv) {
     exit(EXIT_FAILURE);
   }
 
-  catarray_t finalSavedRes;
-  finalSavedRes.arr = NULL;
-  finalSavedRes.n = 0;
+  catarray_t savedres;
+  savedres.arr = NULL;
+  savedres.n = 0;
 
   /*
   catarray_t savedres2;
@@ -30,17 +30,13 @@ int main(int argc, char ** argv) {
   char * line = NULL;
   size_t sz = 0;
   size_t lenNum = 0;
-  /*
+
   catInfo_t res;
   res.cat = NULL;
   res.name = NULL;
-  */
+
   while (getline(&line, &sz, f) >= 0) {
     lenNum++;
-
-    catInfo_t res;
-    res.cat = NULL;
-    res.name = NULL;
     /*
     catInfo_t res;
 
@@ -49,7 +45,7 @@ int main(int argc, char ** argv) {
     */
 
     res = parseLineSemi(line);
-
+    /*
     catarray_t savedres;
     savedres.arr = NULL;
     savedres.n = 0;
@@ -57,36 +53,36 @@ int main(int argc, char ** argv) {
     catarray_t savedres2;
     savedres2.arr = NULL;
     savedres2.n = 0;
-
+    */
     if (lenNum == 1) {
       savedres = storeNewArr(res, savedres);
 
-      finalSavedRes = arrDeepCopy(savedres);
+      //      finalSavedRes = arrDeepCopy(savedres);
       /*
       finalSavedRes.arr = malloc(finalSavedRes.n * sizeof(*finalSavedRes.arr));
       for (size_t i = 0; i < finalSavedRes.n; i++) {
 	finalSavedRes.arr[i] = savedres.arr[i];
 	}*/
-      freeSavedRes(savedres);
-      free(res.cat);
-      free(res.name);
+      //freeSavedRes(savedres);
+      //free(res.cat);
+      //free(res.name);
     }
     else {
-      savedres2 = arrDeepCopy(finalSavedRes);
-      savedres2 = storeRes(res, savedres2);
-      finalSavedRes = arrDeepCopy(savedres2);
-      freeSavedRes(savedres2);
-      free(res.cat);
-      free(res.name);
+      //savedres2 = arrDeepCopy(finalSavedRes);
+      savedres = storeRes(res, savedres);
+      //finalSavedRes = arrDeepCopy(savedres2);
+      //freeSavedRes(savedres2);
+      //free(res.cat);
+      //free(res.name);
     }
   }
   free(line);
   //free(res.cat);
   //free(res.name);
-  for (size_t i = 0; i < finalSavedRes.n; i++) {
-    printf("%s:\n", finalSavedRes.arr[i].name);
-    for (size_t j = 0; j < finalSavedRes.arr[i].n_words; j++) {
-      printf("  %s\n", finalSavedRes.arr[i].words[j]);
+  for (size_t i = 0; i < savedres.n; i++) {
+    printf("%s:\n", savedres.arr[i].name);
+    for (size_t j = 0; j < savedres.arr[i].n_words; j++) {
+      printf("  %s\n", savedres.arr[i].words[j]);
     }
   }
   /*
@@ -97,8 +93,8 @@ int main(int argc, char ** argv) {
     }
   }
   */
-  freeSavedRes(finalSavedRes);
-
+  //freeSavedRes(finalSavedRes);
+  freeSavedRes(savedres);
   if (fclose(f) != 0) {
     fprintf(stderr, "File closed failure");
   }

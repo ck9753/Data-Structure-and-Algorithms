@@ -142,13 +142,13 @@ catInfo_t parseLineSemi(char * line) {
   }
 
   else {
+    ptr1 = strchr(ptr1, ':');
     while (*ptr1 != '\0') {
-      ptr1 = strchr(ptr1, ':');
-
       res.cat = malloc((ptr1 - ptr2 + 1) * sizeof(*res.cat));
 
       if (ptr1 != NULL) {
         strncpy(res.cat, ptr2, ptr1 - ptr2);
+        res.cat[ptr1 - ptr2] = '\0';
         ptr1++;
         ptr2 = ptr1;
 
@@ -159,6 +159,7 @@ catInfo_t parseLineSemi(char * line) {
       else {
         break;
       }
+      break;
     }
 
     edptr = strchr(line, '\n');
@@ -166,6 +167,8 @@ catInfo_t parseLineSemi(char * line) {
 
     res.name = malloc((edptr - mdptr) * sizeof(*res.name));
     strncpy(res.name, mdptr + 1, edptr - mdptr - 1);
+    res.name[edptr - mdptr - 1] = '\0';
+
     counter++;
 
     if (counter != 2) {
@@ -176,24 +179,75 @@ catInfo_t parseLineSemi(char * line) {
   return res;
 }
 
+catarray_t arrDeepCopy(catarray_t inputArr) {
+  catarray_t outputArr;
+  outputArr.arr = NULL;
+  outputArr.n = 0;
+
+  outputArr.n = inputArr.n;
+
+  outputArr.arr = malloc(outputArr.n * sizeof(*outputArr.arr));
+
+  for (size_t i = 0; i < outputArr.n; i++) {
+    outputArr.arr[i].n_words = inputArr.arr[i].n_words;
+    outputArr.arr[i].name =
+        malloc((strlen(inputArr.arr[i].name) + 1) * sizeof(*outputArr.arr[i].name));
+    strcpy(outputArr.arr[i].name, inputArr.arr[i].name);
+    /*
+    for (size_t k = 0; k < strlen(inputArr.arr[i].name); k++) {
+      outputArr.arr[i].name[k] = inputArr.arr[i].name[k];
+      }*/
+    outputArr.arr[i].words =
+        malloc(outputArr.arr[i].n_words * sizeof(*outputArr.arr[i].words));
+
+    for (size_t j = 0; j < outputArr.arr[i].n_words; j++) {
+      outputArr.arr[i].words[j] = malloc((strlen(inputArr.arr[i].words[j]) + 1) *
+                                         sizeof(*outputArr.arr[i].words[j]));
+      strcpy(outputArr.arr[i].words[j], inputArr.arr[i].words[j]);
+      /*
+      for (size_t k = 0; k < strlen(inputArr.arr[i].words[j]); k++) {
+        outputArr.arr[i].words[j][k] = inputArr.arr[i].words[j][k];
+	}*/
+    }
+  }
+
+  return outputArr;
+}
+
 catarray_t storeNewArr(catInfo_t res, catarray_t savedres) {
   savedres.n++;
 
   savedres.arr = realloc(savedres.arr, savedres.n * sizeof(*savedres.arr));
   //  savedres.arr
-  savedres.arr[savedres.n - 1].name = malloc(
-      strlen(res.cat) * sizeof(*savedres.arr[savedres.n - 1].name));  // may need to fix
-  savedres.arr[savedres.n - 1].name = res.cat;
+  savedres.arr[savedres.n - 1].name = NULL;
+  savedres.arr[savedres.n - 1].n_words = 0;
 
+  savedres.arr[savedres.n - 1].name =
+      malloc((strlen(res.cat) + 1) *
+             sizeof(*savedres.arr[savedres.n - 1].name));  // may need to fix
+  strcpy(savedres.arr[savedres.n - 1].name, res.cat);
+  /*
+  for (size_t i = 0; i < strlen(res.cat); i++) {
+    savedres.arr[savedres.n - 1].name[i] = res.cat[i];
+    }*/
+  //savedres.arr[savedres.n - 1].name = res.cat;
+
+  //  savedres.arr[savedres.n - 1].n_words = 0;
   savedres.arr[savedres.n - 1].n_words++;
 
   savedres.arr[savedres.n - 1].words = malloc(
       savedres.arr[savedres.n - 1].n_words * sizeof(*savedres.arr[savedres.n - 1].words));
 
+  savedres.arr[savedres.n - 1].words[0] = NULL;
   savedres.arr[savedres.n - 1].words[0] =
-      malloc(strlen(res.name) * sizeof(*savedres.arr[savedres.n - 1].words[0]));
+      malloc((strlen(res.name) + 1) * sizeof(*savedres.arr[savedres.n - 1].words[0]));
+  strcpy(savedres.arr[savedres.n - 1].words[0], res.name);
 
-  savedres.arr[savedres.n - 1].words[0] = res.name;
+  /*
+  for (size_t i = 0; i < strlen(res.name); i++) {
+    savedres.arr[savedres.n - 1].words[0][i] = res.name[i];
+    }*/
+  //savedres.arr[savedres.n - 1].words[0] = res.name;
 
   return savedres;
 }
@@ -202,13 +256,22 @@ catarray_t storeRes(catInfo_t res, catarray_t savedres) {
   size_t count = 0;
   for (size_t i = 0; i < savedres.n; i++) {
     if (strcmp(savedres.arr[i].name, res.cat) == 0) {
-      savedres.arr[savedres.n - 1].n_words++;
-      savedres.arr[savedres.n - 1].words[savedres.arr[savedres.n - 1].n_words - 1] =
-          malloc(strlen(res.name) *
-                 sizeof(*savedres.arr[savedres.n - 1]
-                             .words[savedres.arr[savedres.n - 1].n_words - 1]));
-      savedres.arr[savedres.n - 1].words[savedres.arr[savedres.n - 1].n_words - 1] =
-          res.name;
+      savedres.arr[i].n_words++;
+
+      savedres.arr[i].words =
+          realloc(savedres.arr[i].words,
+                  savedres.arr[i].n_words * sizeof(*savedres.arr[i].words));
+
+      savedres.arr[i].words[savedres.arr[i].n_words - 1] =
+          malloc((strlen(res.name) + 1) *
+                 sizeof(*savedres.arr[i].words[savedres.arr[i].n_words - 1]));
+
+      strcpy(savedres.arr[i].words[savedres.arr[i].n_words - 1], res.name);
+      /*
+      for (size_t j = 0; i < strlen(res.name); i++) {
+        savedres.arr[i].words[savedres.arr[i].n_words - 1][j] = res.name[j];
+	}*/
+      //savedres.arr[i].words[savedres.arr[i].n_words - 1] = res.name;
       count++;
     }
     count++;
@@ -219,4 +282,13 @@ catarray_t storeRes(catInfo_t res, catarray_t savedres) {
   }
 
   return savedres;
+}
+
+void freeSavedRes(catarray_t savedres) {
+  for (size_t i = 0; i < savedres.n; i++) {
+    free(savedres.arr[i].name);
+    for (size_t j = 0; j < savedres.arr[i].n_words; j++) {
+      free(savedres.arr[i].words[j]);
+    }
+  }
 }
