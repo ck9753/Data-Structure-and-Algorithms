@@ -18,9 +18,9 @@ int main(int argc, char ** argv) {
     exit(EXIT_FAILURE);
   }
 
-  catarray_t finalSavedRes;
-  finalSavedRes.arr = NULL;
-  finalSavedRes.n = 0;
+  catarray_t savedres;
+  savedres.arr = NULL;
+  savedres.n = 0;
 
   /*
   catarray_t savedres2;
@@ -49,7 +49,7 @@ int main(int argc, char ** argv) {
     */
 
     res = parseLineSemi(line);
-
+    /*
     catarray_t savedres;
     savedres.arr = NULL;
     savedres.n = 0;
@@ -57,36 +57,39 @@ int main(int argc, char ** argv) {
     catarray_t savedres2;
     savedres2.arr = NULL;
     savedres2.n = 0;
+    */
+    //savedres = storeArr(res, savedres);
 
     if (lenNum == 1) {
       savedres = storeNewArr(res, savedres);
 
-      finalSavedRes = arrDeepCopy(savedres);
+      free(res.cat);
+      free(res.name);
+      //finalSavedRes = arrDeepCopy(savedres);
       /*
       finalSavedRes.arr = malloc(finalSavedRes.n * sizeof(*finalSavedRes.arr));
       for (size_t i = 0; i < finalSavedRes.n; i++) {
 	finalSavedRes.arr[i] = savedres.arr[i];
 	}*/
-      freeSavedRes(savedres);
-      free(res.cat);
-      free(res.name);
+      //freeSavedRes(savedres);
     }
     else {
-      savedres2 = arrDeepCopy(finalSavedRes);
-      savedres2 = storeRes(res, savedres2);
-      finalSavedRes = arrDeepCopy(savedres2);
-      freeSavedRes(savedres2);
+      //savedres2 = arrDeepCopy(finalSavedRes);
+      savedres = storeRes(res, savedres);
       free(res.cat);
       free(res.name);
+      //finalSavedRes = arrDeepCopy(savedres2);
+      //freeSavedRes(savedres2);
+      //freeSavedRes(finalSavedRes);
     }
   }
   free(line);
   //free(res.cat);
   //free(res.name);
-  for (size_t i = 0; i < finalSavedRes.n; i++) {
-    printf("%s:\n", finalSavedRes.arr[i].name);
-    for (size_t j = 0; j < finalSavedRes.arr[i].n_words; j++) {
-      printf("  %s\n", finalSavedRes.arr[i].words[j]);
+  for (size_t i = 0; i < savedres.n; i++) {
+    printf("%s:\n", savedres.arr[i].name);
+    for (size_t j = 0; j < savedres.arr[i].n_words; j++) {
+      printf("  %s\n", savedres.arr[i].words[j]);
     }
   }
   /*
@@ -97,7 +100,7 @@ int main(int argc, char ** argv) {
     }
   }
   */
-  freeSavedRes(finalSavedRes);
+  freeSavedRes(savedres);
 
   if (fclose(f) != 0) {
     fprintf(stderr, "File closed failure");

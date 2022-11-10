@@ -108,7 +108,6 @@ termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats) {
     const char * ptr2 = inputTerms.termarr[i];
     const char * end_ptr = &inputTerms.termarr[i][strlen(inputTerms.termarr[i]) - 1];
 
-    // outputTerms.termarr[i] = NULL;
     outputTerms.termarr[i] =
         malloc((strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
 
@@ -253,10 +252,7 @@ catarray_t arrDeepCopy(catarray_t inputArr) {
     outputArr.arr[i].name =
         malloc((strlen(inputArr.arr[i].name) + 1) * sizeof(*outputArr.arr[i].name));
     strcpy(outputArr.arr[i].name, inputArr.arr[i].name);
-    /*
-    for (size_t k = 0; k < strlen(inputArr.arr[i].name); k++) {
-      outputArr.arr[i].name[k] = inputArr.arr[i].name[k];
-      }*/
+
     outputArr.arr[i].words =
         malloc(outputArr.arr[i].n_words * sizeof(*outputArr.arr[i].words));
 
@@ -264,10 +260,6 @@ catarray_t arrDeepCopy(catarray_t inputArr) {
       outputArr.arr[i].words[j] = malloc((strlen(inputArr.arr[i].words[j]) + 1) *
                                          sizeof(*outputArr.arr[i].words[j]));
       strcpy(outputArr.arr[i].words[j], inputArr.arr[i].words[j]);
-      /*
-      for (size_t k = 0; k < strlen(inputArr.arr[i].words[j]); k++) {
-        outputArr.arr[i].words[j][k] = inputArr.arr[i].words[j][k];
-	}*/
     }
   }
 
@@ -278,7 +270,7 @@ catarray_t storeNewArr(catInfo_t res, catarray_t savedres) {
   savedres.n++;
 
   savedres.arr = realloc(savedres.arr, savedres.n * sizeof(*savedres.arr));
-  //  savedres.arr
+
   savedres.arr[savedres.n - 1].name = NULL;
   savedres.arr[savedres.n - 1].n_words = 0;
 
@@ -350,5 +342,7 @@ void freeSavedRes(catarray_t savedres) {
     for (size_t j = 0; j < savedres.arr[i].n_words; j++) {
       free(savedres.arr[i].words[j]);
     }
+    free(savedres.arr[i].words);
   }
+  free(savedres.arr);
 }
