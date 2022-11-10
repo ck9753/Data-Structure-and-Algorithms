@@ -11,15 +11,15 @@ int main(int argc, char ** argv) {
     exit(EXIT_FAILURE);
   }
 
-  FILE * cw = fopen(argv[1], "r");
-  FILE * st = fopen(argv[2], "r");
+  FILE * cat_words = fopen(argv[1], "r");
+  FILE * st_tmpl = fopen(argv[2], "r");
 
-  if (cw == NULL) {
+  if (cat_words == NULL) {
     fprintf(stderr, "Could not open a file with the categories/words\n");
     exit(EXIT_FAILURE);
   }
 
-  if (st == NULL) {
+  if (st_tmpl == NULL) {
     fprintf(stderr, "Could not open a story template file\n");
     exit(EXIT_FAILURE);
   }
@@ -36,7 +36,7 @@ int main(int argc, char ** argv) {
   //char ** temparr = NULL;
   //size_t tempNum = 0;
 
-  while (getline(&line1, &sz1, cw) >= 0) {
+  while (getline(&line1, &sz1, cat_words) >= 0) {
     lenNum++;
     catInfo_t res;
 
@@ -54,28 +54,27 @@ int main(int argc, char ** argv) {
   }
   catarray_t * inputCat = &savedcat;
 
-  while (getline(&line2, &sz2, st) >= 0) {
+  while (getline(&line2, &sz2, st_tmpl) >= 0) {
     termInfo_t termRes;
     termRes.termarr = NULL;
     termRes.termNum = 0;
     termRes = parseTerm(line2);
 
-    termRes = rmUnderScore(termRes, inputCat);
+    termRes = cd_underscore(termRes, inputCat);
 
-    for (size_t i = 0; i < termRes.termNum; i++) {
-      printf("%s ", termRes.termarr[i]);
-    }
+    printTermInfo(termRes);
+
     //free(termRes.termarr);
     //temparr = termRes.termarr;
     //tempNum = termRes.termNum;
   }
 
-  if (fclose(st) != 0) {
+  if (fclose(st_tmpl) != 0) {
     fprintf(stderr, "Story template file fail to close\n");
     exit(EXIT_FAILURE);
   }
 
-  if (fclose(cw) != 0) {
+  if (fclose(cat_words) != 0) {
     fprintf(stderr, "A file with the categories/words fail to close\n");
     exit(EXIT_FAILURE);
   }

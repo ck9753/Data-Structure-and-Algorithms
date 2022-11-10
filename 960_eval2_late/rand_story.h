@@ -19,10 +19,17 @@ struct _catInfo_t {
 };
 typedef struct _catInfo_t catInfo_t;
 
+struct _prevWords_t {
+  char ** words;
+  size_t num;
+};
+typedef struct _prevWords_t prevWords_t;
+
 termInfo_t parseTerm(char * line);
 
 termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats);
 
+termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats);
 void freeTermInfo(termInfo_t termRes);
 
 void printTermInfo(termInfo_t termRes);

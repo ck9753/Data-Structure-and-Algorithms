@@ -55,24 +55,16 @@ termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats) {
   termInfo_t outputTerms;
   outputTerms.termarr = NULL;
   outputTerms.termNum = inputTerms.termNum;
-  //outputTerms.eachTermNum = NULL;
 
   outputTerms.termarr = malloc((inputTerms.termNum) * sizeof(*outputTerms.termarr));
-  /*outputTerms.eachTermNum =
-      malloc((inputTerms.termNum) * sizeof(*outputTerms.eachTermNum));
-      
-  outputTerms.eachTermNum = inputTerms.eachTermNum;
-  */
+
   for (size_t i = 0; i < inputTerms.termNum; i++) {
     const char * ptr1 = inputTerms.termarr[i];
     const char * ptr2 = inputTerms.termarr[i];
     const char * end_ptr = &inputTerms.termarr[i][strlen(inputTerms.termarr[i]) - 1];
 
-    //outputTerms.termarr[i] = NULL;
     outputTerms.termarr[i] =
         malloc((strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
-    //malloc(inputTerms.eachTermNum[i] *sizeof(*outputTerms.termarr[i]));  //makes segfault
-    //strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
 
     while (ptr1 != NULL) {
       ptr1 = strchr(ptr1, '_');
@@ -80,6 +72,7 @@ termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats) {
 
       if (ptr1 != NULL) {
         strncpy(outputTerms.termarr[i], ptr1 + 1, ptr2 - ptr1 - 1);
+
         const char * stringcat = NULL;
         stringcat = chooseWord(outputTerms.termarr[i], cats);
         strcpy(outputTerms.termarr[i], stringcat);
@@ -97,6 +90,74 @@ termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats) {
       }
     }
   }
+  return outputTerms;
+}
+
+termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats) {
+  termInfo_t outputTerms;
+  outputTerms.termarr = NULL;
+  outputTerms.termNum = inputTerms.termNum;
+
+  outputTerms.termarr = malloc((inputTerms.termNum) * sizeof(*outputTerms.termarr));
+
+  prevWords_t list;
+  list.words = NULL;
+  list.num = 0;
+
+  for (size_t i = 0; i < inputTerms.termNum; i++) {
+    const char * ptr1 = inputTerms.termarr[i];
+    const char * ptr2 = inputTerms.termarr[i];
+    const char * end_ptr = &inputTerms.termarr[i][strlen(inputTerms.termarr[i]) - 1];
+
+    outputTerms.termarr[i] =
+        malloc((strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
+
+    while (ptr1 != NULL) {
+      ptr1 = strchr(ptr1, '_');
+      ptr2 = strrchr(ptr2, '_');
+
+      if (ptr1 != NULL) {
+        strncpy(outputTerms.termarr[i], ptr1 + 1, ptr2 - ptr1 - 1);
+
+        if (atoi(outputTerms.termarr[i]) == 0) {
+          const char * stringcat = NULL;
+          stringcat = chooseWord(outputTerms.termarr[i], cats);
+          strcpy(outputTerms.termarr[i], stringcat);
+
+          //store in prevWords list
+          list.num++;
+          list.words = realloc(list.words, list.num * sizeof(*list.words));
+          list.words[list.num - 1] =
+              malloc((strlen(stringcat) + 1) * sizeof(*list.words[list.num - 1]));
+          strcpy(list.words[list.num - 1], stringcat);
+        }
+
+        else {
+          //if it's number _1_ or _2_
+          int index = atoi(outputTerms.termarr[i]);
+          strcpy(outputTerms.termarr[i], list.words[list.num - index]);
+
+          //store the words that used
+          list.num++;
+          list.words = realloc(list.words, list.num * sizeof(*list.words));
+          // issues here
+          list.words[list.num - 1] = malloc((strlen(outputTerms.termarr[i]) + 1) *
+                                            sizeof(*list.words[list.num - 1]));
+          strcpy(list.words[list.num - 1], outputTerms.termarr[i]);
+        }
+        if (*end_ptr != '_') {
+          const char * ptr3 = ptr2 + 1;
+          strcat(outputTerms.termarr[i], ptr3);
+        }
+        break;
+      }
+
+      else {
+        strcpy(outputTerms.termarr[i], inputTerms.termarr[i]);
+      }
+    }
+  }
+
   return outputTerms;
 }
 
