@@ -52,6 +52,7 @@ int main(int argc, char ** argv) {
       savedcat = storeRes(res, savedcat);
     }
   }
+  free(line1);
   catarray_t * inputCat = &savedcat;
 
   while (getline(&line2, &sz2, st_tmpl) >= 0) {
@@ -60,14 +61,21 @@ int main(int argc, char ** argv) {
     termRes.termNum = 0;
     termRes = parseTerm(line2);
 
-    termRes = cd_underscore(termRes, inputCat);
+    termInfo_t termRes2;
+    termRes2.termarr = NULL;
+    termRes2.termNum = 0;
+    termRes2 = cd_underscore(termRes, inputCat);
 
-    printTermInfo(termRes);
+    freeTermInfo(termRes);
+    printTermInfo(termRes2);
+
+    freeTermInfo(termRes2);
 
     //free(termRes.termarr);
     //temparr = termRes.termarr;
     //tempNum = termRes.termNum;
   }
+  free(line2);
 
   if (fclose(st_tmpl) != 0) {
     fprintf(stderr, "Story template file fail to close\n");

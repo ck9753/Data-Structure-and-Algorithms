@@ -42,7 +42,6 @@ termInfo_t parseTerm(char * line) {
           malloc((ptr2 - ptr1 + 1) * sizeof(*termRes.termarr[termRes.termNum]));
 
       strncpy(termRes.termarr[termRes.termNum], ptr1, ptr2 - ptr1 + 1);
-
       termRes.termNum++;
       break;
     }
@@ -109,6 +108,7 @@ termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats) {
     const char * ptr2 = inputTerms.termarr[i];
     const char * end_ptr = &inputTerms.termarr[i][strlen(inputTerms.termarr[i]) - 1];
 
+    // outputTerms.termarr[i] = NULL;
     outputTerms.termarr[i] =
         malloc((strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
 
@@ -140,7 +140,6 @@ termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats) {
           //store the words that used
           list.num++;
           list.words = realloc(list.words, list.num * sizeof(*list.words));
-          // issues here
           list.words[list.num - 1] = malloc((strlen(outputTerms.termarr[i]) + 1) *
                                             sizeof(*list.words[list.num - 1]));
           strcpy(list.words[list.num - 1], outputTerms.termarr[i]);
