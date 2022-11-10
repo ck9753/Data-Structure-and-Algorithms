@@ -92,76 +92,110 @@ termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats) {
   return outputTerms;
 }
 
-termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats, prevWords_t list) {
+termInfo_t cd_underscore(termInfo_t inputTerms,
+                         catarray_t * cats,
+                         prevWords_t list,
+                         int ind) {
+  // declare and initialize outputTerms struct
   termInfo_t outputTerms;
   outputTerms.termarr = NULL;
   outputTerms.termNum = inputTerms.termNum;
 
+  // allocate memory with the size of the number of term in inputTerms struct
   outputTerms.termarr = malloc((inputTerms.termNum) * sizeof(*outputTerms.termarr));
 
-  // initialize list
+  // initialize list with the argument list
   outputTerms.list.num = list.num;
   outputTerms.list.words = list.words;
 
+  // getting each inputTerms.termarr[i] and process it
   for (size_t i = 0; i < inputTerms.termNum; i++) {
     const char * ptr1 = inputTerms.termarr[i];
     const char * ptr2 = inputTerms.termarr[i];
     const char * end_ptr = &inputTerms.termarr[i][strlen(inputTerms.termarr[i]) - 1];
 
+    // allocate memory for outputTerms.termarr[i] with the size of inputTerms.termarr[i]
     outputTerms.termarr[i] =
         malloc((strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
 
     while (ptr1 != NULL) {
+      // check if the array term have '_'
       ptr1 = strchr(ptr1, '_');
       ptr2 = strrchr(ptr2, '_');
 
+      // if the array have '_'
       if (ptr1 != NULL) {
-        /*outputTerms.termarr[i] = realloc(outputTerms.termarr[i],
-	  (ptr2 - ptr1) * sizeof(*outputTerms.termarr[i]));*/
+        // copy term without '_'s
         strncpy(outputTerms.termarr[i], ptr1 + 1, ptr2 - ptr1 - 1);
+        // add the null terminator at the end
         outputTerms.termarr[i][ptr2 - ptr1 - 1] = '\0';
 
+        // if the category is not an integer
         if (atoi(outputTerms.termarr[i]) == 0) {
           const char * stringcat = NULL;
           stringcat = chooseWord(outputTerms.termarr[i], cats);
+          // replace outputTerms.termarr[i] with stringcat
           strcpy(outputTerms.termarr[i], stringcat);
-
-          //store in prevWords list
-          /*list.num++;
-          list.words = realloc(list.words, list.num * sizeof(*list.words));
-          list.words[list.num - 1] =
-              malloc((strlen(stringcat) + 1) * sizeof(*list.words[list.num - 1]));
-	      strcpy(list.words[list.num - 1], stringcat);*/
-
+          /*
+          if (ind == 1) {
+            for (size_t k = 0; k < cats->n; k++) {
+              for (size_t j = 0; j < cats->arr[k].n_words; j++) {
+                if (cats->arr[k].words[j] == stringcat) {
+                  cats->arr[k].n_words--;
+                  free(cats->arr[k].words[j]);
+                  cats->arr[k].words =
+                      realloc(cats->arr[k].words,
+                              cats->arr[k].n_words * sizeof(*cats->arr[k].words));
+                }
+              }
+            }
+          }
+	  */
+          // store the word in list struct
+          // increment outputTerms.list.num
           outputTerms.list.num++;
+
+          // allocate memory to store the word used
           outputTerms.list.words =
               realloc(outputTerms.list.words,
                       outputTerms.list.num * sizeof(*outputTerms.list.words));
           outputTerms.list.words[outputTerms.list.num - 1] =
               malloc((strlen(stringcat) + 1) *
                      sizeof(*outputTerms.list.words[outputTerms.list.num - 1]));
+
+          // copy stringcat to outputTerms.list.words
           strcpy(outputTerms.list.words[outputTerms.list.num - 1], stringcat);
+
+          if (ind == 1) {
+            for (size_t k = 0; k < cats->n; k++) {
+              for (size_t j = 0; j < cats->arr[k].n_words; j++) {
+                if (cats->arr[k].words[j] == stringcat) {
+                  cats->arr[k].n_words--;
+                  free(cats->arr[k].words[j]);
+                  cats->arr[k].words =
+                      realloc(cats->arr[k].words,
+                              cats->arr[k].n_words * sizeof(*cats->arr[k].words));
+                }
+              }
+            }
+          }
         }
 
+        // otherwise, if the category is an integer
+        // i.e. if it's number such as _1_ or _2_
         else {
-          //if it's number _1_ or _2_
+          // assign the int to index
           int index = atoi(outputTerms.termarr[i]);
+
+          // allocate the memory for storing it
           outputTerms.termarr[i] =
               realloc(outputTerms.termarr[i],
                       (strlen(outputTerms.list.words[outputTerms.list.num - index]) + 1) *
                           sizeof(*outputTerms.termarr[i]));
 
+          // copy the used words in list to outputTerms.termarr[i]
           strcpy(outputTerms.termarr[i],
                  outputTerms.list.words[outputTerms.list.num - index]);
-
-          //store the words that used
-          /*
-          list.num++;
-          list.words = realloc(list.words, list.num * sizeof(*list.words));
-          list.words[list.num - 1] = malloc((strlen(outputTerms.termarr[i]) + 1) *
-                                            sizeof(*list.words[list.num - 1]));
-          strcpy(list.words[list.num - 1], outputTerms.termarr[i]);
-	  */
 
           //store the words that used
           outputTerms.list.num++;
@@ -175,17 +209,22 @@ termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats, prevWords_t l
                  outputTerms.termarr[i]);
         }
 
+        // if the term is the last term of the line
         if (*end_ptr != '_') {
           const char * ptr3 = ptr2 + 1;
+
+          // reallocate momery to append the rest of string
           outputTerms.termarr[i] =
               realloc(outputTerms.termarr[i],
                       (strlen(outputTerms.termarr[i]) + 2 +
                        strlen(ptr3) * sizeof(*outputTerms.termarr[i])));
+          // append the rest of string to the name of category
           strcat(outputTerms.termarr[i], ptr3);
         }
         break;
       }
 
+      // if the term does not include '_', just copy input to output
       else {
         strcpy(outputTerms.termarr[i], inputTerms.termarr[i]);
       }
@@ -196,10 +235,14 @@ termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats, prevWords_t l
 }
 
 prevWords_t cpList(prevWords_t inputlist) {
+  // declare outputlist
   prevWords_t outputlist;
+
+  // save inputlist.num to outputlist.num
   outputlist.num = inputlist.num;
   outputlist.words = malloc(outputlist.num * sizeof(*outputlist.words));
 
+  // copy each words to outputlist.words
   for (size_t i = 0; i < outputlist.num; i++) {
     outputlist.words[i] =
         malloc((strlen(inputlist.words[i]) + 1) * sizeof(*outputlist.words[i]));
@@ -412,4 +455,132 @@ void freeSavedRes(catarray_t savedres) {
     free(savedres.arr[i].words);
   }
   free(savedres.arr);
+}
+
+void checkFileOpen(FILE * catF, FILE * tmpF) {
+  if (catF == NULL) {
+    fprintf(stderr, "Could not open a file with the categories/words\n");
+    exit(EXIT_FAILURE);
+  }
+
+  if (tmpF == NULL) {
+    fprintf(stderr, "Could not open a story template file\n");
+    exit(EXIT_FAILURE);
+  }
+}
+
+void checkFileClosed(FILE * catF, FILE * tmpF) {
+  if (fclose(catF) != 0) {
+    fprintf(stderr, "A file with the categories/words fail to close\n");
+    exit(EXIT_FAILURE);
+  }
+
+  if (fclose(tmpF) != 0) {
+    fprintf(stderr, "A file for story template fail to close\n");
+    exit(EXIT_FAILURE);
+  }
+}
+
+catarray_t savedCatfor4(FILE * catF, catarray_t savedcat) {
+  char * line1 = NULL;
+  // char * line2 = NULL;
+  size_t sz1 = 0;
+  //size_t sz2 = 0;
+
+  /*
+  // declare and initialize catarray_t struct
+  catarray_t savedcat;
+  savedcat.arr = NULL;
+  savedcat.n = 0;
+  */
+
+  // declare line number counter
+  size_t lenNum = 0;
+
+  while (getline(&line1, &sz1, catF) >= 0) {
+    lenNum++;
+
+    // declare and initialize catInfo_t res
+    catInfo_t res;
+    res.cat = NULL;
+    res.name = NULL;
+
+    // get result parsed by the delimiter ':'
+    res = parseLineSemi(line1);
+
+    // if the line1 is the first line, use the function storeNewArr
+    if (lenNum == 1) {
+      savedcat = storeNewArr(res, savedcat);
+
+      // free res
+      free(res.cat);
+      free(res.name);
+    }
+
+    // otherwise, use the function storeRes
+    else {
+      savedcat = storeRes(res, savedcat);
+
+      // free res
+      free(res.cat);
+      free(res.name);
+    }
+  }
+  // free line1 once every line has been read
+  free(line1);
+
+  return savedcat;
+}
+
+void cd_underscorefor4(FILE * tmpF, catarray_t savedcat, catarray_t * inputCat, int n) {
+  char * line2 = NULL;
+  size_t sz2 = 0;
+
+  // declare and initialize prevWordsList
+  prevWords_t prevWordsList;
+  prevWordsList.words = NULL;
+  prevWordsList.num = 0;
+
+  while (getline(&line2, &sz2, tmpF) >= 0) {
+    // declare and initialize termInfo_t termRes struct
+    termInfo_t termRes;
+    termRes.termarr = NULL;
+    termRes.termNum = 0;
+
+    // store result of parseTerm in termRes
+    termRes = parseTerm(line2);
+
+    // declare and initialize termInfo_t termRes2 struct
+    termInfo_t termRes2;
+    termRes2.termarr = NULL;
+    termRes2.termNum = 0;
+
+    if (n == 0) {
+      // store result of cd_underscore in termRes2
+      termRes2 = cd_underscore(termRes, inputCat, prevWordsList, 0);
+    }
+
+    else if (n == 1) {
+      //chooseword will not return a word that has already been used
+      //should be changed
+      termRes2 = cd_underscore(termRes, inputCat, prevWordsList, 1);
+    }
+    //copy and store list to prevwordsList
+    prevWordsList = cpList(termRes2.list);
+
+    //free termRes struct
+    freeTermInfo(termRes);
+
+    //print termRes2
+    printTermInfo(termRes2);
+
+    // free termRes struct
+    freeTermInfo(termRes2);
+    // free list struct inside termRes strcut
+    freeListinTermInfo(termRes2);
+  }
+  // free List, line2, and savedcat
+  freeList(prevWordsList);
+  free(line2);
+  freeSavedRes(savedcat);
 }

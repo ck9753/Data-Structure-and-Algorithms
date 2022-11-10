@@ -30,7 +30,10 @@ termInfo_t parseTerm(char * line);
 
 termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats);
 
-termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats, prevWords_t list);
+termInfo_t cd_underscore(termInfo_t inputTerms,
+                         catarray_t * cats,
+                         prevWords_t list,
+                         int ind);
 
 void freeTermInfo(termInfo_t termRes);
 
@@ -51,4 +54,12 @@ catarray_t storeNewArr(catInfo_t res, catarray_t savedres);
 catarray_t storeRes(catInfo_t res, catarray_t savedres);
 
 void freeSavedRes(catarray_t savedres);
+
+void checkFileOpen(FILE * catF, FILE * tmpF);
+
+void checkFileClosed(FILE * catF, FILE * tmpF);
+
+catarray_t savedCatfor4(FILE * catF, catarray_t savedcat);
+
+void cd_underscorefor4(FILE * tmpF, catarray_t savedcat, catarray_t * inputCat, int n);
 #endif

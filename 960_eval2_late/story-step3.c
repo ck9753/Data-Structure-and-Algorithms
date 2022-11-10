@@ -15,17 +15,7 @@ int main(int argc, char ** argv) {
   FILE * cat_words = fopen(argv[1], "r");
   FILE * st_tmpl = fopen(argv[2], "r");
 
-  // check if the file with categories and words is opened
-  if (cat_words == NULL) {
-    fprintf(stderr, "Could not open a file with the categories/words\n");
-    exit(EXIT_FAILURE);
-  }
-
-  // check if the file for the story template is opened
-  if (st_tmpl == NULL) {
-    fprintf(stderr, "Could not open a story template file\n");
-    exit(EXIT_FAILURE);
-  }
+  checkFileOpen(cat_words, st_tmpl);
 
   // initialize pointers of lines and sizes
   char * line1 = NULL;
@@ -96,7 +86,7 @@ int main(int argc, char ** argv) {
     termRes2.termNum = 0;
 
     // store result of cd_underscore in termRes2
-    termRes2 = cd_underscore(termRes, inputCat, prevWordsList);
+    termRes2 = cd_underscore(termRes, inputCat, prevWordsList, 0);
 
     //copy and store list to prevwordsList
     prevWordsList = cpList(termRes2.list);
