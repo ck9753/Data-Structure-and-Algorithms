@@ -1,6 +1,6 @@
-Grading at 11/10/2022:03:58:28.999665
-For commit ID b41e946644271b73ac03f1474e2c8fa7c39e8e33
-Grading at Wed Nov  9 10:58:24 PM EST 2022
+Grading at 11/10/2022:04:50:45.994083
+For commit ID 2f1b6ea91aba450225830d1645c5462c1a3c57e9
+Grading at Wed Nov  9 11:50:42 PM EST 2022
 Doing some basic checking for your submission
 
 Step 1
@@ -56,52 +56,52 @@ Now running YOUR tests for step 2
 Your output looks good. Lets check valgrind
   - Valgrind reported errors
 Valgrind reported errors or memory leaks:
-==2475103== Memcheck, a memory error detector
-==2475103== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2475103== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2475103== Command: ./story-step2 words.txt
-==2475103== Parent PID: 2475102
-==2475103== 
-==2475103== 
-==2475103== HEAP SUMMARY:
-==2475103==     in use at exit: 1,135 bytes in 63 blocks
-==2475103==   total heap usage: 127 allocs, 64 frees, 10,423 bytes allocated
-==2475103== 
-==2475103== 32 (24 direct, 8 indirect) bytes in 1 blocks are definitely lost in loss record 6 of 15
-==2475103==    at 0x48487A9: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2475103==    by 0x10A53F: storeNewArr (rand_story.c:280)
-==2475103==    by 0x109539: main (story-step2.c:62)
-==2475103== 
-==2475103== 46 (24 direct, 22 indirect) bytes in 1 blocks are definitely lost in loss record 7 of 15
-==2475103==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2475103==    by 0x10A2A4: arrDeepCopy (rand_story.c:249)
-==2475103==    by 0x109554: main (story-step2.c:64)
-==2475103== 
-==2475103== 176 (120 direct, 56 indirect) bytes in 2 blocks are definitely lost in loss record 13 of 15
-==2475103==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2475103==    by 0x10A53F: storeNewArr (rand_story.c:280)
-==2475103==    by 0x10A900: storeRes (rand_story.c:341)
-==2475103==    by 0x1095C2: main (story-step2.c:76)
-==2475103== 
-==2475103== 272 (168 direct, 104 indirect) bytes in 3 blocks are definitely lost in loss record 14 of 15
-==2475103==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2475103==    by 0x10A2A4: arrDeepCopy (rand_story.c:249)
-==2475103==    by 0x10959F: main (story-step2.c:75)
-==2475103== 
-==2475103== 609 (288 direct, 321 indirect) bytes in 5 blocks are definitely lost in loss record 15 of 15
-==2475103==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2475103==    by 0x10A2A4: arrDeepCopy (rand_story.c:249)
-==2475103==    by 0x1095DD: main (story-step2.c:77)
-==2475103== 
-==2475103== LEAK SUMMARY:
-==2475103==    definitely lost: 624 bytes in 12 blocks
-==2475103==    indirectly lost: 511 bytes in 51 blocks
-==2475103==      possibly lost: 0 bytes in 0 blocks
-==2475103==    still reachable: 0 bytes in 0 blocks
-==2475103==         suppressed: 0 bytes in 0 blocks
-==2475103== 
-==2475103== For lists of detected and suppressed errors, rerun with: -s
-==2475103== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 0 from 0)
+==2546422== Memcheck, a memory error detector
+==2546422== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2546422== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2546422== Command: ./story-step2 words.txt
+==2546422== Parent PID: 2546421
+==2546422== 
+==2546422== 
+==2546422== HEAP SUMMARY:
+==2546422==     in use at exit: 1,135 bytes in 63 blocks
+==2546422==   total heap usage: 127 allocs, 64 frees, 10,423 bytes allocated
+==2546422== 
+==2546422== 32 (24 direct, 8 indirect) bytes in 1 blocks are definitely lost in loss record 6 of 15
+==2546422==    at 0x48487A9: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2546422==    by 0x10A53F: storeNewArr (rand_story.c:280)
+==2546422==    by 0x109539: main (story-step2.c:62)
+==2546422== 
+==2546422== 46 (24 direct, 22 indirect) bytes in 1 blocks are definitely lost in loss record 7 of 15
+==2546422==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2546422==    by 0x10A2A4: arrDeepCopy (rand_story.c:249)
+==2546422==    by 0x109554: main (story-step2.c:64)
+==2546422== 
+==2546422== 176 (120 direct, 56 indirect) bytes in 2 blocks are definitely lost in loss record 13 of 15
+==2546422==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2546422==    by 0x10A53F: storeNewArr (rand_story.c:280)
+==2546422==    by 0x10A900: storeRes (rand_story.c:341)
+==2546422==    by 0x1095C2: main (story-step2.c:76)
+==2546422== 
+==2546422== 272 (168 direct, 104 indirect) bytes in 3 blocks are definitely lost in loss record 14 of 15
+==2546422==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2546422==    by 0x10A2A4: arrDeepCopy (rand_story.c:249)
+==2546422==    by 0x10959F: main (story-step2.c:75)
+==2546422== 
+==2546422== 609 (288 direct, 321 indirect) bytes in 5 blocks are definitely lost in loss record 15 of 15
+==2546422==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2546422==    by 0x10A2A4: arrDeepCopy (rand_story.c:249)
+==2546422==    by 0x1095DD: main (story-step2.c:77)
+==2546422== 
+==2546422== LEAK SUMMARY:
+==2546422==    definitely lost: 624 bytes in 12 blocks
+==2546422==    indirectly lost: 511 bytes in 51 blocks
+==2546422==      possibly lost: 0 bytes in 0 blocks
+==2546422==    still reachable: 0 bytes in 0 blocks
+==2546422==         suppressed: 0 bytes in 0 blocks
+==2546422== 
+==2546422== For lists of detected and suppressed errors, rerun with: -s
+==2546422== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 0 from 0)
 
 Step 3
 Checking that story-step3 compiles
@@ -117,7 +117,7 @@ Now running YOUR tests for step 3
 3.1: Current test is story-step3 words.txt story2.txt
 -----------------------------
 You considered this a failure case:
-Category placeV not found
+Category placeU not found
 But we did not.
 
 Step 4
