@@ -47,24 +47,60 @@ int main(int argc, char ** argv) {
 
     if (lenNum == 1) {
       savedcat = storeNewArr(res, savedcat);
+
+      free(res.cat);
+      free(res.name);
     }
     else {
       savedcat = storeRes(res, savedcat);
+      free(res.cat);
+      free(res.name);
     }
   }
   free(line1);
+
   catarray_t * inputCat = &savedcat;
 
+  prevWords_t prevWordsList;
+  prevWordsList.words = NULL;
+  prevWordsList.num = 0;
+
+  size_t lineNum = 0;
+
   while (getline(&line2, &sz2, st_tmpl) >= 0) {
+    lineNum++;
     termInfo_t termRes;
     termRes.termarr = NULL;
     termRes.termNum = 0;
+
     termRes = parseTerm(line2);
 
     termInfo_t termRes2;
     termRes2.termarr = NULL;
     termRes2.termNum = 0;
-    termRes2 = cd_underscore(termRes, inputCat);
+    /*
+    if (lineNum == 1) {
+      termRes2 = cd_underscore(termRes,inputCat,prevWordsList);
+    }
+
+    else if (lineNum > 1) {
+      termRes2 = cd_underscore(termRes, inputCat,prevWordsList);
+    }
+    */
+    termRes2 = cd_underscore(termRes, inputCat, prevWordsList);
+    //termRes2 = cd_underscore(termRes, inputCat, inlist);
+
+    //copy and store list
+    /*
+    prevWordsList.num = termRes2.list.num;
+    prevWordsList.words = malloc(prevWordsList.num * sizeof(*prevWordsList.words));
+    for (size_t i = 0; i < prevWordsList.num; i++) {
+      prevWordsList.words[i] =
+          malloc((strlen(termRes2.list.words[i]) + 1) * sizeof(*prevWordsList.words[i]));
+      strcpy(prevWordsList.words[i], termRes2.list.words[i]);
+    */
+
+    prevWordsList = cpList(termRes2.list);
 
     freeTermInfo(termRes);
     printTermInfo(termRes2);

@@ -7,9 +7,16 @@
 #include "provided.h"
 
 //any functions you want your main to use
+struct _prevWords_t {
+  char ** words;
+  size_t num;
+};
+typedef struct _prevWords_t prevWords_t;
+
 struct _termInfo_t {
   char ** termarr;
   size_t termNum;
+  prevWords_t list;
 };
 typedef struct _termInfo_t termInfo_t;
 
@@ -19,18 +26,15 @@ struct _catInfo_t {
 };
 typedef struct _catInfo_t catInfo_t;
 
-struct _prevWords_t {
-  char ** words;
-  size_t num;
-};
-typedef struct _prevWords_t prevWords_t;
-
 termInfo_t parseTerm(char * line);
 
 termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats);
 
-termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats);
+termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats, prevWords_t list);
+
 void freeTermInfo(termInfo_t termRes);
+
+prevWords_t cpList(prevWords_t inputlist);
 
 void printTermInfo(termInfo_t termRes);
 

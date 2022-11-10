@@ -22,84 +22,40 @@ int main(int argc, char ** argv) {
   savedres.arr = NULL;
   savedres.n = 0;
 
-  /*
-  catarray_t savedres2;
-  savedres2.arr = NULL;
-  savedres2.n = 0;
-  */
   char * line = NULL;
   size_t sz = 0;
   size_t lenNum = 0;
-  /*
-  catInfo_t res;
-  res.cat = NULL;
-  res.name = NULL;
-  */
+
   while (getline(&line, &sz, f) >= 0) {
     lenNum++;
 
     catInfo_t res;
     res.cat = NULL;
     res.name = NULL;
-    /*
-    catInfo_t res;
-
-    res.cat = NULL;
-    res.name = NULL;
-    */
 
     res = parseLineSemi(line);
-    /*
-    catarray_t savedres;
-    savedres.arr = NULL;
-    savedres.n = 0;
-
-    catarray_t savedres2;
-    savedres2.arr = NULL;
-    savedres2.n = 0;
-    */
-    //savedres = storeArr(res, savedres);
 
     if (lenNum == 1) {
       savedres = storeNewArr(res, savedres);
 
       free(res.cat);
       free(res.name);
-      //finalSavedRes = arrDeepCopy(savedres);
-      /*
-      finalSavedRes.arr = malloc(finalSavedRes.n * sizeof(*finalSavedRes.arr));
-      for (size_t i = 0; i < finalSavedRes.n; i++) {
-	finalSavedRes.arr[i] = savedres.arr[i];
-	}*/
-      //freeSavedRes(savedres);
     }
     else {
-      //savedres2 = arrDeepCopy(finalSavedRes);
       savedres = storeRes(res, savedres);
       free(res.cat);
       free(res.name);
-      //finalSavedRes = arrDeepCopy(savedres2);
-      //freeSavedRes(savedres2);
-      //freeSavedRes(finalSavedRes);
     }
   }
   free(line);
-  //free(res.cat);
-  //free(res.name);
+
   for (size_t i = 0; i < savedres.n; i++) {
     printf("%s:\n", savedres.arr[i].name);
     for (size_t j = 0; j < savedres.arr[i].n_words; j++) {
       printf("  %s\n", savedres.arr[i].words[j]);
     }
   }
-  /*
-  for (size_t i = 0; i < savedres.n; i++) {
-    free(savedres.arr[i].name);
-    for (size_t j = 0; j < savedres.arr[i].n_words; j++) {
-      free(savedres.arr[i].words[j]);
-    }
-  }
-  */
+
   freeSavedRes(savedres);
 
   if (fclose(f) != 0) {
