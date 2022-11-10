@@ -116,8 +116,8 @@ termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats, prevWords_t l
       ptr2 = strrchr(ptr2, '_');
 
       if (ptr1 != NULL) {
-        outputTerms.termarr[i] = realloc(outputTerms.termarr[i],
-                                         (ptr2 - ptr1) * sizeof(*outputTerms.termarr[i]));
+        /*outputTerms.termarr[i] = realloc(outputTerms.termarr[i],
+	  (ptr2 - ptr1) * sizeof(*outputTerms.termarr[i]));*/
         strncpy(outputTerms.termarr[i], ptr1 + 1, ptr2 - ptr1 - 1);
         outputTerms.termarr[i][ptr2 - ptr1 - 1] = '\0';
 
@@ -146,6 +146,11 @@ termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats, prevWords_t l
         else {
           //if it's number _1_ or _2_
           int index = atoi(outputTerms.termarr[i]);
+          outputTerms.termarr[i] =
+              realloc(outputTerms.termarr[i],
+                      (strlen(outputTerms.list.words[outputTerms.list.num - index]) + 1) *
+                          sizeof(*outputTerms.termarr[i]));
+
           strcpy(outputTerms.termarr[i],
                  outputTerms.list.words[outputTerms.list.num - index]);
 
@@ -216,6 +221,20 @@ void freeTermInfo(termInfo_t termRes) {
     free(termRes.termarr[i]);
   }
   free(termRes.termarr);
+}
+
+void freeList(prevWords_t list) {
+  for (size_t i = 0; i < list.num; i++) {
+    free(list.words[i]);
+  }
+  free(list.words);
+}
+
+void freeListinTermInfo(termInfo_t termRes) {
+  for (size_t i = 0; i < termRes.list.num; i++) {
+    free(termRes.list.words[i]);
+  }
+  free(termRes.list.words);
 }
 
 catInfo_t parseLineSemi(char * line) {

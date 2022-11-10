@@ -34,6 +34,10 @@ termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats, prevWords_t l
 
 void freeTermInfo(termInfo_t termRes);
 
+void freeList(prevWords_t list);
+
+void freeListinTermInfo(termInfo_t termRes);
+
 prevWords_t cpList(prevWords_t inputlist);
 
 void printTermInfo(termInfo_t termRes);

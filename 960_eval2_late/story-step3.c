@@ -106,12 +106,15 @@ int main(int argc, char ** argv) {
     printTermInfo(termRes2);
 
     freeTermInfo(termRes2);
+    freeListinTermInfo(termRes2);
 
     //free(termRes.termarr);
     //temparr = termRes.termarr;
     //tempNum = termRes.termNum;
   }
+  freeList(prevWordsList);
   free(line2);
+  freeSavedRes(savedcat);
 
   if (fclose(st_tmpl) != 0) {
     fprintf(stderr, "Story template file fail to close\n");
