@@ -6,6 +6,7 @@
 #include "rand_story.h"
 
 int main(int argc, char ** argv) {
+  // check if the user types correct commands
   if (argc != 3) {
     fprintf(stderr, "Incorrect Commands\n");
     exit(EXIT_FAILURE);
@@ -14,113 +15,115 @@ int main(int argc, char ** argv) {
   FILE * cat_words = fopen(argv[1], "r");
   FILE * st_tmpl = fopen(argv[2], "r");
 
+  // check if the file with categories and words is opened
   if (cat_words == NULL) {
     fprintf(stderr, "Could not open a file with the categories/words\n");
     exit(EXIT_FAILURE);
   }
 
+  // check if the file for the story template is opened
   if (st_tmpl == NULL) {
     fprintf(stderr, "Could not open a story template file\n");
     exit(EXIT_FAILURE);
   }
 
+  // initialize pointers of lines and sizes
   char * line1 = NULL;
   char * line2 = NULL;
   size_t sz1 = 0;
   size_t sz2 = 0;
 
+  // declare and initialize catarray_t struct
   catarray_t savedcat;
   savedcat.arr = NULL;
   savedcat.n = 0;
+
+  // declare line number counter
   size_t lenNum = 0;
-  //char ** temparr = NULL;
-  //size_t tempNum = 0;
 
   while (getline(&line1, &sz1, cat_words) >= 0) {
     lenNum++;
-    catInfo_t res;
 
+    // declare and initialize catInfo_t res
+    catInfo_t res;
     res.cat = NULL;
     res.name = NULL;
 
+    // get result parsed by the delimiter ':'
     res = parseLineSemi(line1);
 
+    // if the line1 is the first line, use the function storeNewArr
     if (lenNum == 1) {
       savedcat = storeNewArr(res, savedcat);
 
+      // free res
       free(res.cat);
       free(res.name);
     }
+
+    // otherwise, use the function storeRes
     else {
       savedcat = storeRes(res, savedcat);
+
+      // free res
       free(res.cat);
       free(res.name);
     }
   }
+  // free line1 once every line has been read
   free(line1);
 
+  // store savedcat result to inputCat
   catarray_t * inputCat = &savedcat;
 
+  // declare and initialize prevWordsList
   prevWords_t prevWordsList;
   prevWordsList.words = NULL;
   prevWordsList.num = 0;
 
-  size_t lineNum = 0;
-
   while (getline(&line2, &sz2, st_tmpl) >= 0) {
-    lineNum++;
+    // declare and initialize termInfo_t termRes struct
     termInfo_t termRes;
     termRes.termarr = NULL;
     termRes.termNum = 0;
 
+    // store result of parseTerm in termRes
     termRes = parseTerm(line2);
 
+    // declare and initialize termInfo_t termRes2 struct
     termInfo_t termRes2;
     termRes2.termarr = NULL;
     termRes2.termNum = 0;
-    /*
-    if (lineNum == 1) {
-      termRes2 = cd_underscore(termRes,inputCat,prevWordsList);
-    }
 
-    else if (lineNum > 1) {
-      termRes2 = cd_underscore(termRes, inputCat,prevWordsList);
-    }
-    */
+    // store result of cd_underscore in termRes2
     termRes2 = cd_underscore(termRes, inputCat, prevWordsList);
-    //termRes2 = cd_underscore(termRes, inputCat, inlist);
 
-    //copy and store list
-    /*
-    prevWordsList.num = termRes2.list.num;
-    prevWordsList.words = malloc(prevWordsList.num * sizeof(*prevWordsList.words));
-    for (size_t i = 0; i < prevWordsList.num; i++) {
-      prevWordsList.words[i] =
-          malloc((strlen(termRes2.list.words[i]) + 1) * sizeof(*prevWordsList.words[i]));
-      strcpy(prevWordsList.words[i], termRes2.list.words[i]);
-    */
-
+    //copy and store list to prevwordsList
     prevWordsList = cpList(termRes2.list);
 
+    //free termRes struct
     freeTermInfo(termRes);
+
+    //print termRes2
     printTermInfo(termRes2);
 
+    // free termRes struct
     freeTermInfo(termRes2);
+    // free list struct inside termRes strcut
     freeListinTermInfo(termRes2);
-
-    //free(termRes.termarr);
-    //temparr = termRes.termarr;
-    //tempNum = termRes.termNum;
   }
+  // free List, line2, and savedcat
   freeList(prevWordsList);
   free(line2);
   freeSavedRes(savedcat);
 
+  // check if the file for story template is closed
   if (fclose(st_tmpl) != 0) {
     fprintf(stderr, "Story template file fail to close\n");
     exit(EXIT_FAILURE);
   }
 
+  // check if the file with categories/words is closed
   if (fclose(cat_words) != 0) {
     fprintf(stderr, "A file with the categories/words fail to close\n");
     exit(EXIT_FAILURE);

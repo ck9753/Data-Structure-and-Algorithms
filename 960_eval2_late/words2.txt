@@ -1,0 +1,11 @@
+animal:dragon
+animal:walrus
+animal:cat
+animal:dog
+place:ocean
+place:cave
+place:school
+adjective:peculiar
+adjective:scary
+adjective:peaceful
+adjective:clean
