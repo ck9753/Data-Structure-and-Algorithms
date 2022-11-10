@@ -108,6 +108,7 @@ termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats) {
     const char * ptr2 = inputTerms.termarr[i];
     const char * end_ptr = &inputTerms.termarr[i][strlen(inputTerms.termarr[i]) - 1];
 
+    // outputTerms.termarr[i] = NULL;
     outputTerms.termarr[i] =
         malloc((strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
 
