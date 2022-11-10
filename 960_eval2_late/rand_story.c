@@ -177,6 +177,10 @@ termInfo_t cd_underscore(termInfo_t inputTerms, catarray_t * cats, prevWords_t l
 
         if (*end_ptr != '_') {
           const char * ptr3 = ptr2 + 1;
+          outputTerms.termarr[i] =
+              realloc(outputTerms.termarr[i],
+                      (strlen(outputTerms.termarr[i]) + 2 +
+                       strlen(ptr3) * sizeof(*outputTerms.termarr[i])));
           strcat(outputTerms.termarr[i], ptr3);
         }
         break;
