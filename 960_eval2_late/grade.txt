@@ -1,6 +1,6 @@
-Grading at 11/11/2022:21:51:30.538129
-For commit ID 86c28ebe102834c07f108e99979c6c229fc632a5
-Grading at Fri Nov 11 04:51:27 PM EST 2022
+Grading at 11/11/2022:21:52:43.770655
+For commit ID 5a8d2925d62aef1bd3792201c8b69e3ea4992f92
+Grading at Fri Nov 11 04:52:40 PM EST 2022
 Doing some basic checking for your submission
 
 Step 1
@@ -40,6 +40,22 @@ Your output looks good. Lets check valgrind
 Valgrind was clean
 
 1.4: Current test is story-step1 story2.txt
+-----------------------------
+It looks like you got different output from us on that case.
+Here is the diff (yours on left, ours on right):
+
+Once upon a time, there was a cat This cat lived in a very    |	Once upon a time, there was a cat. This cat lived in a very
+cat cat One day, it left its cat cat and met a cat.	      |	cat cat. One day, it left its cat cat and met a cat.
+Your file did not match the expected ouput
+
+
+1.5: Current test is story-step1 story_e1.txt
+-----------------------------
+You considered this a failure case:
+Incorrect category format
+But we did not.
+
+1.6: Current test is story-step1 story_e2.txt
 -----------------------------
 It looks like you got different output from us on that case.
 Here is the diff (yours on left, ours on right):
