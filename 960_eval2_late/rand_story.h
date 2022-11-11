@@ -28,7 +28,7 @@ typedef struct _catInfo_t catInfo_t;
 
 termInfo_t parseTerm(char * line);
 
-termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats);
+termInfo_t cdCatToWord(termInfo_t inputTerms, catarray_t * cats);
 
 termInfo_t cd_underscore(termInfo_t inputTerms,
                          catarray_t * cats,

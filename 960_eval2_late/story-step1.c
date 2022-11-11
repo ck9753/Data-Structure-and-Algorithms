@@ -31,7 +31,7 @@ int main(int argc, char ** argv) {
     termInfo_t termRes2;
     termRes2.termarr = NULL;
     termRes2.termNum = 0;
-    termRes2 = rmUnderScore(termRes, NULL);
+    termRes2 = cdCatToWord(termRes, NULL);
 
     freeTermInfo(termRes);
     printTermInfo(termRes2);
@@ -42,5 +42,6 @@ int main(int argc, char ** argv) {
 
   if (fclose(f) != 0) {
     fprintf(stderr, "File closed failure");
+    exit(EXIT_FAILURE);
   }
 }

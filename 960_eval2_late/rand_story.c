@@ -15,24 +15,47 @@ termInfo_t parseTerm(char * line) {
 
   const char * ptr1 = line;
   const char * ptr2 = line;
+  const char * ptr3 = line;  // pointer for checkting if it's '_'
 
   while (*ptr1 != '\0') {
     termRes.termarr =
         realloc(termRes.termarr, (termRes.termNum + 1) * sizeof(*termRes.termarr));
+    if (ptr3 != NULL) {
+      ptr3 = strchr(ptr3, '_');
+    }
 
     ptr1 = strchr(ptr1, ' ');
 
     if (ptr1 != NULL) {
-      termRes.termarr[termRes.termNum] =
-          malloc((ptr1 - ptr2 + 1) * sizeof(*termRes.termarr[termRes.termNum]));
+      if ((ptr2 != ptr3) || (ptr3 == NULL)) {
+        termRes.termarr[termRes.termNum] =
+            malloc((ptr1 - ptr2 + 1) * sizeof(*termRes.termarr[termRes.termNum]));
 
-      strncpy(termRes.termarr[termRes.termNum], ptr2, ptr1 - ptr2);
-      termRes.termarr[termRes.termNum][ptr1 - ptr2] = '\0';
+        strncpy(termRes.termarr[termRes.termNum], ptr2, ptr1 - ptr2);
+        termRes.termarr[termRes.termNum][ptr1 - ptr2] = '\0';
 
-      ptr1++;
-      ptr2 = ptr1;
+        ptr1++;
+        ptr2 = ptr1;
 
-      termRes.termNum++;
+        termRes.termNum++;
+      }
+
+      else if (ptr2 == ptr3) {
+        ptr1 = ptr3 + 1;
+        ptr1 = strchr(ptr1, '_');
+        termRes.termarr[termRes.termNum] =
+            malloc((ptr1 - ptr2 + 2) * sizeof(*termRes.termarr[termRes.termNum]));
+
+        strncpy(termRes.termarr[termRes.termNum], ptr2, ptr1 - ptr2 + 1);
+        termRes.termarr[termRes.termNum][ptr1 - ptr2 + 1] = '\0';
+
+        ptr1 = strchr(ptr1, ' ');
+        ptr1++;
+        ptr2 = ptr1;
+        ptr3 = ptr1;
+
+        termRes.termNum++;
+      }
     }
 
     else {
@@ -50,7 +73,7 @@ termInfo_t parseTerm(char * line) {
   return termRes;
 }
 
-termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats) {
+termInfo_t cdCatToWord(termInfo_t inputTerms, catarray_t * cats) {
   termInfo_t outputTerms;
   outputTerms.termarr = NULL;
   outputTerms.termNum = inputTerms.termNum;
@@ -70,6 +93,11 @@ termInfo_t rmUnderScore(termInfo_t inputTerms, catarray_t * cats) {
       ptr2 = strrchr(ptr2, '_');
 
       if (ptr1 != NULL) {
+        if (ptr1 == ptr2) {
+          fprintf(stderr, "Incorrect category format\n");
+          exit(EXIT_FAILURE);
+        }
+
         strncpy(outputTerms.termarr[i], ptr1 + 1, ptr2 - ptr1 - 1);
 
         const char * stringcat = NULL;
