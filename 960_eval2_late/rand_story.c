@@ -136,21 +136,7 @@ termInfo_t cd_underscore(termInfo_t inputTerms,
           stringcat = chooseWord(outputTerms.termarr[i], cats);
           // replace outputTerms.termarr[i] with stringcat
           strcpy(outputTerms.termarr[i], stringcat);
-          /*
-          if (ind == 1) {
-            for (size_t k = 0; k < cats->n; k++) {
-              for (size_t j = 0; j < cats->arr[k].n_words; j++) {
-                if (cats->arr[k].words[j] == stringcat) {
-                  cats->arr[k].n_words--;
-                  free(cats->arr[k].words[j]);
-                  cats->arr[k].words =
-                      realloc(cats->arr[k].words,
-                              cats->arr[k].n_words * sizeof(*cats->arr[k].words));
-                }
-              }
-            }
-          }
-	  */
+
           // store the word in list struct
           // increment outputTerms.list.num
           outputTerms.list.num++;
@@ -166,15 +152,52 @@ termInfo_t cd_underscore(termInfo_t inputTerms,
           // copy stringcat to outputTerms.list.words
           strcpy(outputTerms.list.words[outputTerms.list.num - 1], stringcat);
 
+          // if "-n", then remove
           if (ind == 1) {
             for (size_t k = 0; k < cats->n; k++) {
               for (size_t j = 0; j < cats->arr[k].n_words; j++) {
                 if (cats->arr[k].words[j] == stringcat) {
                   cats->arr[k].n_words--;
                   free(cats->arr[k].words[j]);
-                  cats->arr[k].words =
-                      realloc(cats->arr[k].words,
-                              cats->arr[k].n_words * sizeof(*cats->arr[k].words));
+                  cats->arr[k].words[j] = NULL;
+
+                  char ** wordsList = NULL;
+                  wordsList = malloc(cats->arr[k].n_words * sizeof(*wordsList));
+
+                  size_t l = 0;
+                  for (size_t z = 0; z < cats->arr[k].n_words; z++) {
+                    if (cats->arr[k].words[z] != NULL) {
+                      wordsList[l] = NULL;
+                      wordsList[l] = malloc((strlen(cats->arr[k].words[z]) + 1) *
+                                            sizeof(*wordsList[l]));
+                      strcpy(wordsList[l], cats->arr[k].words[z]);
+                      l++;
+                    }
+                  }
+                  for (size_t z = 0; z < cats->arr[k].n_words + 1; z++) {
+                    free(cats->arr[k].words[z]);
+                  }
+                  free(cats->arr[k].words);
+
+                  cats->arr[k].words = NULL;
+                  /*
+                  for (size_t z = 0; z < cats->arr[k].n_words; z++) {
+                    cats->arr[k].words[z] = NULL;
+                    cats->arr[k].words[z] = malloc((strlen(wordsList[z]) + 1) *
+                                                   sizeof(*cats->arr[k].words[z]));
+                    strcpy(cats->arr[k].words[z], wordsList[z]);
+                  }
+		  */
+
+                  cats->arr[k].words = wordsList;
+                  break;
+                  /*
+                  if (cats->arr[k].n_words > 0) {
+                    cats->arr[k].words =
+                        realloc(cats->arr[k].words,
+                                cats->arr[k].n_words * sizeof(*cats->arr[k].words));
+                  }
+		  */
                 }
               }
             }
@@ -483,9 +506,7 @@ void checkFileClosed(FILE * catF, FILE * tmpF) {
 
 catarray_t savedCatfor4(FILE * catF, catarray_t savedcat) {
   char * line1 = NULL;
-  // char * line2 = NULL;
   size_t sz1 = 0;
-  //size_t sz2 = 0;
 
   /*
   // declare and initialize catarray_t struct
