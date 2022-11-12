@@ -20,6 +20,7 @@ termInfo_t parseTerm(char * line) {
   while (*ptr1 != '\0') {
     termRes.termarr =
         realloc(termRes.termarr, (termRes.termNum + 1) * sizeof(*termRes.termarr));
+    // new added
     if (ptr3 != NULL) {
       ptr3 = strchr(ptr3, '_');
     }
@@ -27,6 +28,7 @@ termInfo_t parseTerm(char * line) {
     ptr1 = strchr(ptr1, ' ');
 
     if (ptr1 != NULL) {
+      // new added condition
       if ((ptr2 != ptr3) || (ptr3 == NULL)) {
         termRes.termarr[termRes.termNum] =
             malloc((ptr1 - ptr2 + 1) * sizeof(*termRes.termarr[termRes.termNum]));
@@ -40,6 +42,7 @@ termInfo_t parseTerm(char * line) {
         termRes.termNum++;
       }
 
+      // new added
       else if (ptr2 == ptr3) {
         ptr1 = ptr3 + 1;
         ptr1 = strchr(ptr1, '_');
@@ -48,6 +51,25 @@ termInfo_t parseTerm(char * line) {
 
         strncpy(termRes.termarr[termRes.termNum], ptr2, ptr1 - ptr2 + 1);
         termRes.termarr[termRes.termNum][ptr1 - ptr2 + 1] = '\0';
+
+        // new added
+        if (*(ptr1 + 1) != ' ') {
+          ptr1++;
+          ptr2 = strchr(ptr1, ' ');
+          char * rest = NULL;
+
+          rest = malloc((ptr2 - ptr1 + 1) * sizeof(*rest));
+          strncpy(rest, ptr1, ptr2 - ptr1);
+          rest[ptr2 - ptr1] = '\0';
+          termRes.termarr[termRes.termNum] =
+              realloc(termRes.termarr[termRes.termNum],
+                      (strlen(termRes.termarr[termRes.termNum]) + ptr2 - ptr1) *
+                          sizeof(*termRes.termarr[termRes.termNum]));
+          strcat(termRes.termarr[termRes.termNum], rest);
+          termRes.termarr[termRes.termNum][ptr2 - ptr3 + 1] = '\0';
+        }
+        // should fix this logic
+        //termRes.termarr[termRes.termNum][ptr1 - ptr2 + 1] = '\0';
 
         ptr1 = strchr(ptr1, ' ');
         ptr1++;
