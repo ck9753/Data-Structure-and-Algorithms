@@ -212,7 +212,6 @@ termInfo_t cdCatToWord(termInfo_t inputTerms, catarray_t * cats) {
 
       else {
         strcpy(outputTerms.termarr[i], inputTerms.termarr[i]);
-        //break;
       }
     }
   }
