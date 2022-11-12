@@ -425,6 +425,7 @@ catInfo_t parseLineSemi(char * line) {
   return res;
 }
 
+/*
 catarray_t arrDeepCopy(catarray_t inputArr) {
   catarray_t outputArr;
   outputArr.arr = NULL;
@@ -452,6 +453,7 @@ catarray_t arrDeepCopy(catarray_t inputArr) {
 
   return outputArr;
 }
+*/
 
 // function for storing the first element in savedres
 catarray_t storeNewArr(catInfo_t res, catarray_t savedres) {
