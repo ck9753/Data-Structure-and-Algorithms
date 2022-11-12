@@ -47,12 +47,17 @@ termInfo_t parseTerm(char * line) {
         termRes.termNum++;
 
         ptr1--;
+        termRes.termarr =
+            realloc(termRes.termarr, (termRes.termNum + 1) * sizeof(*termRes.termarr));
+
         termRes.termarr[termRes.termNum] =
             malloc((ptr4 - ptr1 + 2) * sizeof(*termRes.termarr[termRes.termNum]));
 
         strncpy(termRes.termarr[termRes.termNum], ptr1, ptr4 - ptr1 + 1);
         termRes.termarr[termRes.termNum][ptr4 - ptr1 + 1] = '\0';
 
+        termRes.space =
+            realloc(termRes.space, (termRes.termNum + 1) * sizeof(*termRes.space));
         termRes.space[termRes.termNum] = 0;
 
         //make index for reducing space for this case
@@ -394,6 +399,7 @@ void freeTermInfo(termInfo_t termRes) {
     free(termRes.termarr[i]);
   }
   free(termRes.termarr);
+  free(termRes.space);
 }
 
 void freeList(prevWords_t list) {
