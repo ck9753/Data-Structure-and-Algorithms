@@ -185,6 +185,7 @@ termInfo_t cd_underscore(termInfo_t inputTerms,
         if (atoi(outputTerms.termarr[i]) == 0) {
           const char * stringcat = NULL;
           stringcat = chooseWord(outputTerms.termarr[i], cats);
+
           // replace outputTerms.termarr[i] with stringcat
           strcpy(outputTerms.termarr[i], stringcat);
 
@@ -207,7 +208,7 @@ termInfo_t cd_underscore(termInfo_t inputTerms,
           if (ind == 1) {
             for (size_t k = 0; k < cats->n; k++) {
               for (size_t j = 0; j < cats->arr[k].n_words; j++) {
-                if (cats->arr[k].words[j] == outputTerms.termarr[i]) {
+                if (cats->arr[k].words[j] == stringcat) {
                   cats->arr[k].n_words--;
                   free(cats->arr[k].words[j]);
                   cats->arr[k].words[j] = NULL;
@@ -216,7 +217,7 @@ termInfo_t cd_underscore(termInfo_t inputTerms,
                   wordsList = malloc(cats->arr[k].n_words * sizeof(*wordsList));
 
                   size_t l = 0;
-                  for (size_t z = 0; z < cats->arr[k].n_words; z++) {
+                  for (size_t z = 0; z < cats->arr[k].n_words + 1; z++) {
                     if (cats->arr[k].words[z] != NULL) {
                       wordsList[l] = NULL;
                       wordsList[l] = malloc((strlen(cats->arr[k].words[z]) + 1) *
@@ -231,24 +232,22 @@ termInfo_t cd_underscore(termInfo_t inputTerms,
                   free(cats->arr[k].words);
 
                   cats->arr[k].words = NULL;
-                  /*
+
+                  // new added
+                  cats->arr[k].words =
+                      malloc(cats->arr[k].n_words * sizeof(*cats->arr[k].words));
                   for (size_t z = 0; z < cats->arr[k].n_words; z++) {
-                    cats->arr[k].words[z] = NULL;
                     cats->arr[k].words[z] = malloc((strlen(wordsList[z]) + 1) *
                                                    sizeof(*cats->arr[k].words[z]));
                     strcpy(cats->arr[k].words[z], wordsList[z]);
                   }
-		  */
 
-                  cats->arr[k].words = wordsList;
-                  break;
-                  /*
-                  if (cats->arr[k].n_words > 0) {
-                    cats->arr[k].words =
-                        realloc(cats->arr[k].words,
-                                cats->arr[k].n_words * sizeof(*cats->arr[k].words));
+                  for (size_t z = 0; z < cats->arr[k].n_words; z++) {
+                    free(wordsList[z]);
                   }
-		  */
+                  free(wordsList);
+                  //cats->arr[k].words = wordsList;
+                  break;
                 }
               }
             }
