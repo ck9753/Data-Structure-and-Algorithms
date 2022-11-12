@@ -207,7 +207,8 @@ termInfo_t cd_underscore(termInfo_t inputTerms,
           if (ind == 1) {
             for (size_t k = 0; k < cats->n; k++) {
               for (size_t j = 0; j < cats->arr[k].n_words; j++) {
-                if (cats->arr[k].words[j] == stringcat) {
+                if (cats->arr[k].words[j] ==
+                    outputTerms.list.words[outputTerms.list.num - 1]) {
                   cats->arr[k].n_words--;
                   free(cats->arr[k].words[j]);
                   cats->arr[k].words[j] = NULL;

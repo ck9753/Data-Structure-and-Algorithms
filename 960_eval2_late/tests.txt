@@ -6,6 +6,8 @@ story-step1 story_e1.txt
 story-step1 story_e2.txt
 
 story-step2 words.txt
+story-step2 words2.txt
+
 story-step3 words.txt story2.txt
 story-step3 words2.txt story3.txt
 

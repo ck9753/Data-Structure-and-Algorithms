@@ -23,7 +23,8 @@ int main(int argc, char ** argv) {
 
     savedcat = savedCatfor4(cat_words, savedcat);
 
-    catarray_t * inputCat = &savedcat;
+    catarray_t * inputCat = NULL;
+    inputCat = &savedcat;
 
     cd_underscorefor4(st_tmpl, savedcat, inputCat, _n);
 
@@ -42,7 +43,8 @@ int main(int argc, char ** argv) {
 
     savedcat = savedCatfor4(cat_words, savedcat);
 
-    catarray_t * inputCat = &savedcat;
+    catarray_t * inputCat = NULL;
+    inputCat = &savedcat;
 
     cd_underscorefor4(st_tmpl, savedcat, inputCat, _n);
 
