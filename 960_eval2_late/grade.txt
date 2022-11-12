@@ -1,6 +1,6 @@
-Grading at 11/12/2022:15:15:05.448430
-For commit ID 558c9476f6524a2cfa7570583bedf333d620548e
-Grading at Sat Nov 12 10:14:58 AM EST 2022
+Grading at 11/12/2022:16:28:39.262830
+For commit ID da5e79e4984d2de4195c1ba61e51379dbc296ef3
+Grading at Sat Nov 12 11:28:31 AM EST 2022
 Doing some basic checking for your submission
 
 Step 1
@@ -117,13 +117,9 @@ Valgrind was clean
 
 4.2: Current test is story-step4 -n words.txt story2.txt
 -----------------------------
-It looks like you got different output from us on that case.
-Here is the diff (yours on left, ours on right):
-
-Once upon a time, there was a walrus. This walrus lived in a 	Once upon a time, there was a walrus. This walrus lived in a 
-peculiar cave. One day, it left its peculiar cave and met a w |	peculiar cave. One day, it left its peculiar cave and met a d
-Your file did not match the expected ouput
-
+Your output looks good. Lets check valgrind
+  - Valgrind was clean (no errors, no memory leaks)
+Valgrind was clean
 
 You have NOT passed your test cases!
 You should go and figure out/understand where thing went wrong
