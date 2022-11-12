@@ -26,11 +26,13 @@ int main(int argc, char ** argv) {
     termInfo_t termRes;
     termRes.termarr = NULL;
     termRes.termNum = 0;
+    termRes.space = NULL;
     termRes = parseTerm(line);
 
     termInfo_t termRes2;
     termRes2.termarr = NULL;
     termRes2.termNum = 0;
+    termRes2.space = NULL;
     termRes2 = cdCatToWord(termRes, NULL);
 
     freeTermInfo(termRes);

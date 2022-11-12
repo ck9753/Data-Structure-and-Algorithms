@@ -16,6 +16,7 @@ typedef struct _prevWords_t prevWords_t;
 struct _termInfo_t {
   char ** termarr;
   size_t termNum;
+  size_t * space;
   prevWords_t list;
 };
 typedef struct _termInfo_t termInfo_t;

@@ -10,8 +10,10 @@ termInfo_t parseTerm(char * line) {
   termInfo_t termRes;
   termRes.termarr = NULL;
   termRes.termNum = 0;
+  termRes.space = NULL;
 
   termRes.termarr = malloc(sizeof(*termRes.termarr));
+  termRes.space = malloc(sizeof(*termRes.termarr));
 
   const char * ptr1 = line;
   const char * ptr2 = line;
@@ -20,6 +22,9 @@ termInfo_t parseTerm(char * line) {
   while (*ptr1 != '\0') {
     termRes.termarr =
         realloc(termRes.termarr, (termRes.termNum + 1) * sizeof(*termRes.termarr));
+    termRes.space =
+        realloc(termRes.space, (termRes.termNum + 1) * sizeof(*termRes.space));
+
     // new added
     if (ptr3 != NULL) {
       ptr3 = strchr(ptr3, '_');
@@ -28,13 +33,45 @@ termInfo_t parseTerm(char * line) {
     ptr1 = strchr(ptr1, ' ');
 
     if (ptr1 != NULL) {
+      const char * ptr4 = ptr1;
+      ptr4 = strchr(ptr4, '_');
       // new added condition
-      if ((ptr2 != ptr3) || (ptr3 == NULL)) {
+      if ((ptr2 != ptr3) && (ptr4 != ptr3)) {
+        termRes.termarr[termRes.termNum] =
+            malloc((ptr3 - ptr2 + 1) * sizeof(termRes.termarr[termRes.termNum]));
+        strncpy(termRes.termarr[termRes.termNum], ptr2, ptr3 - ptr2);
+        termRes.termarr[termRes.termNum][ptr3 - ptr2] = '\0';
+
+        termRes.space[termRes.termNum] = 0;
+
+        termRes.termNum++;
+
+        ptr1--;
+        termRes.termarr[termRes.termNum] =
+            malloc((ptr4 - ptr1 + 2) * sizeof(*termRes.termarr[termRes.termNum]));
+
+        strncpy(termRes.termarr[termRes.termNum], ptr1, ptr4 - ptr1 + 1);
+        termRes.termarr[termRes.termNum][ptr4 - ptr1 + 1] = '\0';
+
+        termRes.space[termRes.termNum] = 0;
+
+        //make index for reducing space for this case
+
+        ptr1 = ptr4 + 1;
+        ptr2 = ptr1;
+        ptr3 = ptr1;
+
+        termRes.termNum++;
+      }
+
+      else if ((ptr2 != ptr3) || (ptr3 == NULL)) {
         termRes.termarr[termRes.termNum] =
             malloc((ptr1 - ptr2 + 1) * sizeof(*termRes.termarr[termRes.termNum]));
 
         strncpy(termRes.termarr[termRes.termNum], ptr2, ptr1 - ptr2);
         termRes.termarr[termRes.termNum][ptr1 - ptr2] = '\0';
+
+        termRes.space[termRes.termNum] = 1;
 
         ptr1++;
         ptr2 = ptr1;
@@ -51,6 +88,8 @@ termInfo_t parseTerm(char * line) {
 
         strncpy(termRes.termarr[termRes.termNum], ptr2, ptr1 - ptr2 + 1);
         termRes.termarr[termRes.termNum][ptr1 - ptr2 + 1] = '\0';
+
+        termRes.space[termRes.termNum] = 1;
 
         // new added
         if (*(ptr1 + 1) != ' ') {
@@ -88,6 +127,9 @@ termInfo_t parseTerm(char * line) {
           malloc((ptr2 - ptr1 + 1) * sizeof(*termRes.termarr[termRes.termNum]));
 
       strncpy(termRes.termarr[termRes.termNum], ptr1, ptr2 - ptr1 + 1);
+
+      termRes.space[termRes.termNum] = 1;
+
       termRes.termNum++;
       break;
     }
@@ -100,17 +142,21 @@ termInfo_t cdCatToWord(termInfo_t inputTerms, catarray_t * cats) {
   termInfo_t outputTerms;
   outputTerms.termarr = NULL;
   outputTerms.termNum = inputTerms.termNum;
+  outputTerms.space = NULL;
 
   outputTerms.termarr = malloc((inputTerms.termNum) * sizeof(*outputTerms.termarr));
+  outputTerms.space = malloc((inputTerms.termNum) * sizeof(*outputTerms.space));
 
   for (size_t i = 0; i < inputTerms.termNum; i++) {
+    //outputTerms.space[i] = *(inputTerms.space);
     const char * ptr1 = inputTerms.termarr[i];
     const char * ptr2 = inputTerms.termarr[i];
     const char * end_ptr = &inputTerms.termarr[i][strlen(inputTerms.termarr[i]) - 1];
 
+    outputTerms.space[i] = inputTerms.space[i];
+
     outputTerms.termarr[i] =
         malloc((strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
-
     while (ptr1 != NULL) {
       ptr1 = strchr(ptr1, '_');
       ptr2 = strrchr(ptr2, '_');
@@ -334,7 +380,7 @@ prevWords_t cpList(prevWords_t inputlist) {
 
 void printTermInfo(termInfo_t termRes) {
   for (size_t i = 0; i < termRes.termNum; i++) {
-    if (i != termRes.termNum - 1) {
+    if ((i != termRes.termNum - 1) && (termRes.space[i] == 1)) {
       printf("%s ", termRes.termarr[i]);
     }
     else {
