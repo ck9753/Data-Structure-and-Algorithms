@@ -75,6 +75,7 @@ int main(int argc, char ** argv) {
     // declare and initialize termInfo_t termRes struct
     termInfo_t termRes;
     termRes.termarr = NULL;
+    termRes.space = NULL;
     termRes.termNum = 0;
 
     // store result of parseTerm in termRes
@@ -84,6 +85,7 @@ int main(int argc, char ** argv) {
     termInfo_t termRes2;
     termRes2.termarr = NULL;
     termRes2.termNum = 0;
+    termRes2.space = NULL;
 
     // store result of cd_underscore in termRes2
     termRes2 = cd_underscore(termRes, inputCat, prevWordsList, 0);

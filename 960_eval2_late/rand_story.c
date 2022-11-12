@@ -202,9 +202,11 @@ termInfo_t cd_underscore(termInfo_t inputTerms,
   termInfo_t outputTerms;
   outputTerms.termarr = NULL;
   outputTerms.termNum = inputTerms.termNum;
+  outputTerms.space = NULL;
 
   // allocate memory with the size of the number of term in inputTerms struct
   outputTerms.termarr = malloc((inputTerms.termNum) * sizeof(*outputTerms.termarr));
+  outputTerms.space = malloc((inputTerms.termNum) * sizeof(*outputTerms.space));
 
   // initialize list with the argument list
   outputTerms.list.num = list.num;
@@ -216,7 +218,11 @@ termInfo_t cd_underscore(termInfo_t inputTerms,
     const char * ptr2 = inputTerms.termarr[i];
     const char * end_ptr = &inputTerms.termarr[i][strlen(inputTerms.termarr[i]) - 1];
 
+    // copy inputTerms.space[i] to output
+    outputTerms.space[i] = inputTerms.space[i];
+
     // allocate memory for outputTerms.termarr[i] with the size of inputTerms.termarr[i]
+    outputTerms.termarr[i] = NULL;
     outputTerms.termarr[i] =
         malloc((strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
 
@@ -227,8 +233,17 @@ termInfo_t cd_underscore(termInfo_t inputTerms,
 
       // if the array have '_'
       if (ptr1 != NULL) {
+        //
+        /*
+        if (ptr1 == ptr2) {
+          strcpy(outputTerms.termarr[i], inputTerms.termarr[i]);
+          break;
+        }
+	*/
+
         // copy term without '_'s
         strncpy(outputTerms.termarr[i], ptr1 + 1, ptr2 - ptr1 - 1);
+
         // add the null terminator at the end
         outputTerms.termarr[i][ptr2 - ptr1 - 1] = '\0';
 
