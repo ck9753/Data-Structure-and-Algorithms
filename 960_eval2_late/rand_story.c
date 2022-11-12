@@ -6,12 +6,14 @@
 
 #include "provided.h"
 
+// function to parse term with the delimiter ' ' and '_'
 termInfo_t parseTerm(char * line) {
   termInfo_t termRes;
   termRes.termarr = NULL;
   termRes.termNum = 0;
   termRes.space = NULL;
 
+  // allocate memory for termarr and space
   termRes.termarr = malloc(sizeof(*termRes.termarr));
   termRes.space = malloc(sizeof(*termRes.termarr));
 
@@ -20,12 +22,13 @@ termInfo_t parseTerm(char * line) {
   const char * ptr3 = line;  // pointer for checkting if it's '_'
 
   while (*ptr1 != '\0') {
+    // increase memory to add term
     termRes.termarr =
         realloc(termRes.termarr, (termRes.termNum + 1) * sizeof(*termRes.termarr));
     termRes.space =
         realloc(termRes.space, (termRes.termNum + 1) * sizeof(*termRes.space));
 
-    // new added
+    // pointer for checking if '_' starts term
     if (ptr3 != NULL) {
       ptr3 = strchr(ptr3, '_');
     }
@@ -33,19 +36,24 @@ termInfo_t parseTerm(char * line) {
     ptr1 = strchr(ptr1, ' ');
 
     if (ptr1 != NULL) {
+      // pointer for checking '_' not starting with space
       const char * ptr4 = ptr1;
       ptr4 = strchr(ptr4, '_');
-      // new added condition
+
+      // if there's no space and '_'s are placed in strings
       if ((ptr2 != ptr3) && (ptr4 != ptr3)) {
+        // store the first term
         termRes.termarr[termRes.termNum] =
             malloc((ptr3 - ptr2 + 1) * sizeof(termRes.termarr[termRes.termNum]));
         strncpy(termRes.termarr[termRes.termNum], ptr2, ptr3 - ptr2);
         termRes.termarr[termRes.termNum][ptr3 - ptr2] = '\0';
 
+        // assign space index to 0
         termRes.space[termRes.termNum] = 0;
 
         termRes.termNum++;
 
+        // store term with '_'s
         ptr1--;
         termRes.termarr =
             realloc(termRes.termarr, (termRes.termNum + 1) * sizeof(*termRes.termarr));
@@ -58,9 +66,9 @@ termInfo_t parseTerm(char * line) {
 
         termRes.space =
             realloc(termRes.space, (termRes.termNum + 1) * sizeof(*termRes.space));
-        termRes.space[termRes.termNum] = 0;
 
-        //make index for reducing space for this case
+        // assign space index to 0
+        termRes.space[termRes.termNum] = 0;
 
         ptr1 = ptr4 + 1;
         ptr2 = ptr1;
@@ -69,6 +77,7 @@ termInfo_t parseTerm(char * line) {
         termRes.termNum++;
       }
 
+      // if the term does not start with '_'
       else if ((ptr2 != ptr3) || (ptr3 == NULL)) {
         termRes.termarr[termRes.termNum] =
             malloc((ptr1 - ptr2 + 1) * sizeof(*termRes.termarr[termRes.termNum]));
@@ -76,6 +85,7 @@ termInfo_t parseTerm(char * line) {
         strncpy(termRes.termarr[termRes.termNum], ptr2, ptr1 - ptr2);
         termRes.termarr[termRes.termNum][ptr1 - ptr2] = '\0';
 
+        // assign space index to 1
         termRes.space[termRes.termNum] = 1;
 
         ptr1++;
@@ -84,7 +94,7 @@ termInfo_t parseTerm(char * line) {
         termRes.termNum++;
       }
 
-      // new added
+      // if the term starts with '_'
       else if (ptr2 == ptr3) {
         ptr1 = ptr3 + 1;
         ptr1 = strchr(ptr1, '_');
@@ -94,26 +104,32 @@ termInfo_t parseTerm(char * line) {
         strncpy(termRes.termarr[termRes.termNum], ptr2, ptr1 - ptr2 + 1);
         termRes.termarr[termRes.termNum][ptr1 - ptr2 + 1] = '\0';
 
+        // assign space index to 1
         termRes.space[termRes.termNum] = 1;
 
-        // new added
+        // in case more strings exist after the second '_'
         if (*(ptr1 + 1) != ' ') {
           ptr1++;
           ptr2 = strchr(ptr1, ' ');
+
+          // declare temporary memory for the rest
           char * rest = NULL;
 
           rest = malloc((ptr2 - ptr1 + 1) * sizeof(*rest));
           strncpy(rest, ptr1, ptr2 - ptr1);
           rest[ptr2 - ptr1] = '\0';
+
           termRes.termarr[termRes.termNum] =
               realloc(termRes.termarr[termRes.termNum],
                       (strlen(termRes.termarr[termRes.termNum]) + ptr2 - ptr1 + 1) *
                           sizeof(*termRes.termarr[termRes.termNum]));
+
+          // store the rest of strings to termRes.termarr[termRes.termNum]
           strcat(termRes.termarr[termRes.termNum], rest);
           termRes.termarr[termRes.termNum][ptr2 - ptr3] = '\0';
           free(rest);
         }
-        // should fix this logic
+
         //termRes.termarr[termRes.termNum][ptr1 - ptr2 + 1] = '\0';
 
         ptr1 = strchr(ptr1, ' ');
@@ -125,6 +141,7 @@ termInfo_t parseTerm(char * line) {
       }
     }
 
+    // in case this term is the last term
     else {
       ptr1 = ptr2;
       ptr2 = strchr(ptr2, '\0');
@@ -143,44 +160,52 @@ termInfo_t parseTerm(char * line) {
   return termRes;
 }
 
+// the function to convert category to "cat"
 termInfo_t cdCatToWord(termInfo_t inputTerms, catarray_t * cats) {
   termInfo_t outputTerms;
   outputTerms.termarr = NULL;
   outputTerms.termNum = inputTerms.termNum;
   outputTerms.space = NULL;
 
+  // allocate memory for termarr and space
   outputTerms.termarr = malloc((inputTerms.termNum) * sizeof(*outputTerms.termarr));
   outputTerms.space = malloc((inputTerms.termNum) * sizeof(*outputTerms.space));
 
   for (size_t i = 0; i < inputTerms.termNum; i++) {
-    //outputTerms.space[i] = *(inputTerms.space);
     const char * ptr1 = inputTerms.termarr[i];
     const char * ptr2 = inputTerms.termarr[i];
     const char * end_ptr = &inputTerms.termarr[i][strlen(inputTerms.termarr[i]) - 1];
 
+    // store each space index to outputTerms
     outputTerms.space[i] = inputTerms.space[i];
 
     outputTerms.termarr[i] =
         malloc((strlen(inputTerms.termarr[i]) + 1) * sizeof(*outputTerms.termarr[i]));
+
     while (ptr1 != NULL) {
       ptr1 = strchr(ptr1, '_');
       ptr2 = strrchr(ptr2, '_');
 
+      // if has '_'
       if (ptr1 != NULL) {
+        // if '_'s are not a pair
         if (ptr1 == ptr2) {
           strcpy(outputTerms.termarr[i], inputTerms.termarr[i]);
           break;
         }
 
+        // store the strings inside '_'s
         strncpy(outputTerms.termarr[i], ptr1 + 1, ptr2 - ptr1 - 1);
 
+        // change termarr to stringcat output
         const char * stringcat = NULL;
         stringcat = chooseWord(outputTerms.termarr[i], cats);
         strcpy(outputTerms.termarr[i], stringcat);
+
+        // if there are more strings after the last '_'
         if (*end_ptr != '_') {
           const char * ptr3 = ptr2 + 1;
           strcat(outputTerms.termarr[i], ptr3);
-          //break;
         }
         break;
       }
@@ -233,14 +258,6 @@ termInfo_t cd_underscore(termInfo_t inputTerms,
 
       // if the array have '_'
       if (ptr1 != NULL) {
-        //
-        /*
-        if (ptr1 == ptr2) {
-          strcpy(outputTerms.termarr[i], inputTerms.termarr[i]);
-          break;
-        }
-	*/
-
         // copy term without '_'s
         strncpy(outputTerms.termarr[i], ptr1 + 1, ptr2 - ptr1 - 1);
 
@@ -498,36 +515,6 @@ catInfo_t parseLineSemi(char * line) {
   }
   return res;
 }
-
-/*
-catarray_t arrDeepCopy(catarray_t inputArr) {
-  catarray_t outputArr;
-  outputArr.arr = NULL;
-  outputArr.n = 0;
-
-  outputArr.n = inputArr.n;
-
-  outputArr.arr = malloc(outputArr.n * sizeof(*outputArr.arr));
-
-  for (size_t i = 0; i < outputArr.n; i++) {
-    outputArr.arr[i].n_words = inputArr.arr[i].n_words;
-    outputArr.arr[i].name =
-        malloc((strlen(inputArr.arr[i].name) + 1) * sizeof(*outputArr.arr[i].name));
-    strcpy(outputArr.arr[i].name, inputArr.arr[i].name);
-
-    outputArr.arr[i].words =
-        malloc(outputArr.arr[i].n_words * sizeof(*outputArr.arr[i].words));
-
-    for (size_t j = 0; j < outputArr.arr[i].n_words; j++) {
-      outputArr.arr[i].words[j] = malloc((strlen(inputArr.arr[i].words[j]) + 1) *
-                                         sizeof(*outputArr.arr[i].words[j]));
-      strcpy(outputArr.arr[i].words[j], inputArr.arr[i].words[j]);
-    }
-  }
-
-  return outputArr;
-}
-*/
 
 // function for storing the first element in savedres
 catarray_t storeNewArr(catInfo_t res, catarray_t savedres) {
