@@ -63,10 +63,11 @@ termInfo_t parseTerm(char * line) {
           rest[ptr2 - ptr1] = '\0';
           termRes.termarr[termRes.termNum] =
               realloc(termRes.termarr[termRes.termNum],
-                      (strlen(termRes.termarr[termRes.termNum]) + ptr2 - ptr1) *
+                      (strlen(termRes.termarr[termRes.termNum]) + ptr2 - ptr1 + 1) *
                           sizeof(*termRes.termarr[termRes.termNum]));
           strcat(termRes.termarr[termRes.termNum], rest);
-          termRes.termarr[termRes.termNum][ptr2 - ptr3 + 1] = '\0';
+          termRes.termarr[termRes.termNum][ptr2 - ptr3] = '\0';
+          free(rest);
         }
         // should fix this logic
         //termRes.termarr[termRes.termNum][ptr1 - ptr2 + 1] = '\0';
