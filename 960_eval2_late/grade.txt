@@ -1,6 +1,6 @@
-Grading at 11/12/2022:05:00:32.411663
-For commit ID 24f450827c904103bbfbd9879935e2149833a962
-Grading at Sat Nov 12 12:00:25 AM EST 2022
+Grading at 11/12/2022:05:20:59.773335
+For commit ID 8c40a0713d0fbfb66a60832df6d83366d5d8c56c
+Grading at Sat Nov 12 12:20:52 AM EST 2022
 Doing some basic checking for your submission
 
 Step 1
@@ -69,6 +69,12 @@ Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
+2.2: Current test is story-step2 words2.txt
+-----------------------------
+Your output looks good. Lets check valgrind
+  - Valgrind was clean (no errors, no memory leaks)
+Valgrind was clean
+
 Step 3
 Checking that story-step3 compiles
 rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
@@ -111,36 +117,13 @@ Valgrind was clean
 
 4.2: Current test is story-step4 -n words.txt story2.txt
 -----------------------------
-Your output looks good. Lets check valgrind
-  - Valgrind reported errors
-Valgrind reported errors or memory leaks:
-==3740436== Memcheck, a memory error detector
-==3740436== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3740436== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==3740436== Command: ./story-step4 -n words.txt story2.txt
-==3740436== Parent PID: 3740435
-==3740436== 
-==3740436== Conditional jump or move depends on uninitialised value(s)
-==3740436==    at 0x109FDF: cd_underscore (rand_story.c:210)
-==3740436==    by 0x10B54D: cd_underscorefor4 (rand_story.c:638)
-==3740436==    by 0x1095D1: main (story-step4.c:47)
-==3740436== 
-==3740436== Conditional jump or move depends on uninitialised value(s)
-==3740436==    at 0x484B235: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3740436==    by 0x10B17D: freeSavedRes (rand_story.c:527)
-==3740436==    by 0x10B644: cd_underscorefor4 (rand_story.c:657)
-==3740436==    by 0x1095D1: main (story-step4.c:47)
-==3740436== 
-==3740436== 
-==3740436== HEAP SUMMARY:
-==3740436==     in use at exit: 0 bytes in 0 blocks
-==3740436==   total heap usage: 167 allocs, 167 frees, 16,498 bytes allocated
-==3740436== 
-==3740436== All heap blocks were freed -- no leaks are possible
-==3740436== 
-==3740436== Use --track-origins=yes to see where uninitialised values come from
-==3740436== For lists of detected and suppressed errors, rerun with: -s
-==3740436== ERROR SUMMARY: 3 errors from 2 contexts (suppressed: 0 from 0)
+It looks like you got different output from us on that case.
+Here is the diff (yours on left, ours on right):
+
+Once upon a time, there was a walrus. This walrus lived in a 	Once upon a time, there was a walrus. This walrus lived in a 
+peculiar cave. One day, it left its peculiar cave and met a w |	peculiar cave. One day, it left its peculiar cave and met a d
+Your file did not match the expected ouput
+
 
 You have NOT passed your test cases!
 You should go and figure out/understand where thing went wrong
