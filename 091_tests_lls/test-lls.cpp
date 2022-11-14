@@ -330,7 +330,7 @@ class Tester {
     assert(il.getSize() == 4);
   }
   void testRemove() {
-    IntList l1;  // l1: 224321
+    IntList l1;  // 2 2 4 3 2 1
     l1.addFront(1);
     l1.addFront(2);
     l1.addFront(3);
@@ -338,15 +338,15 @@ class Tester {
     l1.addFront(2);
     l1.addFront(2);
 
-    IntList l2;  //l2: 21
+    IntList l2;  //2 1
     l2.addFront(1);
     l2.addFront(2);
 
-    IntList l3;  //l3: 21
+    IntList l3;  //2 1
     l3.addFront(1);
     l3.addFront(2);
 
-    IntList l4;  //l4: 1357
+    IntList l4;  //1 3 5 7
     l4.addBack(1);
     l4.addBack(3);
     l4.addBack(5);
@@ -360,7 +360,7 @@ class Tester {
     //test l1
     assert(l1.getSize() == 6);
 
-    assert(l1.remove(2) == true);  //l1:24321
+    assert(l1.remove(2) == true);  //2 4 3 2 1
     assert(l1.getSize() == 5);
 
     assert(l1[0] == 2 && l1[3] == 2);
@@ -368,12 +368,12 @@ class Tester {
     assert(l1.head->next->data == 4);
 
     assert(l1.remove(10) == false);
-    l1.remove(2);  //l1:4321
+    l1.remove(2);  //4 3 2 1
     assert(l1.head->data == 4);
-    l1.remove(2);  //l1: 431
+    l1.remove(2);  //4 3 1
     assert(l1.head->next->next->data == 1);
     assert(l1.tail->data == 1);
-    l1.remove(1);  //l1 : 43
+    l1.remove(1);  //4 3
     assert(l1.tail->data == 3);
 
     //test l2
