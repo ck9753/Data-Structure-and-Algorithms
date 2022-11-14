@@ -1,0 +1,23 @@
+Grading at 11/14/2022:20:10:09.091898
+For commit ID 32d95f4672945d18110e7770c69ec483a25ac988
+Grading at Mon Nov 14 03:10:05 PM EST 2022
+-----------------------------------------------
+testcase 1 : Testing with LinkedList<int>
+...compiling...
+The code compiled.
+  - Valgrind reported errors
+Valgrind reported errors (test failed).
+-----------------------------------------------
+testcase 2 : Testing with LinkedList<std::string>
+...compiling...
+The code compiled.
+  - Valgrind reported errors
+Valgrind reported errors (test failed).
+-----------------------------------------------
+testcase 3 : Testing with LinkedList<(a custom class we wrote)>
+...compiling...
+The code compiled.
+  - Valgrind reported errors
+Valgrind reported errors (test failed).
+
+Overall Grade: F
