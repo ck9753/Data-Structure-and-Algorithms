@@ -1,0 +1,44 @@
+Grading at 11/20/2022:20:30:49.037874
+For commit ID 83c2ec4f3698d5db358ce366156643983a9a347b
+Grading at Sun Nov 20 03:30:48 PM EST 2022
+-----------------------------------------------
+testcase 1 : Testing with BstSet<int>
+...compiling...
+In file included from 90-tester.cpp:1:
+bstset.h: In instantiation of ‘void BstSet<K>::remove(const K&) [with K = int]’:
+bstset.h:123:6:   required from here
+bstset.h:155:30: error: ‘class BstSet<int>::Node’ has no member named ‘left’
+  155 |       current = &(*current)->left;
+      |                  ~~~~~~~~~~~~^~~~
+bstset.h:159:30: error: ‘class BstSet<int>::Node’ has no member named ‘right’
+  159 |       current = &(*current)->right;
+      |                  ~~~~~~~~~~~~^~~~~
+The code did not compile.  This test failed.
+-----------------------------------------------
+testcase 2 : Testing with BstSet<std::string>
+...compiling...
+In file included from 90-tester.cpp:1:
+bstset.h: In instantiation of ‘void BstSet<K>::remove(const K&) [with K = std::__cxx11::basic_string<char>]’:
+bstset.h:123:6:   required from here
+bstset.h:155:30: error: ‘class BstSet<std::__cxx11::basic_string<char> >::Node’ has no member named ‘left’
+  155 |       current = &(*current)->left;
+      |                  ~~~~~~~~~~~~^~~~
+bstset.h:159:30: error: ‘class BstSet<std::__cxx11::basic_string<char> >::Node’ has no member named ‘right’
+  159 |       current = &(*current)->right;
+      |                  ~~~~~~~~~~~~^~~~~
+The code did not compile.  This test failed.
+-----------------------------------------------
+testcase 3 : Testing with BstSet<(a custom class we wrote)>
+...compiling...
+In file included from 90-tester.cpp:1:
+bstset.h: In instantiation of ‘void BstSet<K>::remove(const K&) [with K = Tester]’:
+bstset.h:123:6:   required from here
+bstset.h:155:30: error: ‘class BstSet<Tester>::Node’ has no member named ‘left’
+  155 |       current = &(*current)->left;
+      |                  ~~~~~~~~~~~~^~~~
+bstset.h:159:30: error: ‘class BstSet<Tester>::Node’ has no member named ‘right’
+  159 |       current = &(*current)->right;
+      |                  ~~~~~~~~~~~~^~~~~
+The code did not compile.  This test failed.
+
+Overall Grade: F
