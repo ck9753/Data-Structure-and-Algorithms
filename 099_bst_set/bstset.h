@@ -28,8 +28,15 @@ class BstSet : public Set<K> {
   Node * copyHelper(Node * current);
   Node * addnode(Node * current, const K & key);
   void destroy(Node * current);
-  void inOrder(Node * current);
-  void inOrderPrint();
+  void inOrder(Node * current) {
+    inOrder(current->l);
+    std::cout << current->key << " ";
+    inOrder(current->r);
+  }
+  void inOrderPrint() {
+    inOrder(root);
+    std::cout << std::endl;
+  }
 };
 
 // copy constructor
@@ -152,15 +159,15 @@ void BstSet<K>::remove(const K & key) {
     }
 
     else if (key < (*current)->key) {
-      current = &(*current)->left;
+      current = &(*current)->l;
     }
 
     else {
-      current = &(*current)->right;
+      current = &(*current)->r;
     }
   }
 }
-
+/*
 template<typename K>
 void BstSet<K>::inOrder(Node * current) {
   if (current != NULL) {
@@ -175,3 +182,4 @@ void BstSet<K>::inOrderPrint() {
   inOrder(root);
   std::cout << std::endl;
 }
+*/
