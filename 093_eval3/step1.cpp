@@ -22,7 +22,9 @@ bool readStory::readStoryFile(const char * fileName) {
   while (!file.eof()) {
     std::string tmp_line;
     std::getline(file, tmp_line);
-    fullText.push_back(tmp_line.c_str());
+    if (!tmp_line.empty()) {
+      fullText.push_back(tmp_line.c_str());
+    }
   }
 
   // iterate each line
@@ -37,11 +39,13 @@ bool readStory::readStoryFile(const char * fileName) {
     size_t atIndex = (*it).find('@');
 
     //add how to handle blank line
+    /*
     if ((*it).empty()) {
       break;
     }
+    */
 
-    else if (atIndex != std::string::npos) {
+    if (atIndex != std::string::npos) {
       allPageDeclaration.push_back(*it);
     }
 
