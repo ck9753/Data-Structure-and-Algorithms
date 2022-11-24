@@ -93,9 +93,16 @@ void readStory::printPage(std::vector<std::string> pageText) {
     std::cout << *it << std::endl;
     ++it;
   }
-  //std::cout << "\n" << std::endl;
 }
 
+/*
+void printStory::getPageNumAndType(std::string pageDeclaration,
+                                   int atIndex,
+                                   int colonIndex) {
+  if (atIndex == 1) {
+    
+}
+*/
 /*
 void readStory::groupByPageNum(std::vector<std::string> allPageDeclaration,
                                std::vector<std::pair<size_t, std::string> > allChoices) {

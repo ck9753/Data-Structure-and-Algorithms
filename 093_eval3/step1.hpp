@@ -6,13 +6,23 @@ class readStory {
  public:
   std::vector<std::string> allPageDeclaration;
   std::vector<std::pair<size_t, std::string> > allChoices;
-  std::vector<std::pair<std::string, std::vector<std::string> > > infoByPageNum;
 
   bool readStoryFile(const char * filenamee);
   std::vector<std::string> readPageFile(const char * filename);
   void printPage(std::vector<std::string> pageText);
-  void groupByPageNum(std::vector<std::string> allPageDeclaration,
-                      std::vector<std::pair<size_t, std::string> > allChoices);
+};
+
+class printStory {
+ public:
+  size_t pageNum_declar;
+  size_t pageNum_choice;
+  std::string pageType;
+  ;
+  std::string textOfThePageName;
+  std::vector<std::string> pageText;
+
+  void getPageNumAndType(std::string pageDeclaration, int atIndex, int colonIndex);
+  void printOutput();
 };
 
 /*
