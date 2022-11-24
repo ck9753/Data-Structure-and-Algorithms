@@ -29,27 +29,16 @@ bool readStory::readStoryFile(const char * fileName) {
 
   // iterate each line
   std::vector<std::string>::iterator it = fullText.begin();
-  // vector for page declarations
-  //std::vector<std::string> allPageDeclaration;
-
-  // vector for choices of pages
-  //std::vector<std::pair<size_t, std::string> > allChoices;
 
   while (it != fullText.end()) {
     size_t atIndex = (*it).find('@');
-
-    //add how to handle blank line
-    /*
-    if ((*it).empty()) {
-      break;
-    }
-    */
 
     if (atIndex != std::string::npos) {
       allPageDeclaration.push_back(*it);
     }
 
     else {
+      /*
       size_t firstColon = (*it).find(':');
       size_t secondColon = (*it).find_last_of(':');
       size_t page_num;
@@ -58,6 +47,8 @@ bool readStory::readStoryFile(const char * fileName) {
       text = (*it).substr(++secondColon);
 
       allChoices.push_back(std::make_pair(page_num, text));
+      */
+      allChoices.push_back(*it);
     }
 
     ++it;

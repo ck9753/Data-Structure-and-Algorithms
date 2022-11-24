@@ -5,7 +5,9 @@
 class readStory {
  public:
   std::vector<std::string> allPageDeclaration;
-  std::vector<std::pair<size_t, std::string> > allChoices;
+  std::vector<std::string> allChoices;
+
+  //std::vector<std::pair<size_t, std::string> > allChoices;
 
   bool readStoryFile(const char * filenamee);
   std::vector<std::string> readPageFile(const char * filename);
@@ -17,7 +19,6 @@ class printStory {
   size_t pageNum_declar;
   size_t pageNum_choice;
   std::string pageType;
-  ;
   std::string textOfThePageName;
   std::vector<std::string> pageText;
 

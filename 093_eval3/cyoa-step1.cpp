@@ -30,6 +30,7 @@ int main(int argc, char * argv[]) {
   std::string pageType;
   std::string textOfThePageName;
   std::vector<std::string> pageText;
+  std::string choiceOfThePage;
 
   // can use file.allPagedeclaration, file.allChoices
   for (std::vector<std::string>::iterator i = file.allPageDeclaration.begin();
@@ -73,14 +74,17 @@ int main(int argc, char * argv[]) {
 
       // counter for choice index
       int k = 1;
-      for (std::vector<std::pair<size_t, std::string> >::iterator j =
-               file.allChoices.begin();
+      for (std::vector<std::string>::iterator j = file.allChoices.begin();
            j != file.allChoices.end();
            ++j) {
-        pageNum_choice = j->first;
+        int firstColonIndex = (*j).find(':');
+        int secondColonIndex = (*j).find_last_of(':');
+
+        pageNum_choice = atoi(((*j).substr(firstColonIndex - 1, 1)).c_str());
+        choiceOfThePage = (*j).substr(secondColonIndex + 1);
 
         if (pageNum_choice == pageNum_declar) {
-          std::cout << k << ". " << j->second << std::endl;
+          std::cout << k << ". " << choiceOfThePage << std::endl;
           k++;
         }
       }
