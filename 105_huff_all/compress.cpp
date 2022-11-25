@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <fstream>
 #include <functional>
 #include <iostream>
 #include <map>
@@ -40,23 +41,25 @@ void writeCompressedOutput(const char * inFile,
 
   //BitFileWriter will close the output file in its destructor
   //but you probably need to close your input file.
-
-  FILE * f = fopen(inFile, "r");
-  if (f == NULL) {
-    std::cerr << "can't open the file" << std::endl;
+  std::ifstream f;
+  f.open(inFile);
+  if (f.fail()) {
+    std::cerr << "cannot open the file" << std::endl;
     exit(EXIT_FAILURE);
   }
   int c = 0;
   std::map<unsigned, BitString>::const_iterator it;
-  while ((c = fgetc(f)) != EOF) {
-    if (theMap.find(c) == theMap.end()) {
-      std::cerr << "can't find the character" << std::endl;
+  while ((c = f.get()) != EOF) {
+    it = theMap.find(c);
+    if (it == theMap.end()) {
+      std::cerr << "does not contain the character" << std::endl;
       exit(EXIT_FAILURE);
     }
-    bfw.writeBitString(theMap.find(c)->second);
+    bfw.writeBitString(it->second);
   }
-  bfw.writeBitString(theMap.find(c)->second);
-  fclose(f);
+  it = theMap.find(256);
+  bfw.writeBitString(it->second);
+  f.close();
 }
 
 int main(int argc, char ** argv) {
@@ -70,16 +73,12 @@ int main(int argc, char ** argv) {
   //hint 2: you can look at the main from the previous tester for 90% of this
   uint64_t * counts = readFrequencies(argv[1]);
   assert(counts != NULL);
-
   Node * tree = buildTree(counts);
   delete[] counts;
-
   std::map<unsigned, BitString> theMap;
-
   BitString empty;
   tree->buildMap(empty, theMap);
-  writeCompressedOutput(argv[1], argv[2], theMap);
   delete tree;
-
+  writeCompressedOutput(argv[1], argv[2], theMap);
   return EXIT_SUCCESS;
 }
