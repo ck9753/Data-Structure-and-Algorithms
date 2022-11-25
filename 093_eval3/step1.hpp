@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
+
 class readStory {
  public:
   std::vector<std::string> allPageDeclaration;

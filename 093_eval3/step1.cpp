@@ -57,6 +57,7 @@ bool readStory::readStoryFile(const char * fileName) {
 
   return true;
 }
+
 std::vector<std::string> readStory::readPageFile(const char * filename) {
   std::ifstream file;
   file.open(filename);
