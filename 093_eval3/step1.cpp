@@ -38,16 +38,6 @@ bool readStory::readStoryFile(const char * fileName) {
     }
 
     else {
-      /*
-      size_t firstColon = (*it).find(':');
-      size_t secondColon = (*it).find_last_of(':');
-      size_t page_num;
-      std::string text;
-      page_num = atoi(((*it).substr(--firstColon, 1)).c_str());
-      text = (*it).substr(++secondColon);
-
-      allChoices.push_back(std::make_pair(page_num, text));
-      */
       allChoices.push_back(*it);
     }
 
@@ -87,68 +77,46 @@ void readStory::printPage(std::vector<std::string> pageText) {
   }
 }
 
-/*
-void printStory::getPageNumAndType(std::string pageDeclaration,
-                                   int atIndex,
-                                   int colonIndex) {
-  if (atIndex == 1) {
-    
-}
-*/
-/*
-void readStory::groupByPageNum(std::vector<std::string> allPageDeclaration,
-                               std::vector<std::pair<size_t, std::string> > allChoices) {
-  size_t pageNum_declar;
-  size_t pageNum_choice;
-
+std::vector<Page> readStory::storeParsedDataToPage(const char * argv1) {
+  std::vector<Page> pages;
+  Page page;
   for (std::vector<std::string>::iterator i = allPageDeclaration.begin();
        i != allPageDeclaration.end();
        ++i) {
+    std::string textOfPageName;
     int atIndex = (*i).find('@');
-    pageNum_declar = atoi(((*i).substr(--atIndex, 1)).c_str());
-    for (std::vector<std::pair<size_t, std::string> >::iterator j = allChoices.begin();
-         j != allChoices.end();
+    int colonIndex = (*i).find(':');
+
+    if (atIndex == 1) {
+      page.pageNum = atoi(((*i).substr(atIndex - 1, 1)).c_str());
+    }
+
+    else if (atIndex == 2) {
+      page.pageNum = atoi(((*i).substr(atIndex - 2, 2)).c_str());
+    }
+
+    page.pageType = (*i).substr(atIndex + 1, 1);
+    textOfPageName = (*i).substr(++colonIndex);
+    textOfPageName = "/" + textOfPageName;
+    page.textOfPages = readPageFile((argv1 + textOfPageName).c_str());
+    for (std::vector<std::string>::iterator j = allChoices.begin(); j != allChoices.end();
          ++j) {
-      //int colIndex = (*j).find(':');
-      pageNum_choice = (j->first);  //atoi(((*j).substr(++colIndex).c_str));
-      if (pageNum_choice == pageNum_declar) {
-        infoByPageNum.push_back(std::make_pair(*i, j->second));
-        //start from here
+      size_t firstColon = (*j).find(':');
+      size_t secondColon = (*j).find_last_of(':');
+      size_t page_num;
+      size_t dest_num;
+      std::string choiceText;
+
+      page_num = atoi(((*j).substr(firstColon - 1, 1)).c_str());
+      dest_num =
+          atoi(((*j).substr(firstColon + 1, secondColon - firstColon - 1)).c_str());
+      choiceText = (*j).substr(secondColon + 1);
+
+      if (page_num == page.pageNum) {
+        page.choices.push_back(std::make_pair(dest_num, choiceText));
       }
     }
+    pages.push_back(page);
   }
-  void Page::parsePageDec(std::vector<std::string> pageDec) {
-    std::vector<std::string>::iterator it = pageDec.begin();
-    std::vector<std::string> textNames;
-
-    while (it != pageDec.end()) {
-      int atIndex = (*it).find('@');
-      int coIndex = (*it).find(':');
-
-      std::string tmp_pageNum;
-      std::string tmp_pageType;
-      std::string tmp_currentPageTextName;
-      if (atIndex == -1) {
-        std::cerr << "@ doesn't exist. Incorrect template" << std::endl;
-        exit(EXIT_FAILURE);
-      }
-
-      else {
-        // store pageNum
-        tmp_pageNum = (*it).substr(--atIndex, 1);
-        pageNum.push_back(atoi(tmp_pageNum.c_str()));
-
-        // store pageType
-        tmp_pageType = (*it).substr(atIndex, 1);
-        pageType.push_back(tmp_pageType);
-
-        // store currentPageTextName
-        tmp_currentPageTextName = (*it).substr(++coIndex);
-        textNames.push_back(tmp_currentPageTextName);
-      }
-    }
-    getTextOfPages(textNames);
-  }
-
-  void
-*/
+  return pages;
+}
