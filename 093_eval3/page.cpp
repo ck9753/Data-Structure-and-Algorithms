@@ -1,4 +1,4 @@
-#include "step1.hpp"
+#include "page.hpp"
 
 #include <algorithm>
 #include <cstdio>
@@ -8,7 +8,43 @@
 #include <string>
 #include <vector>
 
-bool readStory::readStoryFile(const char * fileName) {
+void Page::printPage() {
+  for (std::vector<std::string>::iterator it = textOfPages.begin();
+       it != textOfPages.end();
+       ++it) {
+    std::cout << *it << std::endl;
+  }
+
+  if (pageType == "W") {
+    std::cout << "Congratulations! You have won. Hooray!" << std::endl;
+  }
+
+  else if (pageType == "L") {
+    std::cout << "Sorry, you have lost. Better luck next time!" << std::endl;
+  }
+
+  else {
+    std::cout << "What would you like to do?"
+              << "\n"
+              << std::endl;
+
+    //counter for choice index
+    int k = 1;
+    for (std::vector<std::pair<size_t, std::string> >::iterator j = choices.begin();
+         j != choices.end();
+         ++j) {
+      std::cout << k << ". " << (*j).second << std::endl;
+      k++;
+    }
+  }
+}
+
+// read story.txt file from input directory and split it by allpagedeclaration and allChoices
+bool readStory::readStoryFile(const char * dir) {
+  std::string storyTxt = "/story.txt";
+  storyTxt = dir + storyTxt;
+
+  const char * fileName = storyTxt.c_str();
   std::ifstream file;
   file.open(fileName);
 
@@ -77,7 +113,7 @@ void readStory::printPage(std::vector<std::string> pageText) {
   }
 }
 
-std::vector<Page> readStory::storeParsedDataToPage(const char * argv1) {
+std::vector<Page> readStory::storeParsedDataToPage(const char * dir) {
   std::vector<Page> pages;
   Page page;
   for (std::vector<std::string>::iterator i = allPageDeclaration.begin();
@@ -98,7 +134,7 @@ std::vector<Page> readStory::storeParsedDataToPage(const char * argv1) {
     page.pageType = (*i).substr(atIndex + 1, 1);
     textOfPageName = (*i).substr(++colonIndex);
     textOfPageName = "/" + textOfPageName;
-    page.textOfPages = readPageFile((argv1 + textOfPageName).c_str());
+    page.textOfPages = readPageFile((dir + textOfPageName).c_str());
     for (std::vector<std::string>::iterator j = allChoices.begin(); j != allChoices.end();
          ++j) {
       size_t firstColon = (*j).find(':');
