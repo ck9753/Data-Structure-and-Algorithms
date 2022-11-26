@@ -153,6 +153,7 @@ std::vector<Page> readStory::storeParsedDataToPage(const char * dir) {
       }
     }
     pages.push_back(page);
+    page.choices.clear();
   }
   return pages;
 }
