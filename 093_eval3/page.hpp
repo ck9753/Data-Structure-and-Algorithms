@@ -51,5 +51,5 @@ class readStory {
   std::vector<std::string> readPageFile(const char * filename);
   //  std::vector<std::pair<size_t, std::string> > convrtChoicesFormat();
   void printPage(std::vector<std::string> pageText);
-  std::vector<Page> storeParsedDataToPage(const char * argv1);
+  std::vector<std::pair<size_t, Page> > storeParsedDataToPage(const char * argv1);
 };

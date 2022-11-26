@@ -15,6 +15,16 @@ class storyBook {
   // default constructor
   storyBook() : pages() {}
 
+  // copy constructor
+  storyBook(const storyBook & rhs) : pages(rhs.pages) {}
+  // An assignment operator
+  storyBook & operator=(const storyBook & rhs) {
+    if (this != &rhs) {
+      pages = rhs.pages;
+    }
+    return *this;
+  }
+
   // destructor
   ~storyBook() {}
 

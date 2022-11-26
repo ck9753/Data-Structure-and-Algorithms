@@ -8,7 +8,9 @@
 #include <vector>
 
 // from readStory class, store pages vector to pages in storyBook class
-void storyBook::runStoryBook(const char * argv1) {
+void storyBook::runStoryBook(const char * dir) {
   readStory file;
-  pages = file.storeParsedDataToPage(argv1);
+  file.readStoryFile(dir);
+
+  pages = file.storeParsedDataToPage(dir);
 }

@@ -113,8 +113,8 @@ void readStory::printPage(std::vector<std::string> pageText) {
   }
 }
 
-std::vector<Page> readStory::storeParsedDataToPage(const char * dir) {
-  std::vector<Page> pages;
+std::vector<std::pair<size_t, Page> > readStory::storeParsedDataToPage(const char * dir) {
+  std::vector<std::pair<size_t, Page> > pages;
   Page page;
   for (std::vector<std::string>::iterator i = allPageDeclaration.begin();
        i != allPageDeclaration.end();
@@ -152,7 +152,9 @@ std::vector<Page> readStory::storeParsedDataToPage(const char * dir) {
         page.choices.push_back(std::make_pair(dest_num, choiceText));
       }
     }
-    pages.push_back(page);
+    pages.push_back(std::make_pair(page.pageNum, page));
+
+    // clear choices in page.choices for next page choices
     page.choices.clear();
   }
   return pages;

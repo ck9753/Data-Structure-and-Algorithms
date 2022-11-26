@@ -14,7 +14,7 @@ int main(int argc, char * argv[]) {
   }
 
   readStory file;
-  std::vector<Page> pages;
+  std::vector<std::pair<size_t, Page> > pages;
 
   if (file.readStoryFile(argv[1]) == false) {
     std::cerr << "unavailable to open story.txt file" << std::endl;
@@ -23,11 +23,13 @@ int main(int argc, char * argv[]) {
 
   pages = file.storeParsedDataToPage(argv[1]);
 
-  for (std::vector<Page>::iterator i = pages.begin(); i != pages.end(); ++i) {
+  for (std::vector<std::pair<size_t, Page> >::iterator i = pages.begin();
+       i != pages.end();
+       ++i) {
     Page page;
-    page = *i;
+    page = (*i).second;
 
-    std::cout << "Page " << page.pageNum << std::endl;
+    std::cout << "Page " << (*i).first << std::endl;
     std::cout << "==========" << std::endl;
 
     page.printPage();
