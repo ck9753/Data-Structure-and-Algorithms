@@ -1,6 +1,6 @@
-Grading at 11/28/2022:01:56:37.506652
-For commit ID 0e032bbf5cec3b99dd806919eecf9de8f62a9d2b
-Grading at Sun Nov 27 08:56:14 PM EST 2022
+Grading at 11/28/2022:02:31:11.946614
+For commit ID 3a7be5fe53497a1ec5a3b9b4aad80b4c06f66f4a
+Grading at Sun Nov 27 09:30:46 PM EST 2022
 Doing some basic checking for your submission
 
 Step 1
@@ -33,7 +33,9 @@ No request to check for intermediate deadline completion on step 1
 Step 2
 Checking that cyoa-step2 compiles
 rm -f *~ cyoa-step1 cyoa-step2  %(PROGS).o page.o storyBook.o
-make: 'cyoa-step2' is up to date.
+g++ -std=gnu++98 -pedantic -Wall -Werror -ggdb3 -c cyoa-step2.cpp
+g++ -o cyoa-step2 cyoa-step2.o page.o storyBook.o
+rm cyoa-step2.o
 The code compiled (good)
 Executable cyoa-step2 exists (good)
 ------------------------------------
@@ -41,263 +43,165 @@ Now running YOUR tests for step 2
 ------------------------------------
 
 
-2.1: Current test is ./cyoa-step2 story1  <  ~/ece551/093_eval3/story1/inputs/input0.txt
------------------------------
-You considered this a failure case:
-/dev/fd/3: line 528: ~/ece551/093_eval3/story1/inputs/input0.txt: No such file or directory
-But we did not.
-
-
-2.2: Current test is ./cyoa-step2 story1  <  ~/ece551/093_eval3/story1/inputs/input1.txt
------------------------------
-You considered this a failure case:
-/dev/fd/3: line 528: ~/ece551/093_eval3/story1/inputs/input1.txt: No such file or directory
-But we did not.
-
-
-2.3: Current test is ./cyoa-step2 story2  <  ~/ece551/093_eval3/story2/inputs/input0.txt
------------------------------
-You considered this a failure case:
-/dev/fd/3: line 528: ~/ece551/093_eval3/story2/inputs/input0.txt: No such file or directory
-But we did not.
-
-
-2.4: Current test is ./cyoa-step2 story2  <  ~/ece551/093_eval3/story2/inputs/input1.txt
------------------------------
-You considered this a failure case:
-/dev/fd/3: line 528: ~/ece551/093_eval3/story2/inputs/input1.txt: No such file or directory
-But we did not.
-
-
-2.5: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input0.txt
+2.1: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input0.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.6: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input1.txt
+2.2: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input1.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.7: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input2.txt
+2.3: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input2.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.8: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input3.txt
+2.4: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input3.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.9: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input4.txt
+2.5: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input4.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.10: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input5.txt
+2.6: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input5.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.11: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input6.txt
+2.7: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input6.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.12: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input7.txt
+2.8: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input7.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.13: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input8.txt
+2.9: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input8.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.14: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input9.txt
+2.10: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input9.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.15: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input10.txt
+2.11: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input10.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.16: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input11.txt
------------------------------
-You considered this a failure case:
-timeout: the monitored command dumped core
-But we did not.
-
-
-2.17: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input12.txt
------------------------------
-You considered this a failure case:
-timeout: the monitored command dumped core
-But we did not.
-
-
-2.18: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input0.txt
+2.12: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input11.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.19: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input1.txt
+2.13: Current test is ./cyoa-step2 story1  <  /usr/local/ece551/cyoa/story1/inputs/input12.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.20: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input2.txt
+2.14: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input0.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.21: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input3.txt
+2.15: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input1.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.22: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input4.txt
+2.16: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input2.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.23: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input5.txt
+2.17: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input3.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.24: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input6.txt
+2.18: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input4.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.25: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input7.txt
+2.19: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input5.txt
 -----------------------------
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
 
 
-2.26: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input8.txt
+2.20: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input6.txt
 -----------------------------
-You considered this a failure case:
-timeout: the monitored command dumped core
-But we did not.
+Your output looks good. Lets check valgrind
+  - Valgrind was clean (no errors, no memory leaks)
+Valgrind was clean
 
 
-2.27: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input9.txt
+2.21: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input7.txt
 -----------------------------
-It looks like you got different output from us on that case.
-Here is the diff (yours on left, ours on right):
+Your output looks good. Lets check valgrind
+  - Valgrind was clean (no errors, no memory leaks)
+Valgrind was clean
 
-One bright weekend afternoon, you decide to adventure, puttin	One bright weekend afternoon, you decide to adventure, puttin
-of the Niebelungen and traveler's cloak and strapping the fam	of the Niebelungen and traveler's cloak and strapping the fam
-to your back.							to your back.
 
-Half-way up the mountain Matterhorn, you see a cave opening w	Half-way up the mountain Matterhorn, you see a cave opening w
-coming out. You enter the cave and tiptoe inside, straining y	coming out. You enter the cave and tiptoe inside, straining y
-the gloomy mist.						the gloomy mist.
+2.22: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input8.txt
+-----------------------------
+Your output looks good. Lets check valgrind
+  - Valgrind was clean (no errors, no memory leaks)
+Valgrind was clean
 
-You encounter a dragon.						You encounter a dragon.
 
-What would you like to do?					What would you like to do?
-
- 1. Try to sneak past the sleeping dragon			 1. Try to sneak past the sleeping dragon
- 2. Leave the dragon's cave and go home				 2. Leave the dragon's cave and go home
- 3. Stab the dragon in the neck					 3. Stab the dragon in the neck
-One bright weekend afternoon, you decide to adventure, puttin |	That is not a valid choice, please try again
-of the Niebelungen and traveler's cloak and strapping the fam <
-to your back.						      <
-							      <
-Half-way up the mountain Matterhorn, you see a cave opening w <
-coming out. You enter the cave and tiptoe inside, straining y <
-the gloomy mist.					      <
-							      <
-You encounter a dragon.					      <
-							      <
-What would you like to do?				      <
-							      <
- 1. Try to sneak past the sleeping dragon		      <
- 2. Leave the dragon's cave and go home			      <
- 3. Stab the dragon in the neck				      <
-As you tiptoe past the sleeping dragon, steam rising from her	As you tiptoe past the sleeping dragon, steam rising from her
-see a gleaming treasure hoard, just beyond the scaly tail.	see a gleaming treasure hoard, just beyond the scaly tail.
-
-An enormous, rare Scythian ruby gleams atop a pedestal, becko	An enormous, rare Scythian ruby gleams atop a pedestal, becko
-
-What would you like to do?					What would you like to do?
-
- 1. Pick up the ruby						 1. Pick up the ruby
- 2. Pass the ruby to explore the rest of the hoard		 2. Pass the ruby to explore the rest of the hoard
-A mountain of treasure rises before you, but two things are m	A mountain of treasure rises before you, but two things are m
-interesting than the sapphires and gold doubloons. To your ri	interesting than the sapphires and gold doubloons. To your ri
-unique and elegant coat stand, rests a silvery cloak. To your	unique and elegant coat stand, rests a silvery cloak. To your
-grand marble desk, lies an ancient book with gold-leaf trim. 	grand marble desk, lies an ancient book with gold-leaf trim. 
-
-What would you like to do?					What would you like to do?
-
- 1. Put on the cloak						 1. Put on the cloak
- 2. Open the book						 2. Open the book
-It appears to be a cloak of invisibility! You pass what shoul	It appears to be a cloak of invisibility! You pass what shoul
-in front of your face, but you see nothing.			in front of your face, but you see nothing.
-
-Emboldened, you explore the treasure hoard further.		Emboldened, you explore the treasure hoard further.
-
-What would you like to do?					What would you like to do?
-
- 1. Go back and take the ruby					 1. Go back and take the ruby
- 2. Go back and open the book					 2. Go back and open the book
-You wrap the Scythian ruby in the cloak, and sneak back to wh	You wrap the Scythian ruby in the cloak, and sneak back to wh
-slumbers. 							slumbers. 
-
-What would you like to do?					What would you like to do?
-
- 1. Take your prize and go home					 1. Take your prize and go home
- 2. Stab the dragon in the neck					 2. Stab the dragon in the neck
-Your famed sword Ice becomes embedded in the dragon's neck sc	Your famed sword Ice becomes embedded in the dragon's neck sc
-dragon rolls over, crushing you.				dragon rolls over, crushing you.
-
-Sorry, you have lost. Better luck next time!			Sorry, you have lost. Better luck next time!
-Your file did not match the expected output
-
+2.23: Current test is ./cyoa-step2 story2  <  /usr/local/ece551/cyoa/story2/inputs/input9.txt
+-----------------------------
+Your output looks good. Lets check valgrind
+  - Valgrind was clean (no errors, no memory leaks)
+Valgrind was clean
 No request to check for intermediate deadline completion on step 2
 
 Step 3
