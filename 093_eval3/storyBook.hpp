@@ -30,5 +30,6 @@ class storyBook {
 
   void runStoryBook(const char * dir);
   void checkValidity();
+  bool checkUserChoice(size_t userChoice, size_t presentPageNum);
   void processPages();
 };

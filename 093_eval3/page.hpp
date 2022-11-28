@@ -8,18 +8,18 @@ class Page {
   size_t pageNum;
   std::string pageType;                                  // W, L, or N
   std::vector<std::pair<size_t, std::string> > choices;  // <destNum, string>
-  std::vector<std::string> textOfPages;
+  std::vector<std::string> storyInsidePage;
 
  public:
   // Default constructor
-  Page() : pageNum(0), pageType("N"), choices(), textOfPages() {}
-  //  Page(init_pageNum, init_pageType, init_choices, init_textOfPages) : page
+  Page() : pageNum(0), pageType("N"), choices(), storyInsidePage() {}
+
   // A copy constructor
   Page(const Page & rhs) :
       pageNum(rhs.pageNum),
       pageType(rhs.pageType),
       choices(rhs.choices),
-      textOfPages(rhs.textOfPages) {}
+      storyInsidePage(rhs.storyInsidePage) {}
 
   // An assignment operator
   // performs a deep copy
@@ -28,7 +28,7 @@ class Page {
       pageNum = rhs.pageNum;
       pageType = rhs.pageType;
       choices = rhs.choices;
-      textOfPages = rhs.textOfPages;
+      storyInsidePage = rhs.storyInsidePage;
     }
     return *this;
   }
@@ -37,7 +37,7 @@ class Page {
   // release any allocated memory
   ~Page(){};
 
-  void printPage();  // start here
+  void printPage();
 };
 
 class readStory {
@@ -45,11 +45,8 @@ class readStory {
   std::vector<std::string> allPageDeclaration;
   std::vector<std::string> allChoices;
 
-  //std::vector<std::pair<size_t, std::string> > allChoices;
-
   bool readStoryFile(const char * filename);
   std::vector<std::string> readPageFile(const char * filename);
-  //  std::vector<std::pair<size_t, std::string> > convrtChoicesFormat();
   void printPage(std::vector<std::string> pageText);
   std::vector<std::pair<size_t, Page> > storeParsedDataToPage(const char * argv1);
 };

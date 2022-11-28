@@ -96,39 +96,18 @@ void storyBook::checkValidity() {
   }
 }
 
-/*  
-  // check if every page is referenced by a choice is valid
-  for (std::vector<std::pair<size_t, Page> >::iterator pages_iter = pages.begin();
-       pages_iter != pages.end();
-       ++pages_iter) {
-    for (std::vector<std::pair<size_t, std::string> >::iterator choices_iter =
-             (*pages_iter).second.choices.begin();
-         choices_iter != (*pages_iter).second.choices.end();
-         ++choices_iter) {
-      if ((*pages_iter).first != 0) {
-        // checker to check if pages include the referenced page
-        int k = 0;
-
-        for (std::vector<std::pair<size_t, Page> >::iterator cmp_pages_iter =
-                 pages.begin();
-             cmp_pages_iter != pages.end();
-             ++cmp_pages_iter) {
-          // if the destNum of choice and one of the page number is equal,
-          if ((*choices_iter).first == (*cmp_pages_iter).first) {
-            k = 1;
-          }
-        }
-        if (k != 1) {
-          std::cerr << "The condition that every page is referenced by a choice is valid "
-                       "was not satisfied."
-                    << std::endl;
-          exit(EXIT_FAILURE);
-        }
-      }
-    }
+bool storyBook::checkUserChoice(size_t userChoice, size_t presentPageNum) {
+  // check if user input is smaller than 1 (userChoice = 0 if input is not string)
+  if (userChoice < 1) {
+    return false;
   }
 
-  // check if every page (except page 0) is referenced by at least one *other* page's choices*/
+  // check if user input is greater than the number of choices
+  if (userChoice > pages[presentPageNum].second.choices.size()) {
+    return false;
+  }
+  return true;
+}
 
 void storyBook::processPages() {
   // print the Page 0
@@ -147,31 +126,20 @@ void storyBook::processPages() {
     std::getline(std::cin, input);
 
     size_t userChoice = atoi(input.c_str());
-    size_t invalid = 0;
 
-    // check if the choice from user is smaller than 1
-    if (userChoice < 1) {
-      invalid = 1;
-    }
-
-    if (userChoice > pages[presentPageNum].second.choices.size()) {
-      invalid = 1;
-    }
-
-    if (invalid == 1) {
+    if (checkUserChoice(userChoice, presentPageNum) == false) {
       std::cout << "That is not a valid choice, please try again" << std::endl;
     }
 
-    else if (invalid == 0) {
+    else {
       std::pair<size_t, std::string> userChoicePair =
           pages[presentPageNum].second.choices[userChoice - 1];
 
       presentPageNum = userChoicePair.first;
 
-      // should fix
-      //presentPageNum = pages[presentPageNum].second.choices[userChoice - 1].first;
       pages[presentPageNum].second.printPage();
 
+      // if pageType is W or L, the game is over and the while loop is stopped
       if (pages[presentPageNum].second.pageType == "W" ||
           pages[presentPageNum].second.pageType == "L") {
         gameOver = true;
