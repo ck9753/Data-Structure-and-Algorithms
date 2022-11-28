@@ -147,19 +147,35 @@ void storyBook::processPages() {
     std::getline(std::cin, input);
 
     size_t userChoice = atoi(input.c_str());
-    /*
-    std::pair<size_t, std::string> userChoicePair =
-        pages[presentPageNum].second.choices[userChoice - 1];
+    size_t invalid = 0;
 
-    presentPageNum = userChoicePair.first - 1;
-    */
-    // should fix
-    presentPageNum = pages[presentPageNum].second.choices[userChoice - 1].first;
-    pages[presentPageNum].second.printPage();
+    // check if the choice from user is smaller than 1
+    if (userChoice < 1) {
+      invalid = 1;
+    }
 
-    if (pages[presentPageNum].second.pageType == "W" ||
-        pages[presentPageNum].second.pageType == "L") {
-      gameOver = true;
+    if (userChoice > pages[presentPageNum].second.choices.size()) {
+      invalid = 1;
+    }
+
+    if (invalid == 1) {
+      std::cout << "That is not a valid choice, please try again" << std::endl;
+    }
+
+    else if (invalid == 0) {
+      std::pair<size_t, std::string> userChoicePair =
+          pages[presentPageNum].second.choices[userChoice - 1];
+
+      presentPageNum = userChoicePair.first;
+
+      // should fix
+      //presentPageNum = pages[presentPageNum].second.choices[userChoice - 1].first;
+      pages[presentPageNum].second.printPage();
+
+      if (pages[presentPageNum].second.pageType == "W" ||
+          pages[presentPageNum].second.pageType == "L") {
+        gameOver = true;
+      }
     }
   }
 }
