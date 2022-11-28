@@ -8,7 +8,7 @@
 
 int main(int argc, char * argv[]) {
   if (argc != 2) {
-    std::cerr << "Wrong command format. Expected: ./cyoa-step1 story_irectory address\n"
+    std::cerr << "Wrong command format. Expected: ./cyoa-step1 story_directory"
               << std::endl;
     exit(EXIT_FAILURE);
   }

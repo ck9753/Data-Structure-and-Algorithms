@@ -33,7 +33,7 @@ void Page::printPage() {
     for (std::vector<std::pair<size_t, std::string> >::iterator j = choices.begin();
          j != choices.end();
          ++j) {
-      std::cout << k << ". " << (*j).second << std::endl;
+      std::cout << " " << k << ". " << (*j).second << std::endl;
       k++;
     }
   }

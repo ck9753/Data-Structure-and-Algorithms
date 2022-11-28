@@ -29,6 +29,6 @@ class storyBook {
   ~storyBook() {}
 
   void runStoryBook(const char * dir);
-  void checkValidities();
-  //void processPages
+  void checkValidity();
+  void processPages();
 };
