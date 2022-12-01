@@ -32,4 +32,5 @@ class storyBook {
   void checkValidity();
   bool checkUserChoice(size_t userChoice, size_t presentPageNum);
   void processPages();
+  void dfs();
 };
