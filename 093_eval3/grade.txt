@@ -1,6 +1,6 @@
-Grading at 12/03/2022:18:24:57.318351
-For commit ID 1e1da3faf227395a4f0ed266c8b9661dd1561d67
-Grading at Sat Dec  3 01:24:32 PM EST 2022
+Grading at 12/03/2022:18:28:03.299137
+For commit ID 0d1ff8706326fc72c10b2f6a370f0ce1c3fdbf1d
+Grading at Sat Dec  3 01:27:37 PM EST 2022
 Doing some basic checking for your submission
 
 Step 1
@@ -33,9 +33,7 @@ No request to check for intermediate deadline completion on step 1
 Step 2
 Checking that cyoa-step2 compiles
 rm -f *~ cyoa-step1 cyoa-step2 cyoa-step3  %(PROGS).o page.o storyBook.o
-g++ -std=gnu++98 -pedantic -Wall -Werror -ggdb3 -c cyoa-step2.cpp
-g++ -o cyoa-step2 cyoa-step2.o page.o storyBook.o
-rm cyoa-step2.o
+make: 'cyoa-step2' is up to date.
 The code compiled (good)
 Executable cyoa-step2 exists (good)
 ------------------------------------
@@ -236,6 +234,16 @@ Here is the diff (yours on left, ours on right):
 0(1),2(win)						      |	0(2),2(win)
 Your file did not match the expected output
 
+
+
+3.3: Current test is ./cyoa-step3 story3 < /dev/null
+-----------------------------
+Great: we both considered this an error
+----here is what you printed on stderr---
+At least one page must be a WIN page and at least one page must be a LOSE page.
+-----------------------------------------
+Lets check if it valgrinds:
+Valgrind was clean
 No request to check for intermediate deadline completion on step 3
 
 Step 4
