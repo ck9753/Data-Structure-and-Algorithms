@@ -1,6 +1,6 @@
-Grading at 12/03/2022:18:28:03.299137
-For commit ID 0d1ff8706326fc72c10b2f6a370f0ce1c3fdbf1d
-Grading at Sat Dec  3 01:27:37 PM EST 2022
+Grading at 12/03/2022:18:33:41.256700
+For commit ID c479a0c8bcec44be9a755d592323a24d99032db4
+Grading at Sat Dec  3 01:33:13 PM EST 2022
 Doing some basic checking for your submission
 
 Step 1
@@ -33,7 +33,9 @@ No request to check for intermediate deadline completion on step 1
 Step 2
 Checking that cyoa-step2 compiles
 rm -f *~ cyoa-step1 cyoa-step2 cyoa-step3  %(PROGS).o page.o storyBook.o
-make: 'cyoa-step2' is up to date.
+g++ -std=gnu++98 -pedantic -Wall -Werror -ggdb3 -c cyoa-step2.cpp
+g++ -o cyoa-step2 cyoa-step2.o page.o storyBook.o
+rm cyoa-step2.o
 The code compiled (good)
 Executable cyoa-step2 exists (good)
 ------------------------------------
@@ -205,7 +207,9 @@ No request to check for intermediate deadline completion on step 2
 Step 3
 Checking that cyoa-step3 compiles
 rm -f *~ cyoa-step1 cyoa-step2 cyoa-step3  %(PROGS).o page.o storyBook.o
-make: 'cyoa-step3' is up to date.
+g++ -std=gnu++98 -pedantic -Wall -Werror -ggdb3 -c cyoa-step3.cpp
+g++ -o cyoa-step3 cyoa-step3.o page.o storyBook.o
+rm cyoa-step3.o
 The code compiled (good)
 Executable cyoa-step3 exists (good)
 ------------------------------------
@@ -215,25 +219,16 @@ Now running YOUR tests for step 3
 
 3.1: Current test is ./cyoa-step3 story1 < /dev/null
 -----------------------------
-It looks like you got different output from us on that case.
-Here is the diff (yours on left, ours on right):
-
-0(0),1(1),3(0),8(win)					      |	0(1),1(2),3(1),8(win)
-0(0),1(2),4(1),12(win)					      |	0(1),1(3),4(2),12(win)
-Your file did not match the expected output
-
+Your output looks good. Lets check valgrind
+  - Valgrind was clean (no errors, no memory leaks)
+Valgrind was clean
 
 
 3.2: Current test is ./cyoa-step3 story2 < /dev/null
 -----------------------------
-It looks like you got different output from us on that case.
-Here is the diff (yours on left, ours on right):
-
-0(0),1(1),5(0),6(0),8(0),11(win)			      |	0(1),1(2),5(1),6(1),8(1),11(win)
-0(0),1(1),5(1),7(0),10(win)				      |	0(1),1(2),5(2),7(1),10(win)
-0(1),2(win)						      |	0(2),2(win)
-Your file did not match the expected output
-
+Your output looks good. Lets check valgrind
+  - Valgrind was clean (no errors, no memory leaks)
+Valgrind was clean
 
 
 3.3: Current test is ./cyoa-step3 story3 < /dev/null
