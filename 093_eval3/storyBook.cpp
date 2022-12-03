@@ -221,7 +221,7 @@ void storyBook::printCurrentPath(std::vector<Page> currentPath) {
            j != (*i).choices.end();
            j++) {
         if ((*j).first == next_pageNum) {
-          userChoiceNum = choicesCtr;
+          userChoiceNum = choicesCtr + 1;
         }
         choicesCtr++;
       }
