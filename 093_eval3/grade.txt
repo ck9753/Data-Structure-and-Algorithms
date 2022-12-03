@@ -1,6 +1,6 @@
-Grading at 12/03/2022:18:20:31.926494
-For commit ID c7c4822a4b3058db0866203ef94ab81b73bc42e7
-Grading at Sat Dec  3 01:20:07 PM EST 2022
+Grading at 12/03/2022:18:24:57.318351
+For commit ID 1e1da3faf227395a4f0ed266c8b9661dd1561d67
+Grading at Sat Dec  3 01:24:32 PM EST 2022
 Doing some basic checking for your submission
 
 Step 1
@@ -33,7 +33,9 @@ No request to check for intermediate deadline completion on step 1
 Step 2
 Checking that cyoa-step2 compiles
 rm -f *~ cyoa-step1 cyoa-step2 cyoa-step3  %(PROGS).o page.o storyBook.o
-make: 'cyoa-step2' is up to date.
+g++ -std=gnu++98 -pedantic -Wall -Werror -ggdb3 -c cyoa-step2.cpp
+g++ -o cyoa-step2 cyoa-step2.o page.o storyBook.o
+rm cyoa-step2.o
 The code compiled (good)
 Executable cyoa-step2 exists (good)
 ------------------------------------
