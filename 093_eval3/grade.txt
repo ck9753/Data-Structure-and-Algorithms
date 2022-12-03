@@ -1,11 +1,11 @@
-Grading at 11/28/2022:04:06:10.818745
-For commit ID 09124fbf1103186ba76bed49e66f1b7ae46a8fbe
-Grading at Sun Nov 27 11:05:46 PM EST 2022
+Grading at 12/03/2022:18:14:06.667454
+For commit ID 5b45fbe43254601e837da63d680404684f34b28a
+Grading at Sat Dec  3 01:13:41 PM EST 2022
 Doing some basic checking for your submission
 
 Step 1
 Checking that cyoa-step1 compiles
-rm -f *~ cyoa-step1 cyoa-step2  %(PROGS).o page.o storyBook.o
+rm -f *~ cyoa-step1 cyoa-step2 cyoa-step3  %(PROGS).o page.o storyBook.o
 g++ -std=gnu++98 -pedantic -Wall -Werror -ggdb3 -c cyoa-step1.cpp
 g++ -o cyoa-step1 cyoa-step1.o page.o storyBook.o
 rm cyoa-step1.o
@@ -32,7 +32,7 @@ No request to check for intermediate deadline completion on step 1
 
 Step 2
 Checking that cyoa-step2 compiles
-rm -f *~ cyoa-step1 cyoa-step2  %(PROGS).o page.o storyBook.o
+rm -f *~ cyoa-step1 cyoa-step2 cyoa-step3  %(PROGS).o page.o storyBook.o
 g++ -std=gnu++98 -pedantic -Wall -Werror -ggdb3 -c cyoa-step2.cpp
 g++ -o cyoa-step2 cyoa-step2.o page.o storyBook.o
 rm cyoa-step2.o
@@ -206,7 +206,18 @@ No request to check for intermediate deadline completion on step 2
 
 Step 3
 Checking that cyoa-step3 compiles
-rm -f *~ cyoa-step1 cyoa-step2  %(PROGS).o page.o storyBook.o
+rm -f *~ cyoa-step1 cyoa-step2 cyoa-step3  %(PROGS).o page.o storyBook.o
+make: 'cyoa-step3' is up to date.
+The code compiled (good)
+Executable cyoa-step3 exists (good)
+------------------------------------
+Now running YOUR tests for step 3
+------------------------------------
+No request to check for intermediate deadline completion on step 3
+
+Step 4
+Checking that cyoa-step4 compiles
+rm -f *~ cyoa-step1 cyoa-step2 cyoa-step3  %(PROGS).o page.o storyBook.o
 The code did not compile!
 
 Overall Grade: NO GRADE YET
