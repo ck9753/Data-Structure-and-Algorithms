@@ -1,6 +1,6 @@
-Grading at 12/03/2022:18:14:06.667454
-For commit ID 5b45fbe43254601e837da63d680404684f34b28a
-Grading at Sat Dec  3 01:13:41 PM EST 2022
+Grading at 12/03/2022:18:20:31.926494
+For commit ID c7c4822a4b3058db0866203ef94ab81b73bc42e7
+Grading at Sat Dec  3 01:20:07 PM EST 2022
 Doing some basic checking for your submission
 
 Step 1
@@ -33,9 +33,7 @@ No request to check for intermediate deadline completion on step 1
 Step 2
 Checking that cyoa-step2 compiles
 rm -f *~ cyoa-step1 cyoa-step2 cyoa-step3  %(PROGS).o page.o storyBook.o
-g++ -std=gnu++98 -pedantic -Wall -Werror -ggdb3 -c cyoa-step2.cpp
-g++ -o cyoa-step2 cyoa-step2.o page.o storyBook.o
-rm cyoa-step2.o
+make: 'cyoa-step2' is up to date.
 The code compiled (good)
 Executable cyoa-step2 exists (good)
 ------------------------------------
@@ -213,6 +211,29 @@ Executable cyoa-step3 exists (good)
 ------------------------------------
 Now running YOUR tests for step 3
 ------------------------------------
+
+
+3.1: Current test is ./cyoa-step3 story1 < /dev/null
+-----------------------------
+It looks like you got different output from us on that case.
+Here is the diff (yours on left, ours on right):
+
+0(0),1(1),3(0),8(win)					      |	0(1),1(2),3(1),8(win)
+0(0),1(2),4(1),12(win)					      |	0(1),1(3),4(2),12(win)
+Your file did not match the expected output
+
+
+
+3.2: Current test is ./cyoa-step3 story2 < /dev/null
+-----------------------------
+It looks like you got different output from us on that case.
+Here is the diff (yours on left, ours on right):
+
+0(0),1(1),5(0),6(0),8(0),11(win)			      |	0(1),1(2),5(1),6(1),8(1),11(win)
+0(0),1(1),5(1),7(0),10(win)				      |	0(1),1(2),5(2),7(1),10(win)
+0(1),2(win)						      |	0(2),2(win)
+Your file did not match the expected output
+
 No request to check for intermediate deadline completion on step 3
 
 Step 4
