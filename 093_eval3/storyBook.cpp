@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <stack>
 #include <string>
 #include <vector>
 
@@ -148,5 +149,96 @@ void storyBook::processPages() {
   }
 }
 
-void storyBook::dfs() {
+std::vector<Page> storyBook::dfs(Page start, Page end) {
+  std::stack<std::vector<Page> > pathStack;
+  std::vector<Page> visited;
+  std::vector<Page> invalid;
+
+  // create vector of start Page for stack
+  std::vector<Page> startVector;
+  startVector.push_back(start);
+
+  pathStack.push(startVector);
+
+  while (pathStack.empty() != 1) {
+    std::vector<Page> currentPath = pathStack.top();
+    pathStack.pop();
+
+    Page currentNode = currentPath.back();
+
+    if (currentNode.pageNum == end.pageNum) {
+      return currentPath;
+    }
+
+    // check if currentNode is in visited
+    size_t visitedFlag = 0;
+    for (std::vector<Page>::iterator it = visited.begin(); it != visited.end(); it++) {
+      if ((*it).pageNum == currentNode.pageNum) {
+        visitedFlag = 1;
+      }
+    }
+
+    if (visitedFlag != 1) {
+      visited.push_back(currentNode);
+
+      for (std::vector<std::pair<size_t, std::string> >::iterator it =
+               currentNode.choices.begin();
+           it != currentNode.choices.end();
+           it++) {
+        currentPath.push_back(
+            pages[(*it).first]
+                .second);  // should check if it's (*it).first - 1 instead or not
+        pathStack.push(currentPath);
+        currentPath.pop_back();
+      }
+    }
+  }
+  return invalid;
+}
+
+void storyBook::printCurrentPath(std::vector<Page> currentPath) {
+  size_t currentPathLen = currentPath.size();
+  size_t currentPathCtr = 0;
+  for (std::vector<Page>::iterator i = currentPath.begin(); i != currentPath.end(); i++) {
+    currentPathCtr++;
+    size_t curr_pageNum = (*i).pageNum;
+    size_t next_pageNum;
+    if (currentPathCtr < currentPathLen) {
+      next_pageNum = (*(i + 1)).pageNum;
+    }
+
+    size_t userChoiceNum;
+    size_t choicesCtr = 0;  // counter for choices vector to find index
+    for (std::vector<std::pair<size_t, std::string> >::iterator j = (*i).choices.begin();
+         j != (*i).choices.end();
+         j++) {
+      if ((*j).first == next_pageNum) {
+        userChoiceNum = choicesCtr;
+      }
+      choicesCtr++;
+    }
+
+    if (currentPathCtr < currentPathLen) {
+      std::cout << curr_pageNum << "(" << userChoiceNum << "),";
+    }
+    else {
+      std::cout << curr_pageNum << "(win)";
+    }
+  }
+}
+
+void storyBook::findWaysToWin() {
+  for (std::vector<std::pair<size_t, Page> >::iterator it = pages.begin();
+       it != pages.end();
+       it++) {
+    if ((*it).second.pageType == "W") {
+      std::vector<Page> currentPath;
+      currentPath =
+          dfs(pages[0].second,
+              (*it).second);  // dfs with page0 for start and page with win for end
+      // print currentPath
+      printCurrentPath(currentPath);
+      std::cout << "\n";
+    }
+  }
 }

@@ -32,5 +32,7 @@ class storyBook {
   void checkValidity();
   bool checkUserChoice(size_t userChoice, size_t presentPageNum);
   void processPages();
-  void dfs();
+  std::vector<Page> dfs(Page start, Page end);
+  void printCurrentPath(std::vector<Page> currentPath);
+  void findWaysToWin();
 };
