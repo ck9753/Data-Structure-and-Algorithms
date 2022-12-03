@@ -1,0 +1,18 @@
+0@N:page0.txt
+1@N:page1.txt
+2@N:page2.txt
+
+3@N:page3.txt
+4@N:page4.txt
+5@W:page5.txt
+6@L:page6.txt
+
+0:1:go to counter
+1:2:hot grande peppermint mocha
+2:1:pick the drink again
+
+3:4:decide to get the bakery
+3:5:wait until you go home
+
+4:5:decide not to get the bakery
+4:6:order the cheese danish

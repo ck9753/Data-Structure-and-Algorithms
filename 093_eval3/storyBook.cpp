@@ -233,6 +233,7 @@ void storyBook::printCurrentPath(std::vector<Page> currentPath) {
         std::cout << curr_pageNum << "(win)";
       }
     }
+    std::cout << "\n";
   }
 }
 void storyBook::findWaysToWin() {
@@ -246,7 +247,6 @@ void storyBook::findWaysToWin() {
               (*it).second);  // dfs with page0 for start and page with win for end
       // print currentPath
       printCurrentPath(currentPath);
-      std::cout << "\n";
     }
   }
 }
