@@ -197,36 +197,44 @@ std::vector<Page> storyBook::dfs(Page start, Page end) {
 }
 
 void storyBook::printCurrentPath(std::vector<Page> currentPath) {
-  size_t currentPathLen = currentPath.size();
-  size_t currentPathCtr = 0;
-  for (std::vector<Page>::iterator i = currentPath.begin(); i != currentPath.end(); i++) {
-    currentPathCtr++;
-    size_t curr_pageNum = (*i).pageNum;
-    size_t next_pageNum;
-    if (currentPathCtr < currentPathLen) {
-      next_pageNum = (*(i + 1)).pageNum;
-    }
+  if (currentPath.empty()) {
+    std::cout << "This story is unwinnable!" << std::endl;
+  }
 
-    size_t userChoiceNum;
-    size_t choicesCtr = 0;  // counter for choices vector to find index
-    for (std::vector<std::pair<size_t, std::string> >::iterator j = (*i).choices.begin();
-         j != (*i).choices.end();
-         j++) {
-      if ((*j).first == next_pageNum) {
-        userChoiceNum = choicesCtr;
+  // if the story is winnable
+  else {
+    size_t currentPathLen = currentPath.size();
+    size_t currentPathCtr = 0;
+    for (std::vector<Page>::iterator i = currentPath.begin(); i != currentPath.end();
+         i++) {
+      currentPathCtr++;
+      size_t curr_pageNum = (*i).pageNum;
+      size_t next_pageNum;
+      if (currentPathCtr < currentPathLen) {
+        next_pageNum = (*(i + 1)).pageNum;
       }
-      choicesCtr++;
-    }
 
-    if (currentPathCtr < currentPathLen) {
-      std::cout << curr_pageNum << "(" << userChoiceNum << "),";
-    }
-    else {
-      std::cout << curr_pageNum << "(win)";
+      size_t userChoiceNum;
+      size_t choicesCtr = 0;  // counter for choices vector to find index
+      for (std::vector<std::pair<size_t, std::string> >::iterator j =
+               (*i).choices.begin();
+           j != (*i).choices.end();
+           j++) {
+        if ((*j).first == next_pageNum) {
+          userChoiceNum = choicesCtr;
+        }
+        choicesCtr++;
+      }
+
+      if (currentPathCtr < currentPathLen) {
+        std::cout << curr_pageNum << "(" << userChoiceNum << "),";
+      }
+      else {
+        std::cout << curr_pageNum << "(win)";
+      }
     }
   }
 }
-
 void storyBook::findWaysToWin() {
   for (std::vector<std::pair<size_t, Page> >::iterator it = pages.begin();
        it != pages.end();
