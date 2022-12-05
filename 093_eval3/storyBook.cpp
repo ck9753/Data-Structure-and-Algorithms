@@ -149,6 +149,7 @@ void storyBook::processPages() {
   }
 }
 
+// A function that does Depth-First Search: Recursively
 std::vector<Page> storyBook::dfs(Page start, Page end) {
   std::stack<std::vector<Page> > pathStack;
   std::vector<Page> visited;
@@ -158,14 +159,18 @@ std::vector<Page> storyBook::dfs(Page start, Page end) {
   std::vector<Page> startVector;
   startVector.push_back(start);
 
+  // push startVector to pathStack
   pathStack.push(startVector);
 
   while (pathStack.empty() != 1) {
+    // pop the first in path to currentPath
     std::vector<Page> currentPath = pathStack.top();
     pathStack.pop();
 
+    // get the last node as the currentNode
     Page currentNode = currentPath.back();
 
+    // if the currentNode matches with the end node, return to currentPath
     if (currentNode.pageNum == end.pageNum) {
       return currentPath;
     }
@@ -178,25 +183,31 @@ std::vector<Page> storyBook::dfs(Page start, Page end) {
       }
     }
 
+    // in case that currentNode is never visited
     if (visitedFlag != 1) {
+      // push the currentNode to visited vector
       visited.push_back(currentNode);
 
       for (std::vector<std::pair<size_t, std::string> >::iterator it =
                currentNode.choices.begin();
            it != currentNode.choices.end();
            it++) {
-        currentPath.push_back(
-            pages[(*it).first]
-                .second);  // should check if it's (*it).first - 1 instead or not
+        // add each adjacent node to currentNode
+        currentPath.push_back(pages[(*it).first].second);
+        // push new path to pathStack
         pathStack.push(currentPath);
+        // update currentPath by removing a newly added node for next iteration
         currentPath.pop_back();
       }
     }
   }
+  // return empty vector if there is no valid path
   return invalid;
 }
 
+// A function that prints currentPath
 void storyBook::printCurrentPath(std::vector<Page> currentPath) {
+  // if the currentPath from dfs function is empty, it is invalid(unwinnable)
   if (currentPath.empty()) {
     std::cout << "This story is unwinnable!" << std::endl;
   }
@@ -204,12 +215,13 @@ void storyBook::printCurrentPath(std::vector<Page> currentPath) {
   // if the story is winnable
   else {
     size_t currentPathLen = currentPath.size();
-    size_t currentPathCtr = 0;
+    size_t currentPathCtr = 0;  // counter for currentNode index
     for (std::vector<Page>::iterator i = currentPath.begin(); i != currentPath.end();
          i++) {
       currentPathCtr++;
       size_t curr_pageNum = (*i).pageNum;
       size_t next_pageNum;
+      // get next_pageNum if the node is not the last one
       if (currentPathCtr < currentPathLen) {
         next_pageNum = (*(i + 1)).pageNum;
       }
@@ -220,6 +232,7 @@ void storyBook::printCurrentPath(std::vector<Page> currentPath) {
                (*i).choices.begin();
            j != (*i).choices.end();
            j++) {
+        // if choices' destNum matches with next_pageNum
         if ((*j).first == next_pageNum) {
           userChoiceNum = choicesCtr + 1;
         }
@@ -236,15 +249,20 @@ void storyBook::printCurrentPath(std::vector<Page> currentPath) {
     std::cout << "\n";
   }
 }
+
+// A function that finds cycle-free ways to win
 void storyBook::findWaysToWin() {
   for (std::vector<std::pair<size_t, Page> >::iterator it = pages.begin();
        it != pages.end();
        it++) {
+    // find a page that has "W" pageType
     if ((*it).second.pageType == "W") {
       std::vector<Page> currentPath;
+
       currentPath =
           dfs(pages[0].second,
               (*it).second);  // dfs with page0 for start and page with win for end
+
       // print currentPath
       printCurrentPath(currentPath);
     }
