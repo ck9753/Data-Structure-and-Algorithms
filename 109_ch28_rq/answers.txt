@@ -16,7 +16,7 @@ c
 d
 d
 b
-d
-d
+c
+c
 c
 c
