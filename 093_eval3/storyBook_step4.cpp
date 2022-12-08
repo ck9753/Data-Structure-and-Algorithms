@@ -1,4 +1,4 @@
-#include "storyBook.hpp"
+#include "storyBook_step4.hpp"
 
 #include <algorithm>
 #include <cstdio>
@@ -32,11 +32,10 @@ void storyBook::checkValidity() {
        i != pages.end();
        ++i) {
     possiblePages.push_back((*i).first);
-    for (std::vector<std::pair<size_t, std::string> >::iterator j =
-             (*i).second.choices.begin();
+    for (std::vector<Page::choices_s>::iterator j = (*i).second.choices.begin();
          j != (*i).second.choices.end();
          ++j) {
-      possibleChoicesDest.push_back((*j).first);
+      possibleChoicesDest.push_back((*j).destNum);
     }
 
     // 3c. At least one page must be a WIN page and at least one page must be a LOSE page
@@ -110,10 +109,46 @@ bool storyBook::checkUserChoice(size_t userChoice, size_t presentPageNum) {
   return true;
 }
 
+void storyBook::printChoiceOptions(Page inputPage) {
+  if (inputPage.pageType == "W") {
+    std::cout << "Congratulations! You have won. Hooray!" << std::endl;
+  }
+
+  else if (inputPage.pageType == "L") {
+    std::cout << "Sorry, you have lost. Better luck next time!" << std::endl;
+  }
+
+  else {
+    std::cout << "What would you like to do?"
+              << "\n"
+              << std::endl;
+
+    // a counter for choice index
+    int k = 1;
+
+    // print all choices
+    for (std::vector<Page::choices_s>::iterator j = inputPage.choices.begin();
+         j != inputPage.choices.end();
+         ++j) {
+      // print unavailable option
+      if ((*j).keyValue[(*j).key] != combinedMap[(*j).key]) {
+        std::cout << " " << k << ". "
+                  << "<UNAVAILABLE>" << std::endl;
+        k++;
+      }
+      else {
+        std::cout << " " << k << ". " << (*j).text << std::endl;
+        k++;
+      }
+    }
+  }
+}
+
 void storyBook::processPages() {
   // print the Page 0
-  pages[0].second.printPage();
-
+  pages[0].second.printPage();  // only page text
+  storeToCombinedMap(pages[0].second);
+  printChoiceOptions(pages[0].second);
   // index for present page number
   size_t presentPageNum = 0;
   // index for checking gameOver
@@ -133,13 +168,16 @@ void storyBook::processPages() {
     }
 
     else {
-      std::pair<size_t, std::string> userChoicePair =
+      Page::choices_s userChoiceStruct =
           pages[presentPageNum].second.choices[userChoice - 1];
 
-      presentPageNum = userChoicePair.first;
+      presentPageNum = userChoiceStruct.destNum;
 
       pages[presentPageNum].second.printPage();
 
+      // store variable map of the called page to combinedMap
+      storeToCombinedMap(pages[presentPageNum].second);
+      printChoiceOptions(pages[presentPageNum].second);
       // if pageType is W or L, the game is over and the while loop is stopped
       if (pages[presentPageNum].second.pageType == "W" ||
           pages[presentPageNum].second.pageType == "L") {
@@ -148,7 +186,7 @@ void storyBook::processPages() {
     }
   }
 }
-
+/*
 // A function that does Depth-First Search: Recursively
 std::vector<Page> storyBook::dfs(Page start, Page end) {
   std::stack<std::vector<Page> > pathStack;
@@ -249,6 +287,7 @@ void storyBook::printCurrentPath(std::vector<Page> currentPath) {
     std::cout << "\n";
   }
 }
+*/
 
 // A function that finds cycle-free ways to win
 void storyBook::findWaysToWin() {
@@ -269,198 +308,13 @@ void storyBook::findWaysToWin() {
   }
 }
 
-// from readStory class, store pages vector to pages in storyBook class (for step 4)
-void storyBook_s4::runStoryBook(const char * dir) {
-  readStory_s4 file;
-  file.readStoryFile(dir);
-
-  pages = file.storeParsedDataToPage(dir);
-
-  checkValidity();
-}
-
-void storyBook_s4::checkValidity() {
-  std::vector<size_t> possiblePages;
-  std::vector<size_t> possibleChoicesDest;
-
-  // checker to check if pages have at least a WIN and a LOSE page
-  size_t checkWin = 0;
-  size_t checkLose = 0;
-
-  for (std::vector<std::pair<size_t, Page_s4> >::iterator i = pages.begin();
-       i != pages.end();
-       ++i) {
-    possiblePages.push_back((*i).first);
-    for (std::vector<Page_s4::choices_s>::iterator j = (*i).second.choices.begin();
-         j != (*i).second.choices.end();
-         ++j) {
-      possibleChoicesDest.push_back((*j).destNum);
-    }
-
-    // 3c. At least one page must be a WIN page and at least one page must be a LOSE page
-    if ((*i).second.pageType == "W") {
-      checkWin = 1;
-    }
-
-    else if ((*i).second.pageType == "L") {
-      checkLose = 1;
-    }
-  }
-
-  if (checkWin == 0 || checkLose == 0) {
-    std::cerr << "At least one page must be a WIN page and at least one page must be a "
-                 "LOSE page."
-              << std::endl;
-    exit(EXIT_FAILURE);
-  }
-
-  // 3a. Every page that is referenced by a choice is valid
-  size_t checkChoices = 0;  // checker to check if destNum exist in pages
-  for (std::vector<size_t>::iterator destIter = possibleChoicesDest.begin();
-       destIter != possibleChoicesDest.end();
-       ++destIter) {
-    for (std::vector<size_t>::iterator pageIter = possiblePages.begin();
-         pageIter != possiblePages.end();
-         ++pageIter) {
-      if (*destIter == *pageIter) {
-        checkChoices = 1;
-      }
-    }
-  }
-  if (checkChoices != 1) {
-    std::cerr << "Every page that is referenced by a choice should be valid" << std::endl;
-    exit(EXIT_FAILURE);
-  }
-
-  // 3b. Every page (except page 0) is referenced by at least one *other* page's choices.
-  size_t checkPages = 0;
-  for (std::vector<size_t>::iterator pageIter = possiblePages.begin();
-       pageIter != possiblePages.end();
-       ++pageIter) {
-    if (*pageIter != 0) {
-      for (std::vector<size_t>::iterator destIter = possibleChoicesDest.begin();
-           destIter != possibleChoicesDest.end();
-           ++destIter) {
-        if (*pageIter == *destIter) {
-          checkPages = 1;
-        }
-      }
-    }
-  }
-  if (checkPages != 1) {
-    std::cerr << "Every page (except page 0) should be referenced by at least one "
-                 "other page's choices."
-              << std::endl;
-    exit(EXIT_FAILURE);
-  }
-}
-
-bool storyBook_s4::checkUserChoice(size_t userChoice, size_t presentPageNum) {
-  // check if user input is smaller than 1 (userChoice = 0 if input is not string)
-  if (userChoice < 1) {
-    return false;
-  }
-
-  // check if user input is greater than the number of choices
-  if (userChoice > pages[presentPageNum].second.choices.size()) {
-    return false;
-  }
-  return true;
-}
-
-void storyBook_s4::printChoiceOptions(Page_s4 inputPage) {
-  if (inputPage.pageType == "W") {
-    std::cout << "Congratulations! You have won. Hooray!" << std::endl;
-  }
-
-  else if (inputPage.pageType == "L") {
-    std::cout << "Sorry, you have lost. Better luck next time!" << std::endl;
-  }
-
-  else {
-    std::cout << "What would you like to do?"
-              << "\n"
-              << std::endl;
-
-    // a counter for choice index
-    int k = 1;
-
-    // print all choices
-    for (std::vector<Page_s4::choices_s>::iterator j = inputPage.choices.begin();
-         j != inputPage.choices.end();
-         ++j) {
-      // print normal choices
-      if ((*j).key == "empty") {
-        std::cout << " " << k << ". " << (*j).text << std::endl;
-        k++;
-      }
-
-      else {
-        // print unavailable option
-        if ((*j).keyValue[(*j).key] != combinedMap[(*j).key]) {
-          std::cout << " " << k << ". "
-                    << "<UNAVAILABLE>" << std::endl;
-          k++;
-        }
-        else {
-          std::cout << " " << k << ". " << (*j).text << std::endl;
-          k++;
-        }
-      }
-    }
-  }
-}
-
-void storyBook_s4::processPages() {
-  // print the Page 0
-  pages[0].second.printPage();  // only page text
-  storeToCombinedMap(pages[0].second);
-  printChoiceOptions(pages[0].second);
-  // index for present page number
-  size_t presentPageNum = 0;
-  // index for checking gameOver
-  bool gameOver = false;
-
-  while (!gameOver) {
-    // declare input from user
-    std::string input;
-
-    // read input
-    std::getline(std::cin, input);
-
-    size_t userChoice = atoi(input.c_str());
-
-    if (checkUserChoice(userChoice, presentPageNum) == false) {
-      std::cout << "That is not a valid choice, please try again" << std::endl;
-    }
-
-    else {
-      Page_s4::choices_s userChoiceStruct =
-          pages[presentPageNum].second.choices[userChoice - 1];
-
-      presentPageNum = userChoiceStruct.destNum;
-
-      pages[presentPageNum].second.printPage();
-
-      // store variable map of the called page to combinedMap
-      storeToCombinedMap(pages[presentPageNum].second);
-      printChoiceOptions(pages[presentPageNum].second);
-      // if pageType is W or L, the game is over and the while loop is stopped
-      if (pages[presentPageNum].second.pageType == "W" ||
-          pages[presentPageNum].second.pageType == "L") {
-        gameOver = true;
-      }
-    }
-  }
-}
-
 // A function that combines variables from all pages
-void storyBook_s4::storeToCombinedMap(Page_s4 userChoicePage) {
+void storyBook::storeToCombinedMap(Page userChoicePage) {
   // declare new unordered_map
   //std::unordered_map < std::string,long int> combinedMap;
 
-  storyBook_s4::combinedMap.insert(userChoicePage.variables.begin(),
-                                   userChoicePage.variables.end());
+  storyBook::combinedMap.insert(userChoicePage.variables.begin(),
+                                userChoicePage.variables.end());
 
   //return combinedMap;
 }
