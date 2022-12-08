@@ -419,6 +419,18 @@ std::vector<size_t> storyBook_s4::printChoiceOptions(Page_s4 inputPage) {
   return unavail_opts;
 }
 
+void storyBook_s4::checkVariables(Page_s4 currPage) {
+  for (std::vector<Page_s4::choices_s>::iterator i = currPage.choices.begin();
+       i != currPage.choices.end();
+       i++) {
+    // if there is a variable that has not been set yet
+    if (combinedMap.find((*i).key) == combinedMap.end()) {
+      // insert key with value as 0
+      combinedMap.insert(std::pair<std::string, long int>((*i).key, 0));
+    }
+  }
+}
+
 void storyBook_s4::processPages() {
   std::vector<size_t> unavail_opts;
 
@@ -478,6 +490,10 @@ void storyBook_s4::processPages() {
 
       // store variable map of the called page to combinedMap
       storeToCombinedMap(pages[presentPageNum].second);
+
+      // check if variables has been already encountered
+      checkVariables(pages[presentPageNum].second);
+
       // print choices and store unavailable options at this time
       unavail_opts = printChoiceOptions(pages[presentPageNum].second);
       // if pageType is W or L, the game is over and the while loop is stopped
@@ -487,25 +503,6 @@ void storyBook_s4::processPages() {
       }
     }
   }
-  /*
-    else {
-      Page_s4::choices_s userChoiceStruct =
-          pages[presentPageNum].second.choices[userChoice - 1];
-
-      presentPageNum = userChoiceStruct.destNum;
-
-      pages[presentPageNum].second.printPage();
-
-      // store variable map of the called page to combinedMap
-      storeToCombinedMap(pages[presentPageNum].second);
-      // print choices and store unavailable options at this time
-      unavail_opts = printChoiceOptions(pages[presentPageNum].second);
-      // if pageType is W or L, the game is over and the while loop is stopped
-      if (pages[presentPageNum].second.pageType == "W" ||
-          pages[presentPageNum].second.pageType == "L") {
-        gameOver = true;
-      }
-    */
 }
 
 // A function that combines variables from all pages

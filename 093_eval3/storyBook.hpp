@@ -53,9 +53,7 @@ class storyBook_s4 {
   void checkValidity();
   bool checkUserChoice(size_t userChoice, size_t presentPageNum);
   std::vector<size_t> printChoiceOptions(Page_s4 inputPage);  // for step 4
+  void checkVariables(Page_s4 currPage);
   void processPages();
-  //std::vector<Page> dfs(Page start, Page end);
-  //void printCurrentPath(std::vector<Page> currentPath);
-  //void findWaysToWin();
   void storeToCombinedMap(Page_s4 userChoicePage);  // for step 4
 };

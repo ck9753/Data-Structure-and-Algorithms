@@ -180,6 +180,7 @@ std::vector<std::pair<size_t, Page> > readStory::storeParsedDataToPage(const cha
   return pages;
 }
 
+// A function that prints each file text without choices
 void Page_s4::printPage() {
   // print each line that is stored in textOfPages
   for (std::vector<std::string>::iterator it = storyInsidePage.begin();
@@ -189,6 +190,7 @@ void Page_s4::printPage() {
   }
 }
 
+// read story.txt file from input directory and split it by allpagedeclaration, allchoices, and allvariables
 bool readStory_s4::readStoryFile(const char * dir) {
   std::string storyTxt = "/story.txt";
   storyTxt = dir + storyTxt;
@@ -310,14 +312,12 @@ std::vector<std::pair<size_t, Page_s4> > readStory_s4::storeParsedDataToPage(
       size_t bracketIndex = (*j).find('[');
       size_t cldbracketIndex = (*j).find(']');
       size_t page_num;
-      //size_t dest_num;
-      //std::string key;
-      //std::string choiceText;
-      //size_t value;
 
       // conditional choices
       if (bracketIndex != std::string::npos) {
         size_t equalIndex = (*j).find('=');
+
+        // parase allchoices into page_num, destNum, and choicetext
         page_num = atoi(((*j).substr(0, bracketIndex)).c_str());
         ch_s.destNum =
             atoi(((*j).substr(firstColon + 1, secondColon - firstColon - 1)).c_str());
@@ -335,6 +335,7 @@ std::vector<std::pair<size_t, Page_s4> > readStory_s4::storeParsedDataToPage(
         ch_s.destNum =
             atoi(((*j).substr(firstColon + 1, secondColon - firstColon - 1)).c_str());
         ch_s.text = (*j).substr(secondColon + 1);
+        // store "empty" for key and -1 for value
         ch_s.key = "empty";
         ch_s.value = -1;
         ch_s.keyValue[ch_s.key] = ch_s.value;
