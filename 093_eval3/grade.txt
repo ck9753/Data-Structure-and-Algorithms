@@ -1,6 +1,6 @@
-Grading at 12/08/2022:04:28:19.673590
-For commit ID 8cbf1e10bac11830cbde3a6dbd28ed48d2575dce
-Grading at Wed Dec  7 11:26:48 PM EST 2022
+Grading at 12/08/2022:04:35:22.415564
+For commit ID b74fd43eebe21e56127407ae85acd0fbb06d328c
+Grading at Wed Dec  7 11:33:51 PM EST 2022
 Doing some basic checking for your submission
 
 Step 1
@@ -47,7 +47,7 @@ Step 1 EC intermediate deadline test 2
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean for this testcase
 You have passed this test case
-Intermediate deadline requirements for Step 1 passed at Wed Dec  7 11:26:55 PM EST 2022
+Intermediate deadline requirements for Step 1 passed at Wed Dec  7 11:33:58 PM EST 2022
 
 Step 2
 Checking that cyoa-step2 compiles
@@ -387,7 +387,7 @@ Step 2 EC intermediate deadline test 23
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean for this testcase
 You have passed this test case
-Intermediate deadline requirements for Step 2 passed at Wed Dec  7 11:27:44 PM EST 2022
+Intermediate deadline requirements for Step 2 passed at Wed Dec  7 11:34:47 PM EST 2022
 
 Step 3
 Checking that cyoa-step3 compiles
@@ -439,7 +439,7 @@ Step 3 EC intermediate deadline test 2
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean for this testcase
 You have passed this test case
-Intermediate deadline requirements for Step 3 passed at Wed Dec  7 11:27:50 PM EST 2022
+Intermediate deadline requirements for Step 3 passed at Wed Dec  7 11:34:53 PM EST 2022
 
 Step 4
 Checking that cyoa-step4 compiles
@@ -468,13 +468,6 @@ Valgrind was clean
 Your output looks good. Lets check valgrind
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean
-
-
-4.3: Current test is ./cyoa-step4 story4  <  ~/ece551/093_eval3/story4/inputs/input0.txt
------------------------------
-You considered this a failure case:
-/dev/fd/3: line 528: ~/ece551/093_eval3/story4/inputs/input0.txt: No such file or directory
-But we did not.
 ------------------------------------
 You have requested that we check for intermediate deadline completion on step 4
 ------------------------------------
@@ -660,7 +653,7 @@ Step 4 EC intermediate deadline test 26
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean for this testcase
 You have passed this test case
-Intermediate deadline requirements for Step 4 passed at Wed Dec  7 11:28:19 PM EST 2022
+Intermediate deadline requirements for Step 4 passed at Wed Dec  7 11:35:22 PM EST 2022
 
 You have NOT passed your test cases!
 You should go and figure out/understand where thing went wrong
