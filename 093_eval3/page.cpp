@@ -347,7 +347,7 @@ std::vector<std::pair<size_t, Page_s4> > readStory_s4::storeParsedDataToPage(
       }
     }
 
-    // add variable to hash table from allVariables
+    // add variable to map from allVariables
     for (std::vector<std::string>::iterator k = allVariables.begin();
          k != allVariables.end();
          k++) {
