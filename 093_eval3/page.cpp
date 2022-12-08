@@ -369,6 +369,7 @@ std::vector<std::pair<size_t, Page_s4> > readStory_s4::storeParsedDataToPage(
 
     // clear choices in page.choices for next page choices
     page.choices.clear();
+    page.variables.clear();
   }
   return pages;
 }
