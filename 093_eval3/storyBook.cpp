@@ -365,10 +365,15 @@ bool storyBook_s4::checkUserChoice(size_t userChoice, size_t presentPageNum) {
   if (userChoice > pages[presentPageNum].second.choices.size()) {
     return false;
   }
+  // check if user input is unavailable option
+  //if (pages[presentPageNum].second.choice
+
   return true;
 }
 
-void storyBook_s4::printChoiceOptions(Page_s4 inputPage) {
+std::vector<size_t> storyBook_s4::printChoiceOptions(Page_s4 inputPage) {
+  std::vector<size_t> unavail_opts;
+
   if (inputPage.pageType == "W") {
     std::cout << "Congratulations! You have won. Hooray!" << std::endl;
   }
@@ -400,6 +405,8 @@ void storyBook_s4::printChoiceOptions(Page_s4 inputPage) {
         if ((*j).keyValue[(*j).key] != combinedMap[(*j).key]) {
           std::cout << " " << k << ". "
                     << "<UNAVAILABLE>" << std::endl;
+          unavail_opts.push_back(k);
+
           k++;
         }
         else {
@@ -409,13 +416,16 @@ void storyBook_s4::printChoiceOptions(Page_s4 inputPage) {
       }
     }
   }
+  return unavail_opts;
 }
 
 void storyBook_s4::processPages() {
+  std::vector<size_t> unavail_opts;
+
   // print the Page 0
   pages[0].second.printPage();  // only page text
   storeToCombinedMap(pages[0].second);
-  printChoiceOptions(pages[0].second);
+  unavail_opts = printChoiceOptions(pages[0].second);
   // index for present page number
   size_t presentPageNum = 0;
   // index for checking gameOver
@@ -435,6 +445,50 @@ void storyBook_s4::processPages() {
     }
 
     else {
+      bool outFlag = false;
+      bool check = true;
+      while (!outFlag) {
+        for (std::vector<size_t>::iterator i = unavail_opts.begin();
+             i != unavail_opts.end();
+             i++) {
+          if (userChoice == *i) {
+            check = false;
+            std::cout << "That choice is not available at this time, please try again"
+                      << std::endl;
+          }
+        }
+
+        if (check == false) {
+          std::getline(std::cin, input);
+          userChoice = atoi(input.c_str());
+          check = true;
+        }
+
+        else if (check == true) {
+          outFlag = true;
+        }
+      }
+
+      Page_s4 ::choices_s userChoiceStruct =
+          pages[presentPageNum].second.choices[userChoice - 1];
+
+      presentPageNum = userChoiceStruct.destNum;
+
+      pages[presentPageNum].second.printPage();
+
+      // store variable map of the called page to combinedMap
+      storeToCombinedMap(pages[presentPageNum].second);
+      // print choices and store unavailable options at this time
+      unavail_opts = printChoiceOptions(pages[presentPageNum].second);
+      // if pageType is W or L, the game is over and the while loop is stopped
+      if (pages[presentPageNum].second.pageType == "W" ||
+          pages[presentPageNum].second.pageType == "L") {
+        gameOver = true;
+      }
+    }
+  }
+  /*
+    else {
       Page_s4::choices_s userChoiceStruct =
           pages[presentPageNum].second.choices[userChoice - 1];
 
@@ -444,14 +498,14 @@ void storyBook_s4::processPages() {
 
       // store variable map of the called page to combinedMap
       storeToCombinedMap(pages[presentPageNum].second);
-      printChoiceOptions(pages[presentPageNum].second);
+      // print choices and store unavailable options at this time
+      unavail_opts = printChoiceOptions(pages[presentPageNum].second);
       // if pageType is W or L, the game is over and the while loop is stopped
       if (pages[presentPageNum].second.pageType == "W" ||
           pages[presentPageNum].second.pageType == "L") {
         gameOver = true;
       }
-    }
-  }
+    */
 }
 
 // A function that combines variables from all pages

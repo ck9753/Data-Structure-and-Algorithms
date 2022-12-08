@@ -52,7 +52,7 @@ class storyBook_s4 {
   void runStoryBook(const char * dir);
   void checkValidity();
   bool checkUserChoice(size_t userChoice, size_t presentPageNum);
-  void printChoiceOptions(Page_s4 inputPage);  // for step 4
+  std::vector<size_t> printChoiceOptions(Page_s4 inputPage);  // for step 4
   void processPages();
   //std::vector<Page> dfs(Page start, Page end);
   //void printCurrentPath(std::vector<Page> currentPath);
