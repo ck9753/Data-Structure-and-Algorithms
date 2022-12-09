@@ -1,6 +1,6 @@
-Grading at 12/08/2022:04:35:22.415564
-For commit ID b74fd43eebe21e56127407ae85acd0fbb06d328c
-Grading at Wed Dec  7 11:33:51 PM EST 2022
+Grading at 12/09/2022:02:14:18.712359
+For commit ID 133e420e04ceff385ba0ce014e42e2b1e2f11395
+Grading at Thu Dec  8 09:12:35 PM EST 2022
 Doing some basic checking for your submission
 
 Step 1
@@ -47,7 +47,7 @@ Step 1 EC intermediate deadline test 2
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean for this testcase
 You have passed this test case
-Intermediate deadline requirements for Step 1 passed at Wed Dec  7 11:33:58 PM EST 2022
+Intermediate deadline requirements for Step 1 passed at Thu Dec  8 09:12:43 PM EST 2022
 
 Step 2
 Checking that cyoa-step2 compiles
@@ -387,7 +387,7 @@ Step 2 EC intermediate deadline test 23
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean for this testcase
 You have passed this test case
-Intermediate deadline requirements for Step 2 passed at Wed Dec  7 11:34:47 PM EST 2022
+Intermediate deadline requirements for Step 2 passed at Thu Dec  8 09:13:34 PM EST 2022
 
 Step 3
 Checking that cyoa-step3 compiles
@@ -420,8 +420,7 @@ Valgrind was clean
 
 3.3: Current test is ./cyoa-step3 unwinnableStory < /dev/null
 -----------------------------
-We considered this a failure case.
-But you did not (exit status was EXIT_SUCCESS).
+You exited with a failure status (good) but did not print to stderr (bad)
 ------------------------------------
 You have requested that we check for intermediate deadline completion on step 3
 ------------------------------------
@@ -439,7 +438,7 @@ Step 3 EC intermediate deadline test 2
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean for this testcase
 You have passed this test case
-Intermediate deadline requirements for Step 3 passed at Wed Dec  7 11:34:53 PM EST 2022
+Intermediate deadline requirements for Step 3 passed at Thu Dec  8 09:13:41 PM EST 2022
 
 Step 4
 Checking that cyoa-step4 compiles
@@ -653,7 +652,7 @@ Step 4 EC intermediate deadline test 26
   - Valgrind was clean (no errors, no memory leaks)
 Valgrind was clean for this testcase
 You have passed this test case
-Intermediate deadline requirements for Step 4 passed at Wed Dec  7 11:35:22 PM EST 2022
+Intermediate deadline requirements for Step 4 passed at Thu Dec  8 09:14:18 PM EST 2022
 
 You have NOT passed your test cases!
 You should go and figure out/understand where thing went wrong
