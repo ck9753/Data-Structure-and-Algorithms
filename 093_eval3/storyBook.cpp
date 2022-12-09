@@ -279,6 +279,7 @@ void storyBook_s4::runStoryBook(const char * dir) {
   checkValidity();
 }
 
+// check three conditions for validity
 void storyBook_s4::checkValidity() {
   std::vector<size_t> possiblePages;
   std::vector<size_t> possibleChoicesDest;
@@ -355,6 +356,7 @@ void storyBook_s4::checkValidity() {
   }
 }
 
+// A function that checks userChoice is valid
 bool storyBook_s4::checkUserChoice(size_t userChoice, size_t presentPageNum) {
   // check if user input is smaller than 1 (userChoice = 0 if input is not string)
   if (userChoice < 1) {
@@ -365,15 +367,16 @@ bool storyBook_s4::checkUserChoice(size_t userChoice, size_t presentPageNum) {
   if (userChoice > pages[presentPageNum].second.choices.size()) {
     return false;
   }
-  // check if user input is unavailable option
-  //if (pages[presentPageNum].second.choice
 
   return true;
 }
 
+// A function that prints Choice options separately for step 4
 std::vector<size_t> storyBook_s4::printChoiceOptions(Page_s4 inputPage) {
+  // declare unavailable choice options
   std::vector<size_t> unavail_opts;
 
+  // check if the pageType is Win or Lose
   if (inputPage.pageType == "W") {
     std::cout << "Congratulations! You have won. Hooray!" << std::endl;
   }
@@ -382,6 +385,7 @@ std::vector<size_t> storyBook_s4::printChoiceOptions(Page_s4 inputPage) {
     std::cout << "Sorry, you have lost. Better luck next time!" << std::endl;
   }
 
+  // for pageType N
   else {
     std::cout << "What would you like to do?"
               << "\n"
@@ -405,10 +409,11 @@ std::vector<size_t> storyBook_s4::printChoiceOptions(Page_s4 inputPage) {
         if ((*j).keyValue[(*j).key] != combinedMap[(*j).key]) {
           std::cout << " " << k << ". "
                     << "<UNAVAILABLE>" << std::endl;
+          // add unavailable choice options to unavail_opts vector
           unavail_opts.push_back(k);
-
           k++;
         }
+        // print available option that has matched variable
         else {
           std::cout << " " << k << ". " << (*j).text << std::endl;
           k++;
@@ -419,6 +424,7 @@ std::vector<size_t> storyBook_s4::printChoiceOptions(Page_s4 inputPage) {
   return unavail_opts;
 }
 
+// A function that checks a variable has already been set
 void storyBook_s4::checkVariables(Page_s4 currPage) {
   for (std::vector<Page_s4::choices_s>::iterator i = currPage.choices.begin();
        i != currPage.choices.end();
@@ -431,13 +437,17 @@ void storyBook_s4::checkVariables(Page_s4 currPage) {
   }
 }
 
+// A function that process each pages and print accordingly
 void storyBook_s4::processPages() {
   std::vector<size_t> unavail_opts;
 
   // print the Page 0
   pages[0].second.printPage();  // only page text
+  // store variable in page 0 to combinedMap
   storeToCombinedMap(pages[0].second);
+  // print choice options and store unavailable choice options
   unavail_opts = printChoiceOptions(pages[0].second);
+
   // index for present page number
   size_t presentPageNum = 0;
   // index for checking gameOver
@@ -452,13 +462,14 @@ void storyBook_s4::processPages() {
 
     size_t userChoice = atoi(input.c_str());
 
+    // if the userChoice is out of range
     if (checkUserChoice(userChoice, presentPageNum) == false) {
       std::cout << "That is not a valid choice, please try again" << std::endl;
     }
 
     else {
-      bool outFlag = false;
-      bool check = true;
+      bool outFlag = false;  // flag to terminate  while loop
+      bool check = true;     // flag to check userChoice is unavailable
       while (!outFlag) {
         for (std::vector<size_t>::iterator i = unavail_opts.begin();
              i != unavail_opts.end();
@@ -470,12 +481,14 @@ void storyBook_s4::processPages() {
           }
         }
 
+        // in case userChoice is unavailable, re-type the input
         if (check == false) {
           std::getline(std::cin, input);
           userChoice = atoi(input.c_str());
           check = true;
         }
 
+        // in case userChoice is not unavailable, terminate while loop
         else if (check == true) {
           outFlag = true;
         }
@@ -485,7 +498,7 @@ void storyBook_s4::processPages() {
           pages[presentPageNum].second.choices[userChoice - 1];
 
       presentPageNum = userChoiceStruct.destNum;
-
+      // print current page
       pages[presentPageNum].second.printPage();
 
       // store variable map of the called page to combinedMap
@@ -507,11 +520,6 @@ void storyBook_s4::processPages() {
 
 // A function that combines variables from all pages
 void storyBook_s4::storeToCombinedMap(Page_s4 userChoicePage) {
-  // declare new unordered_map
-  //std::unordered_map < std::string,long int> combinedMap;
-
   storyBook_s4::combinedMap.insert(userChoicePage.variables.begin(),
                                    userChoicePage.variables.end());
-
-  //return combinedMap;
 }

@@ -358,6 +358,8 @@ std::vector<std::pair<size_t, Page_s4> > readStory_s4::storeParsedDataToPage(
       long int value;
 
       size_t page_num = atoi(((*k).substr(0, doIndex)).c_str());
+
+      // if both page number are matched, store key and value data to page_s4 class
       if (page_num == page.pageNum) {
         key = (*k).substr(doIndex + 1, eqIndex - doIndex - 1);
         value = atoi(((*k).substr(eqIndex + 1)).c_str());
