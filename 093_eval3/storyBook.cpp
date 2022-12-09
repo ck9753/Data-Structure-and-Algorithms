@@ -210,6 +210,7 @@ void storyBook::printCurrentPath(std::vector<Page> currentPath) {
   // if the currentPath from dfs function is empty, it is invalid(unwinnable)
   if (currentPath.empty()) {
     std::cout << "This story is unwinnable!" << std::endl;
+    exit(EXIT_FAILURE);
   }
 
   // if the story is winnable
